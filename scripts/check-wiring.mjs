@@ -324,6 +324,41 @@ check('every file path a workflow names actually exists', () => {
   return `${checked} paths across ${workflows.length} workflows, all present`;
 });
 
+/* 13. A credential is written to a file npm will actually open. */
+check('the release job writes the npm token where npm reads it', () => {
+  const release = read('.github/workflows/release.yml');
+
+  // setup-node with registry-url sets NPM_CONFIG_USERCONFIG to its own
+  // generated path, and that variable wins over the home directory. So in that
+  // state a write to ~/.npmrc puts the token in a file npm never opens, and the
+  // publish fails 401 then 404 while the real credential file holds an empty
+  // token. That is the bug this rule was added for: it cost a release run and
+  // the error named a missing scope, which was not what was wrong.
+  const npmReadsItsOwnFile = /^\s*registry-url\s*:/m.test(release);
+
+  // Only real writes. The anchor plus a no-hash class means an indented
+  // comment line can never match, which matters because this file explains the
+  // bug in comments that mention ~/.npmrc.
+  const writes = [
+    ...release.matchAll(/^([^#\n]*\.npmrc[^#\n]*)$/gm),
+  ].map((m) => m[1].trim());
+
+  const lost = npmReadsItsOwnFile
+    ? writes.filter((line) => !line.includes('NPM_CONFIG_USERCONFIG'))
+    : [];
+
+  if (lost.length > 0) {
+    throw new Error(
+      `the release job writes a credential to a file npm will not read:\n    ${lost.join('\n    ')}\n` +
+        `  setup-node sets NPM_CONFIG_USERCONFIG, which overrides ~/.npmrc.\n` +
+        `  Write to "\${NPM_CONFIG_USERCONFIG:-\${HOME}/.npmrc}" instead.`,
+    );
+  }
+  return npmReadsItsOwnFile
+    ? `${writes.length} credential write(s), all to the file npm reads`
+    : 'no registry-url, so ~/.npmrc would be read';
+});
+
 for (const line of checks) console.log(line);
 console.log();
 

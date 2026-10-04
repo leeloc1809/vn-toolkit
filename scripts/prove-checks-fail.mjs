@@ -104,6 +104,23 @@ const CASES = [
     expect: /never publishes/i,
   },
   {
+    script: 'check-wiring.mjs',
+    name: 'the release job writes the npm token to a file npm never reads',
+    apply: () => {
+      // The exact bug from run 37203373864: setup-node sets
+      // NPM_CONFIG_USERCONFIG, so ~/.npmrc is never opened, and the publish
+      // failed 401 then 404 for a scope that existed the whole time.
+      write(
+        TARGETS.release,
+        originals.release.replace(
+          '> "${NPM_CONFIG_USERCONFIG:-${HOME}/.npmrc}"',
+          '> ~/.npmrc',
+        ),
+      );
+    },
+    expect: /npm will not read/i,
+  },
+  {
     script: 'check-invisible-spaces.mjs',
     name: 'a formatter spacer is written as a literal no-break space',
     apply: () => {

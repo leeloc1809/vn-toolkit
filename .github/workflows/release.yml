@@ -118,28 +118,55 @@ jobs:
       - run: npm ci
 
       - name: Authenticate
-        # Only set the token if one exists. Trusted publishing needs no token,
-        # and passing an empty NODE_AUTH_TOKEN is worse than passing none.
+        # Write to the file npm actually reads, which is not ~/.npmrc.
+        # setup-node with registry-url sets NPM_CONFIG_USERCONFIG to its own
+        # generated path, and that variable overrides the home directory
+        # entirely. So the version of this step that wrote ~/.npmrc put a
+        # perfectly good token in a file npm never opened, while setup-node's
+        # real credential file held an empty _authToken. The run then failed
+        # 401 and the publish failed 404, which reads like a missing scope.
+        #
+        # The secret arrives through env rather than through a ${{ }} spliced
+        # into the script body, so a token containing shell metacharacters
+        # cannot become part of the script.
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          if [ -n "${{ secrets.NPM_TOKEN }}" ]; then
-            echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" \
-              > ~/.npmrc
+          set -euo pipefail
+          # Trusted publishing needs no token, and an empty token is worse than
+          # none, so the file is only rewritten when there is something to say.
+          if [ -n "${NPM_TOKEN}" ]; then
+            printf '//registry.npmjs.org/:_authToken=%s\n' "${NPM_TOKEN}" \
+              > "${NPM_CONFIG_USERCONFIG:-${HOME}/.npmrc}"
             echo "using the NPM_TOKEN secret"
           else
             echo "no NPM_TOKEN secret, using trusted publishing"
           fi
 
       - name: Which npm account is publishing
-        # Worth having in the log permanently. When a publish fails on a scope
-        # that does not exist, the useful fact is which account the token
-        # belongs to, and that is the one thing the error message does not say.
+        # Worth having in the log permanently: when a publish fails on a scope
+        # the account cannot write to, the useful fact is which account the
+        # token belongs to, and that is the one thing the npm error never says.
+        #
+        # This also stops the run. The previous version printed
+        # "unauthenticated" and carried on regardless, so a rejected token
+        # surfaced several steps later as a 404 from the registry.
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           set -euo pipefail
-          if [ -n "${{ secrets.NPM_TOKEN }}" ]; then
-            echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          fi
-          echo "account: $(npm whoami 2>&1 || echo 'unauthenticated')"
+          echo "userconfig: $(npm config get userconfig)"
           echo "registry: $(npm config get registry)"
+          if [ -z "${NPM_TOKEN}" ]; then
+            echo "no token set, expecting trusted publishing to supply a credential"
+            exit 0
+          fi
+          if ! account="$(npm whoami 2>&1)"; then
+            echo "::error::NPM_TOKEN is set but the registry rejected it"
+            echo "$account"
+            exit 1
+          fi
+          echo "account: ${account}"
 
       - name: Publish
         run: |
