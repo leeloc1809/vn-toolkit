@@ -85,8 +85,8 @@ jobs:
           suite = json.load(open("conformance/vn-text-1.0.0.json", encoding="utf-8"))
           cases = suite["cases"]
           print(f"{len(cases)} cases, {len(suite['functions'])} functions")
-          if len(cases) < 139:
-              sys.exit(f"corpus shrank: {len(cases)} < 139")
+          if len(cases) < 156:
+              sys.exit(f"corpus shrank: {len(cases)} < 156")
           unnoted = [c["id"] for c in cases if not c.get("note")]
           if unnoted:
               print(f"note: {len(unnoted)} cases have no explanatory note")

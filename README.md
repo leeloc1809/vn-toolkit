@@ -54,11 +54,34 @@ operations so each does one thing, and the conformance suite pins both:
 |---|---|---|---|
 | `deaccent` | remove tone marks only | `Đang` | `Ðor` |
 | `stripStroke` | `đ`→`d`, U+0110/U+0111 only | `Dặng` | `Ðor` |
-| `fold` | search key, both of the above | `dang` | `ðor` |
+| `repairMojibake` | `Ð`→`Đ`, assumes the text is Vietnamese | `Đặng` | `Đor` |
+| `fold` | search key, deaccent + stripStroke | `dang` | `ðor` |
+
+### The other half of the problem: repairing it
+
+The table above is about producing a search key from text you control. Most
+systems also have text you do **not** control, and the single most common
+corruption in stored Vietnamese is `Ð` (U+00D0) standing in for `Đ` (U+0110) —
+legacy encodings produce it constantly. A record like `Ðặng Minh` can never be
+found by anyone typing `Dang`, and nothing throws.
+
+That is what [`underthesea.text_normalize`](https://github.com/undertheseanlp/underthesea)
+already does, and at 27,000 downloads a month there is no doubt the need is real.
+`repairMojibake` is the same repair, isolated as its own step:
+
+```js
+fold(repairMojibake('Ðặng Minh'));  // 'dang minh'  <- findable again
+fold('Ðặng Minh');                  // 'ðặng minh'  <- the key, if it was never repaired
+```
+
+Note that `repairMojibake('Ðor')` returns `'Đor'`, which is wrong for an Icelandic
+name. That is the trade, stated plainly and pinned by `mojibake-011` so it can
+never be changed by accident. Use `fold` alone when the corpus may contain
+Scandinavian text.
 
 ## Why a conformance suite instead of unit tests
 
-Both ports read the **same** `conformance/vn-text-1.0.0.json`. 139 cases, hand
+Both ports read the **same** `conformance/vn-text-1.0.0.json`. 156 cases, hand
 authored, each with a note explaining what breaks if you get it wrong.
 
 That file is the asset. Copy the library if you want, but the corpus is what
@@ -73,7 +96,7 @@ packages/py/tests/test_conformance.py   <- reads the same file
 
 Three levels of check, because each catches a different class of mistake:
 
-1. **The suite** — 139 cases, both languages, byte-identical results.
+1. **The suite** — 156 cases, both languages, byte-identical results.
 2. **Metadata assertions** — unique case ids, every declared function covered,
    no case referencing a function the runner does not implement. The suite fails
    loudly instead of silently skipping.
@@ -89,6 +112,34 @@ python packages/py/tests/test_conformance.py # Python, stdlib only, no install
 node scripts/verify-port-parity.mjs          # both ports, no Python needed
 ```
 
+## See also
+
+This is a small problem with mature, active solutions around it. Use the right
+tool:
+
+| project | what it is good at |
+|---|---|
+| [**underthesea**](https://github.com/undertheseanlp/underthesea) | The dominant Vietnamese NLP toolkit. Its `text_normalize` already maps `Ð` → `Đ` and fixes regional spelling. Start here. |
+| [**VietnameseTextNormalizer**](https://github.com/langmaninternet/VietnameseTextNormalizer) | C++, the reference implementation for tone-mark placement and vowel composition (`hoà` → `hòa`). |
+| [**vietnormalizer**](https://github.com/nghimestudio/vietnormalizer) | Pure Python, zero-dependency, aimed at TTS. Has a published paper. |
+| [**undertheseanlp/NLP-Vietnamese-progress**](https://github.com/undertheseanlp/NLP-Vietnamese-progress) | The community's task-and-tool index for Vietnamese NLP. |
+
+`vn-text` does not overlap with those on canonicalisation. They are about
+producing a *correct spelling*. This library is about producing a *search key* and
+a *sort key* — `Đặng` next to `Dang` rather than after `Z` — which none of them
+covers. And it is the only one of the group with a TypeScript port and a
+cross-language conformance suite.
+
+The two approaches disagree about `Ð`, on purpose. `underthesea` maps it to `Đ`
+because in Vietnamese data it is essentially always damage.
+[`repairMojibake`](#api) does the same, for the same reason. [`fold`](#api) leaves
+it alone, because its job is to produce a key and not to reinterpret letters. All
+three answers are correct for different inputs, and the suite pins each one so
+none of them can be changed silently.
+
+If you are building something in this space and would rather not have written
+this part yourself, the corpus is here to be reused.
+
 ## What this is not
 
 Being explicit about the limits, because a conformance suite is only worth
@@ -103,8 +154,13 @@ anything if it is honest about what it covers.
 - **No fuzzy matching.** Typing `ko bít` on an unaccented keyboard will not match
   `không biết`. That is `vn-search`, and it is a search problem, not a text
   problem.
+- **No byte-level mojibake recovery.** `repairMojibake` handles the character-level
+  `Ð`/`Đ` confusion. Damage of the form `Ä Ä¡` or `á»Æ` comes from UTF-8 bytes
+  decoded as Windows-1252, and undoing it needs the original bytes, not a
+  character mapping. There are dedicated libraries for that (`ftfy` in Python);
+  guessing at it from a Unicode string is not reliable enough to ship.
 - **No collation or sorting.** `Đặng` should sort next to `Dang`, not after `Z`.
-  That is `vn-collate`.
+  That is `vn-collate`, and it is the least-served part of this whole space.
 - **`isVietnamese` is a character heuristic, not a language detector.** `Nguyen`,
   `Tran` and `Le` are pure ASCII and return `false`.
 - **`deaccent` applies to all Unicode.** `café` → `cafe`, and Cyrillic `Ѐ` → `Е`.
@@ -127,8 +183,17 @@ normalize(s: string): string      // NFC — for storage, keys, equality
 decompose(s: string): string      // NFD — for walking combining marks
 deaccent(s: string): string       // remove tone marks, keep letter identity
 stripStroke(s: string): string    // đ -> d, nothing else
+repairMojibake(s: string): string // Ð -> Đ, for damaged legacy data
 fold(s: string): string           // full search key
 isVietnamese(s: string): boolean
+```
+
+Compose rather than reaching for a single mega-function, because the order
+matters and different corpora need different ones:
+
+```ts
+fold(s)                        // clean input
+fold(repairMojibake(s))        // Vietnamese input that may be damaged
 ```
 
 Python mirrors this with `snake_case` plus `stripStroke` / `isVietnamese` aliases,

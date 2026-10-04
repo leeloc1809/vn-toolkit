@@ -39,6 +39,8 @@ const TS_ALNUM = /[\p{L}\p{N}]/u;
 
 const D_UP = '\u0110';
 const D_LOW = '\u0111';
+const ETH_UP = '\u00D0';
+const ETH_LOW = '\u00F0';
 const COMBINING = /[\u0300-\u036f]/g;
 
 // --- Python port, transliterated line for line ----------------------------
@@ -49,6 +51,9 @@ function pyDeaccent(s) {
 }
 function pyStripStroke(s) {
   return s.replace(new RegExp(D_UP, 'g'), 'D').replace(new RegExp(D_LOW, 'g'), 'd');
+}
+function pyRepairMojibake(s) {
+  return s.replace(new RegExp(ETH_UP, 'g'), D_UP).replace(new RegExp(ETH_LOW, 'g'), D_LOW);
 }
 function pyFold(s) {
   let folded = pyStripStroke(pyDeaccent(s)).toLowerCase();
@@ -64,6 +69,7 @@ const PY_IMPLS = {
   normalize: pyNormalize,
   deaccent: pyDeaccent,
   stripStroke: pyStripStroke,
+  repairMojibake: pyRepairMojibake,
   fold: pyFold,
   isVietnamese: pyIsVietnamese,
 };

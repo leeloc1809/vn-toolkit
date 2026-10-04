@@ -8,6 +8,7 @@ import {
   fold,
   isVietnamese,
   normalize,
+  repairMojibake,
   stripStroke,
 } from '../src/index.js';
 import type { UnicodeFn } from '../src/index.js';
@@ -45,6 +46,7 @@ const IMPLS: Record<string, (s: string) => string> = {
   normalize,
   deaccent,
   stripStroke,
+  repairMojibake,
   fold,
 };
 
@@ -130,6 +132,35 @@ describe('regression: search equivalence', () => {
   it('collapses whitespace and punctuation consistently', () => {
     expect(fold('  Hà    Nội  ')).toBe(fold('Hà-Nội'));
     expect(fold('TP. Hồ Chí Minh')).toBe('tp ho chi minh');
+  });
+});
+
+describe('regression: mojibake repair is a separate decision from folding', () => {
+  it('repairs the documented Ð -> Đ case', () => {
+    // Only the Ð is repaired. The frequently quoted "Ðảm baỏ" -> "Đảm bảo"
+    // additionally needs vowel composition, which this library does not do.
+    expect(repairMojibake('Ðảm baỏ')).toBe('Đảm baỏ');
+    expect(repairMojibake('Ðà Nẵng')).toBe('Đà Nẵng');
+  });
+
+  it('is idempotent', () => {
+    for (const s of ['Ðảm baỏ', 'Ðor', 'Đặng', '', 'Không có gì']) {
+      expect(repairMojibake(s), s).toBe(repairMojibake(repairMojibake(s)));
+    }
+  });
+
+  it('makes damaged text findable once composed with fold', () => {
+    // The whole point: a record indexed after repair is reachable by the string
+    // a user would actually type.
+    expect(fold(repairMojibake('Ðặng Minh'))).toBe(fold('Đặng Minh'));
+    expect(fold(repairMojibake('Ðặng Minh'))).toBe('dang minh');
+    // Without the repair step the record is unreachable, and silently so.
+    expect(fold('Ðặng Minh')).not.toBe(fold('Đặng Minh'));
+  });
+
+  it('deliberately does not repair vowel composition or byte-level mojibake', () => {
+    expect(repairMojibake('lựơng')).toBe('lựơng');
+    expect(repairMojibake('Ä Ä¡ng')).toBe('Ä Ä¡ng');
   });
 });
 

@@ -29,6 +29,7 @@ from vn_text import (  # noqa: E402  (path set up above)
     fold,
     is_vietnamese,
     normalize,
+    repair_mojibake,
     strip_stroke,
 )
 
@@ -48,6 +49,7 @@ IMPLS: dict[str, Callable[[str], str | bool]] = {
     "normalize": normalize,
     "deaccent": deaccent,
     "stripStroke": strip_stroke,
+    "repairMojibake": repair_mojibake,
     "fold": fold,
     "isVietnamese": is_vietnamese,
 }
@@ -159,6 +161,26 @@ def test_uses_nfd_not_nfkd_so_compatibility_ligatures_survive() -> None:
     # NFKD would rewrite this to "fi" and change English text.
     ligature = chr(0xFB01)
     assert deaccent(ligature) == ligature
+
+
+def test_repair_mojibake_is_idempotent() -> None:
+    for s in ["Ðảm baỏ", "Ðor", "Đặng", "", "Không có gì"]:
+        assert repair_mojibake(s) == repair_mojibake(repair_mojibake(s)), s
+
+
+def test_repair_then_fold_makes_damaged_text_findable() -> None:
+    # The whole point of the function: a record indexed after repair is
+    # reachable by the string a user would actually type.
+    assert fold(repair_mojibake("Ðặng Minh")) == fold("Đặng Minh") == "dang minh"
+    # Without the repair step the record is unreachable, and silently so.
+    assert fold("Ðặng Minh") != fold("Đặng Minh")
+
+
+def test_repair_and_fold_answer_different_questions() -> None:
+    # fold never reinterprets a letter; repair_mojibake assumes the corpus is
+    # Vietnamese and that ETH is damage. Both are correct, for different inputs.
+    assert fold("Ðor") == "ðor"
+    assert repair_mojibake("Ðor") == "Đor"
 
 
 # --------------------------------------------------------------------------

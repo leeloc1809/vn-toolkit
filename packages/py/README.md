@@ -30,7 +30,7 @@ too few results. The tempting blanket fix also turns the Icelandic letter `Ð`
 ## Validation
 
 Every function is checked against the shared conformance suite at
-[`conformance/vn-text-1.0.0.json`](../../conformance/vn-text-1.0.0.json) — 139
+[`conformance/vn-text-1.0.0.json`](../../conformance/vn-text-1.0.0.json) — 156
 hand-authored cases that the TypeScript port also consumes, so the two
 implementations cannot drift apart.
 
