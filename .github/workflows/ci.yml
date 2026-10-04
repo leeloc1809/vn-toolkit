@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A new push to the same branch makes the previous run irrelevant.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  typescript:
+    name: TypeScript
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - run: npm ci
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Conformance suite
+        run: npm run test
+      - name: Build
+        run: npm run build
+      # Re-implements the Python algorithm in Node and checks it against the
+      # same conformance file, so a port drift is caught even on a PR that
+      # only touches TypeScript.
+      - name: Cross-port parity
+        run: npm run verify:ports
+
+  python:
+    name: Python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install ./packages/py
+          pip install pytest
+
+      # Runs the real interpreter against the shared conformance file, which
+      # is the one check the Node-only job cannot make on its own.
+      - name: Conformance suite
+        run: python packages/py/tests/test_conformance.py
+
+      - name: Pytest
+        run: pytest packages/py/tests -q
+
+  conformance-file:
+    name: Conformance file is well-formed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Schema, unique ids, full function coverage
+        run: python packages/py/tests/test_conformance.py
+      - name: Corpus size did not silently shrink
+        run: |
+          python - <<'PY'
+          import json, sys
+          suite = json.load(open("conformance/vn-text-1.0.0.json", encoding="utf-8"))
+          cases = suite["cases"]
+          print(f"{len(cases)} cases, {len(suite['functions'])} functions")
+          if len(cases) < 139:
+              sys.exit(f"corpus shrank: {len(cases)} < 139")
+          unnoted = [c["id"] for c in cases if not c.get("note")]
+          if unnoted:
+              print(f"note: {len(unnoted)} cases have no explanatory note")
+          PY
