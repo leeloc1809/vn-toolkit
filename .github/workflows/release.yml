@@ -139,6 +139,18 @@ jobs:
             echo "no NPM_TOKEN secret, using trusted publishing"
           fi
 
+      - name: Which npm account is publishing
+        # Worth having in the log permanently. When a publish fails on a scope
+        # that does not exist, the useful fact is which account the token
+        # belongs to, and that is the one thing the error message does not say.
+        run: |
+          set -euo pipefail
+          if [ -n "${{ secrets.NPM_TOKEN }}" ]; then
+            echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          fi
+          echo "account: $(npm whoami 2>&1 || echo 'unauthenticated')"
+          echo "registry: $(npm config get registry)"
+
       - name: Publish
         run: |
           set -euo pipefail
