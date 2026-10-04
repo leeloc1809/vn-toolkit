@@ -137,7 +137,7 @@ guarantee depends on a test runner is a library you cannot check on a machine
 that has no test runner:
 
 ```bash
-python packages/vn-collate-py/tests/test_conformance.py   # stdlib only
+python packages/vn-collate-py/tests/test_vn_collate.py   # stdlib only
 pytest packages/vn-collate-py/tests -q                     # if you have it
 ```
 

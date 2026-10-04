@@ -39,7 +39,7 @@ guarantee depends on a test runner is a library you cannot check on a machine
 that has no test runner:
 
 ```bash
-python packages/vn-text-py/tests/test_conformance.py   # stdlib only, nothing to install
+python packages/vn-text-py/tests/test_vn_text.py   # stdlib only, nothing to install
 
 pytest packages/vn-text-py/tests -q                     # if you have it
 ```

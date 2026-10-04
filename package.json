@@ -15,8 +15,8 @@
     "verify:ports": "node scripts/verify-port-parity.mjs",
     "verify:collate": "node scripts/verify-collate-parity.mjs",
     "verify": "npm run typecheck && npm run test && npm run build && npm run verify:ports && npm run verify:collate",
-    "test:py": "python packages/vn-text-py/tests/test_conformance.py",
-    "test:py:collate": "python packages/vn-collate-py/tests/test_conformance.py"
+    "test:py": "python packages/vn-text-py/tests/test_vn_text.py",
+    "test:py:collate": "python packages/vn-collate-py/tests/test_vn_collate.py"
   },
   "engines": {
     "node": ">=18"

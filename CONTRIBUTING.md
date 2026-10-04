@@ -35,8 +35,8 @@ Three things follow from that:
 npm ci
 npm run verify          # typecheck + both TypeScript suites + both parity checks
 
-python packages/vn-text-py/tests/test_conformance.py
-python packages/vn-collate-py/tests/test_conformance.py
+python packages/vn-text-py/tests/test_vn_text.py
+python packages/vn-collate-py/tests/test_vn_collate.py
 ```
 
 `npm run verify` is the same thing CI runs. If it passes locally, CI will pass.

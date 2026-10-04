@@ -3,7 +3,7 @@
 This file is deliberately runnable two ways:
 
     pytest packages/py/tests -q              # full runner, nice reporting
-    python packages/py/tests/test_conformance.py   # stdlib only, no install
+    python packages/vn-text-py/tests/test_vn_text.py   # stdlib only, no install
 
 The second form exists because the conformance suite is the contract between
 the two ports. Being able to check it with nothing but a Python interpreter

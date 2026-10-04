@@ -3,7 +3,7 @@
 Runnable two ways, on purpose:
 
     pytest packages/vn-collate-py/tests -q
-    python packages/vn-collate-py/tests/test_conformance.py
+    python packages/vn-collate-py/tests/test_vn_collate.py
 
 The second form needs nothing installed. The conformance suite is the contract
 between the two ports, and being able to check it with nothing but a Python

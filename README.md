@@ -58,7 +58,7 @@ to test.
 ```
 conformance/vn-collate-1.0.0.json
 packages/vn-collate-ts/test/conformance.test.ts   <- reads it
-packages/vn-collate-py/tests/test_conformance.py  <- reads the same file
+packages/vn-collate-py/tests/test_vn_collate.py  <- reads the same file
 ```
 
 Three levels of check, because each catches a different class of mistake.

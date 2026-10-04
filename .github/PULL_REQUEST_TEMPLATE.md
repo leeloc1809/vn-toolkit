@@ -13,7 +13,7 @@
 ## Checklist
 
 - [ ] `npm run verify` passes locally
-- [ ] `python packages/py/tests/test_conformance.py` passes
+- [ ] `python packages/vn-text-py/tests/test_vn_text.py` passes
 - [ ] A behaviour change comes with a new conformance case, including a `note`
       explaining what breaks without it
 - [ ] Both ports are updated, or the PR explains why the change is

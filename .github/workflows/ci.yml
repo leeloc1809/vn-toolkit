@@ -77,10 +77,10 @@ jobs:
       # Runs the real interpreter against the shared conformance file, which
       # is the one check the Node-only job cannot make on its own.
       - name: Conformance suite (vn-text)
-        run: python packages/vn-text-py/tests/test_conformance.py
+        run: python packages/vn-text-py/tests/test_vn_text.py
 
       - name: Conformance suite (vn-collate)
-        run: python packages/vn-collate-py/tests/test_conformance.py
+        run: python packages/vn-collate-py/tests/test_vn_collate.py
 
       - name: Pytest
         run: pytest packages/vn-text-py/tests packages/vn-collate-py/tests -q
@@ -120,7 +120,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Schema, unique ids, full function coverage
-        run: python packages/vn-text-py/tests/test_conformance.py
+        run: python packages/vn-text-py/tests/test_vn_text.py
       - name: Corpus size did not silently shrink
         run: |
           python - <<'PY'
