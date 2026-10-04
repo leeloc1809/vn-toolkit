@@ -32,6 +32,11 @@ jobs:
           cache: npm
 
       - run: npm ci
+      # The collate parity step shells out to a real interpreter, so the version
+      # is pinned here too rather than inherited from whatever the image ships.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Typecheck
         run: npm run typecheck
       - name: Conformance suite
@@ -41,8 +46,16 @@ jobs:
       # Re-implements the Python algorithm in Node and checks it against the
       # same conformance file, so a port drift is caught even on a PR that
       # only touches TypeScript.
-      - name: Cross-port parity
+      - name: Cross-port parity (vn-text)
         run: npm run verify:ports
+
+      # Runs both real ports over the same corpus and compares sort keys byte
+      # for byte. The suite pins the ORDER, which a self-consistent port
+      # satisfies on its own; matching keys is the stronger property, and it is
+      # the one that decides whether a key written by Node sorts the same way in
+      # a database as a key written by Python.
+      - name: Cross-port sort-key parity (vn-collate)
+        run: npm run verify:collate
 
   python:
     name: Python
@@ -57,16 +70,46 @@ jobs:
       - name: Install
         run: |
           python -m pip install --upgrade pip
-          pip install ./packages/py
+          pip install ./packages/vn-text-py
+          pip install ./packages/vn-collate-py
           pip install pytest
 
       # Runs the real interpreter against the shared conformance file, which
       # is the one check the Node-only job cannot make on its own.
-      - name: Conformance suite
-        run: python packages/py/tests/test_conformance.py
+      - name: Conformance suite (vn-text)
+        run: python packages/vn-text-py/tests/test_conformance.py
+
+      - name: Conformance suite (vn-collate)
+        run: python packages/vn-collate-py/tests/test_conformance.py
 
       - name: Pytest
-        run: pytest packages/py/tests -q
+        run: pytest packages/vn-text-py/tests packages/vn-collate-py/tests -q
+
+      # A combining mark is invisible in an editor, so one typed by accident
+      # into a lookup table survives a reformat, still imports, and still
+      # passes a smoke test. Precomposed letters like U+0110 are fine as
+      # literals -- they are visible, and they are what a Vietnamese developer
+      # expects to read. The rule is about the invisible ones only.
+      - name: No literal combining marks in Python source
+        run: |
+          python - <<'PY'
+          import pathlib, sys, unicodedata
+
+          marks = {"Mn", "Mc", "Me"}
+          found = []
+          for path in sorted(pathlib.Path("packages").glob("vn-*-py/**/*.py")):
+              text = path.read_text(encoding="utf-8")
+              hits = [ch for ch in text if unicodedata.category(ch) in marks]
+              if hits:
+                  shown = " ".join(sorted({f"U+{ord(c):04X}" for c in hits}))
+                  found.append((path, shown))
+
+          for path, shown in found:
+              print(f"{path}: {shown}")
+          if found:
+              sys.exit(f"{len(found)} file(s) use literal combining marks; use chr(0xNNNN)")
+          print("no literal combining marks")
+          PY
 
   conformance-file:
     name: Conformance file is well-formed
@@ -77,7 +120,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Schema, unique ids, full function coverage
-        run: python packages/py/tests/test_conformance.py
+        run: python packages/vn-text-py/tests/test_conformance.py
       - name: Corpus size did not silently shrink
         run: |
           python - <<'PY'
@@ -90,4 +133,41 @@ jobs:
           unnoted = [c["id"] for c in cases if not c.get("note")]
           if unnoted:
               print(f"note: {len(unnoted)} cases have no explanatory note")
+          PY
+      - name: Collation table still matches the suite
+        run: |
+          python - <<'PY'
+          import json, sys
+          suite = json.load(open("conformance/vn-collate-1.0.0.json", encoding="utf-8"))
+          cases = suite["cases"]
+          print(f"{len(cases)} cases")
+
+          # A case count below this means someone deleted cases instead of
+          # fixing the port. See CONTRIBUTING.md: a red case is replaced with a
+          # new one, never deleted.
+          if len(cases) < 519:
+              sys.exit(f"corpus shrank: {len(cases)} < 519")
+
+          ids = [c["id"] for c in cases]
+          if len(set(ids)) != len(ids):
+              sys.exit("duplicate case ids")
+
+          # The tables are the contract. If a port disagrees with them the
+          # conformance run above already failed; this pins the values so a
+          # regeneration cannot quietly reorder Vietnamese without a diff
+          # landing in review.
+          #
+          # 33 entries, not 29: the 29 letters of the Vietnamese alphabet plus
+          # w, y and z, which ICU's vi-VN locale still collates as letters
+          # rather than leaving them in the fallback bucket.
+          if len(suite["primaryOrder"]) != 33:
+              sys.exit(f"primary table changed: {len(suite['primaryOrder'])} letters")
+          if suite["digitPlacement"] != "before-all-letters":
+              sys.exit(f"digit placement changed: {suite['digitPlacement']}")
+          if suite["toneOrder"] != ["none", "huyền", "hỏi", "ngã", "sắc", "nặng"]:
+              sys.exit(f"tone order changed: {suite['toneOrder']}")
+          if not suite.get("derivedFrom"):
+              sys.exit("derivedFrom is empty; the table must record its source runtime")
+          print("primary order:", " ".join(suite["primaryOrder"]))
+          print("derived from:", suite["derivedFrom"])
           PY

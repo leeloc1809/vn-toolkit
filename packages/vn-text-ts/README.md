@@ -41,10 +41,11 @@ npm run build
 
 ## Scope
 
-Deliberately narrow. Tone-mark canonicalisation (`hóa` vs `hòa`), fuzzy
-matching for unaccented-keyboard input, and Vietnamese collation are not here.
-See the [root README](../../README.md#what-this-is-not) for why, and what is
-planned.
+Deliberately narrow. Tone-mark canonicalisation (`hóa` vs `hòa`) and fuzzy
+matching for unaccented-keyboard input are not here. Sorting is not here
+either — it is [`@vntoolkit/vn-collate`](../vn-collate-ts), which shares this
+repository's conformance infrastructure. See the
+[root README](../../README.md#what-this-is-not) for the reasoning.
 
 ## Licence
 

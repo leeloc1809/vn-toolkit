@@ -18,7 +18,7 @@
  * This is a check on the port, not a substitute for running the real Python
  * test suite. Once an interpreter is available:
  *
- *     python packages/py/tests/test_conformance.py
+ *     python packages/vn-text-py/tests/test_conformance.py
  */
 
 import { readFileSync } from 'node:fs';

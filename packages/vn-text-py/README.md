@@ -39,9 +39,9 @@ guarantee depends on a test runner is a library you cannot check on a machine
 that has no test runner:
 
 ```bash
-python packages/py/tests/test_conformance.py   # stdlib only, nothing to install
+python packages/vn-text-py/tests/test_conformance.py   # stdlib only, nothing to install
 
-pytest packages/py/tests -q                     # if you have it
+pytest packages/vn-text-py/tests -q                     # if you have it
 ```
 
 ## API parity
@@ -60,9 +60,11 @@ caught.
 
 ## Scope
 
-Deliberately narrow. Tone-mark canonicalisation (`hóa` vs `hòa`), fuzzy matching
-for unaccented-keyboard input, and Vietnamese collation are not here. See the
-[root README](../../README.md#what-this-is-not) for why.
+Deliberately narrow. Tone-mark canonicalisation (`hóa` vs `hòa`) and fuzzy
+matching for unaccented-keyboard input are not here. Sorting is not here
+either -- it is [`vn-collate`](../vn-collate-py), which shares this
+repository's conformance infrastructure. See the
+[root README](../../README.md#what-this-is-not) for the reasoning.
 
 ## Licence
 

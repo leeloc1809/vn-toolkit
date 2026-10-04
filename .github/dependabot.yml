@@ -13,7 +13,7 @@ updates:
       - dependencies
 
   - package-ecosystem: pip
-    directory: "/packages/py"
+    directory: "/packages/vn-text-py"
     schedule:
       interval: weekly
       day: monday

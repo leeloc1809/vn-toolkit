@@ -1,0 +1,4170 @@
+{
+  "schema": "vn-collate-conformance/1",
+  "library": "vn-collate",
+  "version": "0.1.0",
+  "created": "2026-10-04",
+  "derivedFrom": "Intl.Collator('vi-VN') on win32/x64, ICU 75.1, Unicode 15.1",
+  "description": "Collate ordering for Vietnamese, read out of ICU rather than written from memory. Adjacent pairs of the full letter x tone x case repertoire pin the total order, so any single wrong weight fails at least one case.",
+  "primaryOrder": [
+    "a",
+    "ă",
+    "â",
+    "b",
+    "c",
+    "d",
+    "đ",
+    "e",
+    "ê",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "ô",
+    "ơ",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "ư",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z"
+  ],
+  "toneOrder": [
+    "none",
+    "huyền",
+    "hỏi",
+    "ngã",
+    "sắc",
+    "nặng"
+  ],
+  "digitPlacement": "before-all-letters",
+  "cases": [
+    {
+      "id": "order-000",
+      "fn": "compare",
+      "a": "a",
+      "b": "A",
+      "expected": -1,
+      "note": "\"a\" (U+0061) must sort before \"A\" (U+0041)"
+    },
+    {
+      "id": "order-001",
+      "fn": "compare",
+      "a": "A",
+      "b": "à",
+      "expected": -1,
+      "note": "\"A\" (U+0041) must sort before \"à\" (U+00E0)"
+    },
+    {
+      "id": "order-002",
+      "fn": "compare",
+      "a": "à",
+      "b": "À",
+      "expected": -1,
+      "note": "\"à\" (U+00E0) must sort before \"À\" (U+00C0)"
+    },
+    {
+      "id": "order-003",
+      "fn": "compare",
+      "a": "À",
+      "b": "ả",
+      "expected": -1,
+      "note": "\"À\" (U+00C0) must sort before \"ả\" (U+1EA3)"
+    },
+    {
+      "id": "order-004",
+      "fn": "compare",
+      "a": "ả",
+      "b": "Ả",
+      "expected": -1,
+      "note": "\"ả\" (U+1EA3) must sort before \"Ả\" (U+1EA2)"
+    },
+    {
+      "id": "order-005",
+      "fn": "compare",
+      "a": "Ả",
+      "b": "ã",
+      "expected": -1,
+      "note": "\"Ả\" (U+1EA2) must sort before \"ã\" (U+00E3)"
+    },
+    {
+      "id": "order-006",
+      "fn": "compare",
+      "a": "ã",
+      "b": "Ã",
+      "expected": -1,
+      "note": "\"ã\" (U+00E3) must sort before \"Ã\" (U+00C3)"
+    },
+    {
+      "id": "order-007",
+      "fn": "compare",
+      "a": "Ã",
+      "b": "á",
+      "expected": -1,
+      "note": "\"Ã\" (U+00C3) must sort before \"á\" (U+00E1)"
+    },
+    {
+      "id": "order-008",
+      "fn": "compare",
+      "a": "á",
+      "b": "Á",
+      "expected": -1,
+      "note": "\"á\" (U+00E1) must sort before \"Á\" (U+00C1)"
+    },
+    {
+      "id": "order-009",
+      "fn": "compare",
+      "a": "Á",
+      "b": "ạ",
+      "expected": -1,
+      "note": "\"Á\" (U+00C1) must sort before \"ạ\" (U+1EA1)"
+    },
+    {
+      "id": "order-010",
+      "fn": "compare",
+      "a": "ạ",
+      "b": "Ạ",
+      "expected": -1,
+      "note": "\"ạ\" (U+1EA1) must sort before \"Ạ\" (U+1EA0)"
+    },
+    {
+      "id": "order-011",
+      "fn": "compare",
+      "a": "Ạ",
+      "b": "ă",
+      "expected": -1,
+      "note": "\"Ạ\" (U+1EA0) must sort before \"ă\" (U+0103)"
+    },
+    {
+      "id": "order-012",
+      "fn": "compare",
+      "a": "ă",
+      "b": "Ă",
+      "expected": -1,
+      "note": "\"ă\" (U+0103) must sort before \"Ă\" (U+0102)"
+    },
+    {
+      "id": "order-013",
+      "fn": "compare",
+      "a": "Ă",
+      "b": "ằ",
+      "expected": -1,
+      "note": "\"Ă\" (U+0102) must sort before \"ằ\" (U+1EB1)"
+    },
+    {
+      "id": "order-014",
+      "fn": "compare",
+      "a": "ằ",
+      "b": "Ằ",
+      "expected": -1,
+      "note": "\"ằ\" (U+1EB1) must sort before \"Ằ\" (U+1EB0)"
+    },
+    {
+      "id": "order-015",
+      "fn": "compare",
+      "a": "Ằ",
+      "b": "ẳ",
+      "expected": -1,
+      "note": "\"Ằ\" (U+1EB0) must sort before \"ẳ\" (U+1EB3)"
+    },
+    {
+      "id": "order-016",
+      "fn": "compare",
+      "a": "ẳ",
+      "b": "Ẳ",
+      "expected": -1,
+      "note": "\"ẳ\" (U+1EB3) must sort before \"Ẳ\" (U+1EB2)"
+    },
+    {
+      "id": "order-017",
+      "fn": "compare",
+      "a": "Ẳ",
+      "b": "ẵ",
+      "expected": -1,
+      "note": "\"Ẳ\" (U+1EB2) must sort before \"ẵ\" (U+1EB5)"
+    },
+    {
+      "id": "order-018",
+      "fn": "compare",
+      "a": "ẵ",
+      "b": "Ẵ",
+      "expected": -1,
+      "note": "\"ẵ\" (U+1EB5) must sort before \"Ẵ\" (U+1EB4)"
+    },
+    {
+      "id": "order-019",
+      "fn": "compare",
+      "a": "Ẵ",
+      "b": "ắ",
+      "expected": -1,
+      "note": "\"Ẵ\" (U+1EB4) must sort before \"ắ\" (U+1EAF)"
+    },
+    {
+      "id": "order-020",
+      "fn": "compare",
+      "a": "ắ",
+      "b": "Ắ",
+      "expected": -1,
+      "note": "\"ắ\" (U+1EAF) must sort before \"Ắ\" (U+1EAE)"
+    },
+    {
+      "id": "order-021",
+      "fn": "compare",
+      "a": "Ắ",
+      "b": "ặ",
+      "expected": -1,
+      "note": "\"Ắ\" (U+1EAE) must sort before \"ặ\" (U+1EB7)"
+    },
+    {
+      "id": "order-022",
+      "fn": "compare",
+      "a": "ặ",
+      "b": "Ặ",
+      "expected": -1,
+      "note": "\"ặ\" (U+1EB7) must sort before \"Ặ\" (U+1EB6)"
+    },
+    {
+      "id": "order-023",
+      "fn": "compare",
+      "a": "Ặ",
+      "b": "â",
+      "expected": -1,
+      "note": "\"Ặ\" (U+1EB6) must sort before \"â\" (U+00E2)"
+    },
+    {
+      "id": "order-024",
+      "fn": "compare",
+      "a": "â",
+      "b": "Â",
+      "expected": -1,
+      "note": "\"â\" (U+00E2) must sort before \"Â\" (U+00C2)"
+    },
+    {
+      "id": "order-025",
+      "fn": "compare",
+      "a": "Â",
+      "b": "ầ",
+      "expected": -1,
+      "note": "\"Â\" (U+00C2) must sort before \"ầ\" (U+1EA7)"
+    },
+    {
+      "id": "order-026",
+      "fn": "compare",
+      "a": "ầ",
+      "b": "Ầ",
+      "expected": -1,
+      "note": "\"ầ\" (U+1EA7) must sort before \"Ầ\" (U+1EA6)"
+    },
+    {
+      "id": "order-027",
+      "fn": "compare",
+      "a": "Ầ",
+      "b": "ẩ",
+      "expected": -1,
+      "note": "\"Ầ\" (U+1EA6) must sort before \"ẩ\" (U+1EA9)"
+    },
+    {
+      "id": "order-028",
+      "fn": "compare",
+      "a": "ẩ",
+      "b": "Ẩ",
+      "expected": -1,
+      "note": "\"ẩ\" (U+1EA9) must sort before \"Ẩ\" (U+1EA8)"
+    },
+    {
+      "id": "order-029",
+      "fn": "compare",
+      "a": "Ẩ",
+      "b": "ẫ",
+      "expected": -1,
+      "note": "\"Ẩ\" (U+1EA8) must sort before \"ẫ\" (U+1EAB)"
+    },
+    {
+      "id": "order-030",
+      "fn": "compare",
+      "a": "ẫ",
+      "b": "Ẫ",
+      "expected": -1,
+      "note": "\"ẫ\" (U+1EAB) must sort before \"Ẫ\" (U+1EAA)"
+    },
+    {
+      "id": "order-031",
+      "fn": "compare",
+      "a": "Ẫ",
+      "b": "ấ",
+      "expected": -1,
+      "note": "\"Ẫ\" (U+1EAA) must sort before \"ấ\" (U+1EA5)"
+    },
+    {
+      "id": "order-032",
+      "fn": "compare",
+      "a": "ấ",
+      "b": "Ấ",
+      "expected": -1,
+      "note": "\"ấ\" (U+1EA5) must sort before \"Ấ\" (U+1EA4)"
+    },
+    {
+      "id": "order-033",
+      "fn": "compare",
+      "a": "Ấ",
+      "b": "ậ",
+      "expected": -1,
+      "note": "\"Ấ\" (U+1EA4) must sort before \"ậ\" (U+1EAD)"
+    },
+    {
+      "id": "order-034",
+      "fn": "compare",
+      "a": "ậ",
+      "b": "Ậ",
+      "expected": -1,
+      "note": "\"ậ\" (U+1EAD) must sort before \"Ậ\" (U+1EAC)"
+    },
+    {
+      "id": "order-035",
+      "fn": "compare",
+      "a": "Ậ",
+      "b": "b",
+      "expected": -1,
+      "note": "\"Ậ\" (U+1EAC) must sort before \"b\" (U+0062)"
+    },
+    {
+      "id": "order-036",
+      "fn": "compare",
+      "a": "b",
+      "b": "B",
+      "expected": -1,
+      "note": "\"b\" (U+0062) must sort before \"B\" (U+0042)"
+    },
+    {
+      "id": "order-037",
+      "fn": "compare",
+      "a": "B",
+      "b": "b̀",
+      "expected": -1,
+      "note": "\"B\" (U+0042) must sort before \"b̀\" (U+0062 U+0300)"
+    },
+    {
+      "id": "order-038",
+      "fn": "compare",
+      "a": "b̀",
+      "b": "B̀",
+      "expected": -1,
+      "note": "\"b̀\" (U+0062 U+0300) must sort before \"B̀\" (U+0042 U+0300)"
+    },
+    {
+      "id": "order-039",
+      "fn": "compare",
+      "a": "B̀",
+      "b": "b̉",
+      "expected": -1,
+      "note": "\"B̀\" (U+0042 U+0300) must sort before \"b̉\" (U+0062 U+0309)"
+    },
+    {
+      "id": "order-040",
+      "fn": "compare",
+      "a": "b̉",
+      "b": "B̉",
+      "expected": -1,
+      "note": "\"b̉\" (U+0062 U+0309) must sort before \"B̉\" (U+0042 U+0309)"
+    },
+    {
+      "id": "order-041",
+      "fn": "compare",
+      "a": "B̉",
+      "b": "b̃",
+      "expected": -1,
+      "note": "\"B̉\" (U+0042 U+0309) must sort before \"b̃\" (U+0062 U+0303)"
+    },
+    {
+      "id": "order-042",
+      "fn": "compare",
+      "a": "b̃",
+      "b": "B̃",
+      "expected": -1,
+      "note": "\"b̃\" (U+0062 U+0303) must sort before \"B̃\" (U+0042 U+0303)"
+    },
+    {
+      "id": "order-043",
+      "fn": "compare",
+      "a": "B̃",
+      "b": "b́",
+      "expected": -1,
+      "note": "\"B̃\" (U+0042 U+0303) must sort before \"b́\" (U+0062 U+0301)"
+    },
+    {
+      "id": "order-044",
+      "fn": "compare",
+      "a": "b́",
+      "b": "B́",
+      "expected": -1,
+      "note": "\"b́\" (U+0062 U+0301) must sort before \"B́\" (U+0042 U+0301)"
+    },
+    {
+      "id": "order-045",
+      "fn": "compare",
+      "a": "B́",
+      "b": "ḅ",
+      "expected": -1,
+      "note": "\"B́\" (U+0042 U+0301) must sort before \"ḅ\" (U+1E05)"
+    },
+    {
+      "id": "order-046",
+      "fn": "compare",
+      "a": "ḅ",
+      "b": "Ḅ",
+      "expected": -1,
+      "note": "\"ḅ\" (U+1E05) must sort before \"Ḅ\" (U+1E04)"
+    },
+    {
+      "id": "order-047",
+      "fn": "compare",
+      "a": "Ḅ",
+      "b": "c",
+      "expected": -1,
+      "note": "\"Ḅ\" (U+1E04) must sort before \"c\" (U+0063)"
+    },
+    {
+      "id": "order-048",
+      "fn": "compare",
+      "a": "c",
+      "b": "C",
+      "expected": -1,
+      "note": "\"c\" (U+0063) must sort before \"C\" (U+0043)"
+    },
+    {
+      "id": "order-049",
+      "fn": "compare",
+      "a": "C",
+      "b": "c̀",
+      "expected": -1,
+      "note": "\"C\" (U+0043) must sort before \"c̀\" (U+0063 U+0300)"
+    },
+    {
+      "id": "order-050",
+      "fn": "compare",
+      "a": "c̀",
+      "b": "C̀",
+      "expected": -1,
+      "note": "\"c̀\" (U+0063 U+0300) must sort before \"C̀\" (U+0043 U+0300)"
+    },
+    {
+      "id": "order-051",
+      "fn": "compare",
+      "a": "C̀",
+      "b": "c̉",
+      "expected": -1,
+      "note": "\"C̀\" (U+0043 U+0300) must sort before \"c̉\" (U+0063 U+0309)"
+    },
+    {
+      "id": "order-052",
+      "fn": "compare",
+      "a": "c̉",
+      "b": "C̉",
+      "expected": -1,
+      "note": "\"c̉\" (U+0063 U+0309) must sort before \"C̉\" (U+0043 U+0309)"
+    },
+    {
+      "id": "order-053",
+      "fn": "compare",
+      "a": "C̉",
+      "b": "c̃",
+      "expected": -1,
+      "note": "\"C̉\" (U+0043 U+0309) must sort before \"c̃\" (U+0063 U+0303)"
+    },
+    {
+      "id": "order-054",
+      "fn": "compare",
+      "a": "c̃",
+      "b": "C̃",
+      "expected": -1,
+      "note": "\"c̃\" (U+0063 U+0303) must sort before \"C̃\" (U+0043 U+0303)"
+    },
+    {
+      "id": "order-055",
+      "fn": "compare",
+      "a": "C̃",
+      "b": "ć",
+      "expected": -1,
+      "note": "\"C̃\" (U+0043 U+0303) must sort before \"ć\" (U+0107)"
+    },
+    {
+      "id": "order-056",
+      "fn": "compare",
+      "a": "ć",
+      "b": "Ć",
+      "expected": -1,
+      "note": "\"ć\" (U+0107) must sort before \"Ć\" (U+0106)"
+    },
+    {
+      "id": "order-057",
+      "fn": "compare",
+      "a": "Ć",
+      "b": "c̣",
+      "expected": -1,
+      "note": "\"Ć\" (U+0106) must sort before \"c̣\" (U+0063 U+0323)"
+    },
+    {
+      "id": "order-058",
+      "fn": "compare",
+      "a": "c̣",
+      "b": "C̣",
+      "expected": -1,
+      "note": "\"c̣\" (U+0063 U+0323) must sort before \"C̣\" (U+0043 U+0323)"
+    },
+    {
+      "id": "order-059",
+      "fn": "compare",
+      "a": "C̣",
+      "b": "d",
+      "expected": -1,
+      "note": "\"C̣\" (U+0043 U+0323) must sort before \"d\" (U+0064)"
+    },
+    {
+      "id": "order-060",
+      "fn": "compare",
+      "a": "d",
+      "b": "D",
+      "expected": -1,
+      "note": "\"d\" (U+0064) must sort before \"D\" (U+0044)"
+    },
+    {
+      "id": "order-061",
+      "fn": "compare",
+      "a": "D",
+      "b": "d̀",
+      "expected": -1,
+      "note": "\"D\" (U+0044) must sort before \"d̀\" (U+0064 U+0300)"
+    },
+    {
+      "id": "order-062",
+      "fn": "compare",
+      "a": "d̀",
+      "b": "D̀",
+      "expected": -1,
+      "note": "\"d̀\" (U+0064 U+0300) must sort before \"D̀\" (U+0044 U+0300)"
+    },
+    {
+      "id": "order-063",
+      "fn": "compare",
+      "a": "D̀",
+      "b": "d̉",
+      "expected": -1,
+      "note": "\"D̀\" (U+0044 U+0300) must sort before \"d̉\" (U+0064 U+0309)"
+    },
+    {
+      "id": "order-064",
+      "fn": "compare",
+      "a": "d̉",
+      "b": "D̉",
+      "expected": -1,
+      "note": "\"d̉\" (U+0064 U+0309) must sort before \"D̉\" (U+0044 U+0309)"
+    },
+    {
+      "id": "order-065",
+      "fn": "compare",
+      "a": "D̉",
+      "b": "d̃",
+      "expected": -1,
+      "note": "\"D̉\" (U+0044 U+0309) must sort before \"d̃\" (U+0064 U+0303)"
+    },
+    {
+      "id": "order-066",
+      "fn": "compare",
+      "a": "d̃",
+      "b": "D̃",
+      "expected": -1,
+      "note": "\"d̃\" (U+0064 U+0303) must sort before \"D̃\" (U+0044 U+0303)"
+    },
+    {
+      "id": "order-067",
+      "fn": "compare",
+      "a": "D̃",
+      "b": "d́",
+      "expected": -1,
+      "note": "\"D̃\" (U+0044 U+0303) must sort before \"d́\" (U+0064 U+0301)"
+    },
+    {
+      "id": "order-068",
+      "fn": "compare",
+      "a": "d́",
+      "b": "D́",
+      "expected": -1,
+      "note": "\"d́\" (U+0064 U+0301) must sort before \"D́\" (U+0044 U+0301)"
+    },
+    {
+      "id": "order-069",
+      "fn": "compare",
+      "a": "D́",
+      "b": "ḍ",
+      "expected": -1,
+      "note": "\"D́\" (U+0044 U+0301) must sort before \"ḍ\" (U+1E0D)"
+    },
+    {
+      "id": "order-070",
+      "fn": "compare",
+      "a": "ḍ",
+      "b": "Ḍ",
+      "expected": -1,
+      "note": "\"ḍ\" (U+1E0D) must sort before \"Ḍ\" (U+1E0C)"
+    },
+    {
+      "id": "order-071",
+      "fn": "compare",
+      "a": "Ḍ",
+      "b": "đ",
+      "expected": -1,
+      "note": "\"Ḍ\" (U+1E0C) must sort before \"đ\" (U+0111)"
+    },
+    {
+      "id": "order-072",
+      "fn": "compare",
+      "a": "đ",
+      "b": "Đ",
+      "expected": -1,
+      "note": "\"đ\" (U+0111) must sort before \"Đ\" (U+0110)"
+    },
+    {
+      "id": "order-073",
+      "fn": "compare",
+      "a": "Đ",
+      "b": "đ̀",
+      "expected": -1,
+      "note": "\"Đ\" (U+0110) must sort before \"đ̀\" (U+0111 U+0300)"
+    },
+    {
+      "id": "order-074",
+      "fn": "compare",
+      "a": "đ̀",
+      "b": "Đ̀",
+      "expected": -1,
+      "note": "\"đ̀\" (U+0111 U+0300) must sort before \"Đ̀\" (U+0110 U+0300)"
+    },
+    {
+      "id": "order-075",
+      "fn": "compare",
+      "a": "Đ̀",
+      "b": "đ̉",
+      "expected": -1,
+      "note": "\"Đ̀\" (U+0110 U+0300) must sort before \"đ̉\" (U+0111 U+0309)"
+    },
+    {
+      "id": "order-076",
+      "fn": "compare",
+      "a": "đ̉",
+      "b": "Đ̉",
+      "expected": -1,
+      "note": "\"đ̉\" (U+0111 U+0309) must sort before \"Đ̉\" (U+0110 U+0309)"
+    },
+    {
+      "id": "order-077",
+      "fn": "compare",
+      "a": "Đ̉",
+      "b": "đ̃",
+      "expected": -1,
+      "note": "\"Đ̉\" (U+0110 U+0309) must sort before \"đ̃\" (U+0111 U+0303)"
+    },
+    {
+      "id": "order-078",
+      "fn": "compare",
+      "a": "đ̃",
+      "b": "Đ̃",
+      "expected": -1,
+      "note": "\"đ̃\" (U+0111 U+0303) must sort before \"Đ̃\" (U+0110 U+0303)"
+    },
+    {
+      "id": "order-079",
+      "fn": "compare",
+      "a": "Đ̃",
+      "b": "đ́",
+      "expected": -1,
+      "note": "\"Đ̃\" (U+0110 U+0303) must sort before \"đ́\" (U+0111 U+0301)"
+    },
+    {
+      "id": "order-080",
+      "fn": "compare",
+      "a": "đ́",
+      "b": "Đ́",
+      "expected": -1,
+      "note": "\"đ́\" (U+0111 U+0301) must sort before \"Đ́\" (U+0110 U+0301)"
+    },
+    {
+      "id": "order-081",
+      "fn": "compare",
+      "a": "Đ́",
+      "b": "đ̣",
+      "expected": -1,
+      "note": "\"Đ́\" (U+0110 U+0301) must sort before \"đ̣\" (U+0111 U+0323)"
+    },
+    {
+      "id": "order-082",
+      "fn": "compare",
+      "a": "đ̣",
+      "b": "Đ̣",
+      "expected": -1,
+      "note": "\"đ̣\" (U+0111 U+0323) must sort before \"Đ̣\" (U+0110 U+0323)"
+    },
+    {
+      "id": "order-083",
+      "fn": "compare",
+      "a": "Đ̣",
+      "b": "e",
+      "expected": -1,
+      "note": "\"Đ̣\" (U+0110 U+0323) must sort before \"e\" (U+0065)"
+    },
+    {
+      "id": "order-084",
+      "fn": "compare",
+      "a": "e",
+      "b": "E",
+      "expected": -1,
+      "note": "\"e\" (U+0065) must sort before \"E\" (U+0045)"
+    },
+    {
+      "id": "order-085",
+      "fn": "compare",
+      "a": "E",
+      "b": "è",
+      "expected": -1,
+      "note": "\"E\" (U+0045) must sort before \"è\" (U+00E8)"
+    },
+    {
+      "id": "order-086",
+      "fn": "compare",
+      "a": "è",
+      "b": "È",
+      "expected": -1,
+      "note": "\"è\" (U+00E8) must sort before \"È\" (U+00C8)"
+    },
+    {
+      "id": "order-087",
+      "fn": "compare",
+      "a": "È",
+      "b": "ẻ",
+      "expected": -1,
+      "note": "\"È\" (U+00C8) must sort before \"ẻ\" (U+1EBB)"
+    },
+    {
+      "id": "order-088",
+      "fn": "compare",
+      "a": "ẻ",
+      "b": "Ẻ",
+      "expected": -1,
+      "note": "\"ẻ\" (U+1EBB) must sort before \"Ẻ\" (U+1EBA)"
+    },
+    {
+      "id": "order-089",
+      "fn": "compare",
+      "a": "Ẻ",
+      "b": "ẽ",
+      "expected": -1,
+      "note": "\"Ẻ\" (U+1EBA) must sort before \"ẽ\" (U+1EBD)"
+    },
+    {
+      "id": "order-090",
+      "fn": "compare",
+      "a": "ẽ",
+      "b": "Ẽ",
+      "expected": -1,
+      "note": "\"ẽ\" (U+1EBD) must sort before \"Ẽ\" (U+1EBC)"
+    },
+    {
+      "id": "order-091",
+      "fn": "compare",
+      "a": "Ẽ",
+      "b": "é",
+      "expected": -1,
+      "note": "\"Ẽ\" (U+1EBC) must sort before \"é\" (U+00E9)"
+    },
+    {
+      "id": "order-092",
+      "fn": "compare",
+      "a": "é",
+      "b": "É",
+      "expected": -1,
+      "note": "\"é\" (U+00E9) must sort before \"É\" (U+00C9)"
+    },
+    {
+      "id": "order-093",
+      "fn": "compare",
+      "a": "É",
+      "b": "ẹ",
+      "expected": -1,
+      "note": "\"É\" (U+00C9) must sort before \"ẹ\" (U+1EB9)"
+    },
+    {
+      "id": "order-094",
+      "fn": "compare",
+      "a": "ẹ",
+      "b": "Ẹ",
+      "expected": -1,
+      "note": "\"ẹ\" (U+1EB9) must sort before \"Ẹ\" (U+1EB8)"
+    },
+    {
+      "id": "order-095",
+      "fn": "compare",
+      "a": "Ẹ",
+      "b": "ê",
+      "expected": -1,
+      "note": "\"Ẹ\" (U+1EB8) must sort before \"ê\" (U+00EA)"
+    },
+    {
+      "id": "order-096",
+      "fn": "compare",
+      "a": "ê",
+      "b": "Ê",
+      "expected": -1,
+      "note": "\"ê\" (U+00EA) must sort before \"Ê\" (U+00CA)"
+    },
+    {
+      "id": "order-097",
+      "fn": "compare",
+      "a": "Ê",
+      "b": "ề",
+      "expected": -1,
+      "note": "\"Ê\" (U+00CA) must sort before \"ề\" (U+1EC1)"
+    },
+    {
+      "id": "order-098",
+      "fn": "compare",
+      "a": "ề",
+      "b": "Ề",
+      "expected": -1,
+      "note": "\"ề\" (U+1EC1) must sort before \"Ề\" (U+1EC0)"
+    },
+    {
+      "id": "order-099",
+      "fn": "compare",
+      "a": "Ề",
+      "b": "ể",
+      "expected": -1,
+      "note": "\"Ề\" (U+1EC0) must sort before \"ể\" (U+1EC3)"
+    },
+    {
+      "id": "order-100",
+      "fn": "compare",
+      "a": "ể",
+      "b": "Ể",
+      "expected": -1,
+      "note": "\"ể\" (U+1EC3) must sort before \"Ể\" (U+1EC2)"
+    },
+    {
+      "id": "order-101",
+      "fn": "compare",
+      "a": "Ể",
+      "b": "ễ",
+      "expected": -1,
+      "note": "\"Ể\" (U+1EC2) must sort before \"ễ\" (U+1EC5)"
+    },
+    {
+      "id": "order-102",
+      "fn": "compare",
+      "a": "ễ",
+      "b": "Ễ",
+      "expected": -1,
+      "note": "\"ễ\" (U+1EC5) must sort before \"Ễ\" (U+1EC4)"
+    },
+    {
+      "id": "order-103",
+      "fn": "compare",
+      "a": "Ễ",
+      "b": "ế",
+      "expected": -1,
+      "note": "\"Ễ\" (U+1EC4) must sort before \"ế\" (U+1EBF)"
+    },
+    {
+      "id": "order-104",
+      "fn": "compare",
+      "a": "ế",
+      "b": "Ế",
+      "expected": -1,
+      "note": "\"ế\" (U+1EBF) must sort before \"Ế\" (U+1EBE)"
+    },
+    {
+      "id": "order-105",
+      "fn": "compare",
+      "a": "Ế",
+      "b": "ệ",
+      "expected": -1,
+      "note": "\"Ế\" (U+1EBE) must sort before \"ệ\" (U+1EC7)"
+    },
+    {
+      "id": "order-106",
+      "fn": "compare",
+      "a": "ệ",
+      "b": "Ệ",
+      "expected": -1,
+      "note": "\"ệ\" (U+1EC7) must sort before \"Ệ\" (U+1EC6)"
+    },
+    {
+      "id": "order-107",
+      "fn": "compare",
+      "a": "Ệ",
+      "b": "f",
+      "expected": -1,
+      "note": "\"Ệ\" (U+1EC6) must sort before \"f\" (U+0066)"
+    },
+    {
+      "id": "order-108",
+      "fn": "compare",
+      "a": "f",
+      "b": "F",
+      "expected": -1,
+      "note": "\"f\" (U+0066) must sort before \"F\" (U+0046)"
+    },
+    {
+      "id": "order-109",
+      "fn": "compare",
+      "a": "F",
+      "b": "f̀",
+      "expected": -1,
+      "note": "\"F\" (U+0046) must sort before \"f̀\" (U+0066 U+0300)"
+    },
+    {
+      "id": "order-110",
+      "fn": "compare",
+      "a": "f̀",
+      "b": "F̀",
+      "expected": -1,
+      "note": "\"f̀\" (U+0066 U+0300) must sort before \"F̀\" (U+0046 U+0300)"
+    },
+    {
+      "id": "order-111",
+      "fn": "compare",
+      "a": "F̀",
+      "b": "f̉",
+      "expected": -1,
+      "note": "\"F̀\" (U+0046 U+0300) must sort before \"f̉\" (U+0066 U+0309)"
+    },
+    {
+      "id": "order-112",
+      "fn": "compare",
+      "a": "f̉",
+      "b": "F̉",
+      "expected": -1,
+      "note": "\"f̉\" (U+0066 U+0309) must sort before \"F̉\" (U+0046 U+0309)"
+    },
+    {
+      "id": "order-113",
+      "fn": "compare",
+      "a": "F̉",
+      "b": "f̃",
+      "expected": -1,
+      "note": "\"F̉\" (U+0046 U+0309) must sort before \"f̃\" (U+0066 U+0303)"
+    },
+    {
+      "id": "order-114",
+      "fn": "compare",
+      "a": "f̃",
+      "b": "F̃",
+      "expected": -1,
+      "note": "\"f̃\" (U+0066 U+0303) must sort before \"F̃\" (U+0046 U+0303)"
+    },
+    {
+      "id": "order-115",
+      "fn": "compare",
+      "a": "F̃",
+      "b": "f́",
+      "expected": -1,
+      "note": "\"F̃\" (U+0046 U+0303) must sort before \"f́\" (U+0066 U+0301)"
+    },
+    {
+      "id": "order-116",
+      "fn": "compare",
+      "a": "f́",
+      "b": "F́",
+      "expected": -1,
+      "note": "\"f́\" (U+0066 U+0301) must sort before \"F́\" (U+0046 U+0301)"
+    },
+    {
+      "id": "order-117",
+      "fn": "compare",
+      "a": "F́",
+      "b": "f̣",
+      "expected": -1,
+      "note": "\"F́\" (U+0046 U+0301) must sort before \"f̣\" (U+0066 U+0323)"
+    },
+    {
+      "id": "order-118",
+      "fn": "compare",
+      "a": "f̣",
+      "b": "F̣",
+      "expected": -1,
+      "note": "\"f̣\" (U+0066 U+0323) must sort before \"F̣\" (U+0046 U+0323)"
+    },
+    {
+      "id": "order-119",
+      "fn": "compare",
+      "a": "F̣",
+      "b": "g",
+      "expected": -1,
+      "note": "\"F̣\" (U+0046 U+0323) must sort before \"g\" (U+0067)"
+    },
+    {
+      "id": "order-120",
+      "fn": "compare",
+      "a": "g",
+      "b": "G",
+      "expected": -1,
+      "note": "\"g\" (U+0067) must sort before \"G\" (U+0047)"
+    },
+    {
+      "id": "order-121",
+      "fn": "compare",
+      "a": "G",
+      "b": "g̀",
+      "expected": -1,
+      "note": "\"G\" (U+0047) must sort before \"g̀\" (U+0067 U+0300)"
+    },
+    {
+      "id": "order-122",
+      "fn": "compare",
+      "a": "g̀",
+      "b": "G̀",
+      "expected": -1,
+      "note": "\"g̀\" (U+0067 U+0300) must sort before \"G̀\" (U+0047 U+0300)"
+    },
+    {
+      "id": "order-123",
+      "fn": "compare",
+      "a": "G̀",
+      "b": "g̉",
+      "expected": -1,
+      "note": "\"G̀\" (U+0047 U+0300) must sort before \"g̉\" (U+0067 U+0309)"
+    },
+    {
+      "id": "order-124",
+      "fn": "compare",
+      "a": "g̉",
+      "b": "G̉",
+      "expected": -1,
+      "note": "\"g̉\" (U+0067 U+0309) must sort before \"G̉\" (U+0047 U+0309)"
+    },
+    {
+      "id": "order-125",
+      "fn": "compare",
+      "a": "G̉",
+      "b": "g̃",
+      "expected": -1,
+      "note": "\"G̉\" (U+0047 U+0309) must sort before \"g̃\" (U+0067 U+0303)"
+    },
+    {
+      "id": "order-126",
+      "fn": "compare",
+      "a": "g̃",
+      "b": "G̃",
+      "expected": -1,
+      "note": "\"g̃\" (U+0067 U+0303) must sort before \"G̃\" (U+0047 U+0303)"
+    },
+    {
+      "id": "order-127",
+      "fn": "compare",
+      "a": "G̃",
+      "b": "ǵ",
+      "expected": -1,
+      "note": "\"G̃\" (U+0047 U+0303) must sort before \"ǵ\" (U+01F5)"
+    },
+    {
+      "id": "order-128",
+      "fn": "compare",
+      "a": "ǵ",
+      "b": "Ǵ",
+      "expected": -1,
+      "note": "\"ǵ\" (U+01F5) must sort before \"Ǵ\" (U+01F4)"
+    },
+    {
+      "id": "order-129",
+      "fn": "compare",
+      "a": "Ǵ",
+      "b": "g̣",
+      "expected": -1,
+      "note": "\"Ǵ\" (U+01F4) must sort before \"g̣\" (U+0067 U+0323)"
+    },
+    {
+      "id": "order-130",
+      "fn": "compare",
+      "a": "g̣",
+      "b": "G̣",
+      "expected": -1,
+      "note": "\"g̣\" (U+0067 U+0323) must sort before \"G̣\" (U+0047 U+0323)"
+    },
+    {
+      "id": "order-131",
+      "fn": "compare",
+      "a": "G̣",
+      "b": "h",
+      "expected": -1,
+      "note": "\"G̣\" (U+0047 U+0323) must sort before \"h\" (U+0068)"
+    },
+    {
+      "id": "order-132",
+      "fn": "compare",
+      "a": "h",
+      "b": "H",
+      "expected": -1,
+      "note": "\"h\" (U+0068) must sort before \"H\" (U+0048)"
+    },
+    {
+      "id": "order-133",
+      "fn": "compare",
+      "a": "H",
+      "b": "h̀",
+      "expected": -1,
+      "note": "\"H\" (U+0048) must sort before \"h̀\" (U+0068 U+0300)"
+    },
+    {
+      "id": "order-134",
+      "fn": "compare",
+      "a": "h̀",
+      "b": "H̀",
+      "expected": -1,
+      "note": "\"h̀\" (U+0068 U+0300) must sort before \"H̀\" (U+0048 U+0300)"
+    },
+    {
+      "id": "order-135",
+      "fn": "compare",
+      "a": "H̀",
+      "b": "h̉",
+      "expected": -1,
+      "note": "\"H̀\" (U+0048 U+0300) must sort before \"h̉\" (U+0068 U+0309)"
+    },
+    {
+      "id": "order-136",
+      "fn": "compare",
+      "a": "h̉",
+      "b": "H̉",
+      "expected": -1,
+      "note": "\"h̉\" (U+0068 U+0309) must sort before \"H̉\" (U+0048 U+0309)"
+    },
+    {
+      "id": "order-137",
+      "fn": "compare",
+      "a": "H̉",
+      "b": "h̃",
+      "expected": -1,
+      "note": "\"H̉\" (U+0048 U+0309) must sort before \"h̃\" (U+0068 U+0303)"
+    },
+    {
+      "id": "order-138",
+      "fn": "compare",
+      "a": "h̃",
+      "b": "H̃",
+      "expected": -1,
+      "note": "\"h̃\" (U+0068 U+0303) must sort before \"H̃\" (U+0048 U+0303)"
+    },
+    {
+      "id": "order-139",
+      "fn": "compare",
+      "a": "H̃",
+      "b": "h́",
+      "expected": -1,
+      "note": "\"H̃\" (U+0048 U+0303) must sort before \"h́\" (U+0068 U+0301)"
+    },
+    {
+      "id": "order-140",
+      "fn": "compare",
+      "a": "h́",
+      "b": "H́",
+      "expected": -1,
+      "note": "\"h́\" (U+0068 U+0301) must sort before \"H́\" (U+0048 U+0301)"
+    },
+    {
+      "id": "order-141",
+      "fn": "compare",
+      "a": "H́",
+      "b": "ḥ",
+      "expected": -1,
+      "note": "\"H́\" (U+0048 U+0301) must sort before \"ḥ\" (U+1E25)"
+    },
+    {
+      "id": "order-142",
+      "fn": "compare",
+      "a": "ḥ",
+      "b": "Ḥ",
+      "expected": -1,
+      "note": "\"ḥ\" (U+1E25) must sort before \"Ḥ\" (U+1E24)"
+    },
+    {
+      "id": "order-143",
+      "fn": "compare",
+      "a": "Ḥ",
+      "b": "i",
+      "expected": -1,
+      "note": "\"Ḥ\" (U+1E24) must sort before \"i\" (U+0069)"
+    },
+    {
+      "id": "order-144",
+      "fn": "compare",
+      "a": "i",
+      "b": "I",
+      "expected": -1,
+      "note": "\"i\" (U+0069) must sort before \"I\" (U+0049)"
+    },
+    {
+      "id": "order-145",
+      "fn": "compare",
+      "a": "I",
+      "b": "ì",
+      "expected": -1,
+      "note": "\"I\" (U+0049) must sort before \"ì\" (U+00EC)"
+    },
+    {
+      "id": "order-146",
+      "fn": "compare",
+      "a": "ì",
+      "b": "Ì",
+      "expected": -1,
+      "note": "\"ì\" (U+00EC) must sort before \"Ì\" (U+00CC)"
+    },
+    {
+      "id": "order-147",
+      "fn": "compare",
+      "a": "Ì",
+      "b": "ỉ",
+      "expected": -1,
+      "note": "\"Ì\" (U+00CC) must sort before \"ỉ\" (U+1EC9)"
+    },
+    {
+      "id": "order-148",
+      "fn": "compare",
+      "a": "ỉ",
+      "b": "Ỉ",
+      "expected": -1,
+      "note": "\"ỉ\" (U+1EC9) must sort before \"Ỉ\" (U+1EC8)"
+    },
+    {
+      "id": "order-149",
+      "fn": "compare",
+      "a": "Ỉ",
+      "b": "ĩ",
+      "expected": -1,
+      "note": "\"Ỉ\" (U+1EC8) must sort before \"ĩ\" (U+0129)"
+    },
+    {
+      "id": "order-150",
+      "fn": "compare",
+      "a": "ĩ",
+      "b": "Ĩ",
+      "expected": -1,
+      "note": "\"ĩ\" (U+0129) must sort before \"Ĩ\" (U+0128)"
+    },
+    {
+      "id": "order-151",
+      "fn": "compare",
+      "a": "Ĩ",
+      "b": "í",
+      "expected": -1,
+      "note": "\"Ĩ\" (U+0128) must sort before \"í\" (U+00ED)"
+    },
+    {
+      "id": "order-152",
+      "fn": "compare",
+      "a": "í",
+      "b": "Í",
+      "expected": -1,
+      "note": "\"í\" (U+00ED) must sort before \"Í\" (U+00CD)"
+    },
+    {
+      "id": "order-153",
+      "fn": "compare",
+      "a": "Í",
+      "b": "ị",
+      "expected": -1,
+      "note": "\"Í\" (U+00CD) must sort before \"ị\" (U+1ECB)"
+    },
+    {
+      "id": "order-154",
+      "fn": "compare",
+      "a": "ị",
+      "b": "Ị",
+      "expected": -1,
+      "note": "\"ị\" (U+1ECB) must sort before \"Ị\" (U+1ECA)"
+    },
+    {
+      "id": "order-155",
+      "fn": "compare",
+      "a": "Ị",
+      "b": "j",
+      "expected": -1,
+      "note": "\"Ị\" (U+1ECA) must sort before \"j\" (U+006A)"
+    },
+    {
+      "id": "order-156",
+      "fn": "compare",
+      "a": "j",
+      "b": "J",
+      "expected": -1,
+      "note": "\"j\" (U+006A) must sort before \"J\" (U+004A)"
+    },
+    {
+      "id": "order-157",
+      "fn": "compare",
+      "a": "J",
+      "b": "j̀",
+      "expected": -1,
+      "note": "\"J\" (U+004A) must sort before \"j̀\" (U+006A U+0300)"
+    },
+    {
+      "id": "order-158",
+      "fn": "compare",
+      "a": "j̀",
+      "b": "J̀",
+      "expected": -1,
+      "note": "\"j̀\" (U+006A U+0300) must sort before \"J̀\" (U+004A U+0300)"
+    },
+    {
+      "id": "order-159",
+      "fn": "compare",
+      "a": "J̀",
+      "b": "j̉",
+      "expected": -1,
+      "note": "\"J̀\" (U+004A U+0300) must sort before \"j̉\" (U+006A U+0309)"
+    },
+    {
+      "id": "order-160",
+      "fn": "compare",
+      "a": "j̉",
+      "b": "J̉",
+      "expected": -1,
+      "note": "\"j̉\" (U+006A U+0309) must sort before \"J̉\" (U+004A U+0309)"
+    },
+    {
+      "id": "order-161",
+      "fn": "compare",
+      "a": "J̉",
+      "b": "j̃",
+      "expected": -1,
+      "note": "\"J̉\" (U+004A U+0309) must sort before \"j̃\" (U+006A U+0303)"
+    },
+    {
+      "id": "order-162",
+      "fn": "compare",
+      "a": "j̃",
+      "b": "J̃",
+      "expected": -1,
+      "note": "\"j̃\" (U+006A U+0303) must sort before \"J̃\" (U+004A U+0303)"
+    },
+    {
+      "id": "order-163",
+      "fn": "compare",
+      "a": "J̃",
+      "b": "j́",
+      "expected": -1,
+      "note": "\"J̃\" (U+004A U+0303) must sort before \"j́\" (U+006A U+0301)"
+    },
+    {
+      "id": "order-164",
+      "fn": "compare",
+      "a": "j́",
+      "b": "J́",
+      "expected": -1,
+      "note": "\"j́\" (U+006A U+0301) must sort before \"J́\" (U+004A U+0301)"
+    },
+    {
+      "id": "order-165",
+      "fn": "compare",
+      "a": "J́",
+      "b": "j̣",
+      "expected": -1,
+      "note": "\"J́\" (U+004A U+0301) must sort before \"j̣\" (U+006A U+0323)"
+    },
+    {
+      "id": "order-166",
+      "fn": "compare",
+      "a": "j̣",
+      "b": "J̣",
+      "expected": -1,
+      "note": "\"j̣\" (U+006A U+0323) must sort before \"J̣\" (U+004A U+0323)"
+    },
+    {
+      "id": "order-167",
+      "fn": "compare",
+      "a": "J̣",
+      "b": "k",
+      "expected": -1,
+      "note": "\"J̣\" (U+004A U+0323) must sort before \"k\" (U+006B)"
+    },
+    {
+      "id": "order-168",
+      "fn": "compare",
+      "a": "k",
+      "b": "K",
+      "expected": -1,
+      "note": "\"k\" (U+006B) must sort before \"K\" (U+004B)"
+    },
+    {
+      "id": "order-169",
+      "fn": "compare",
+      "a": "K",
+      "b": "k̀",
+      "expected": -1,
+      "note": "\"K\" (U+004B) must sort before \"k̀\" (U+006B U+0300)"
+    },
+    {
+      "id": "order-170",
+      "fn": "compare",
+      "a": "k̀",
+      "b": "K̀",
+      "expected": -1,
+      "note": "\"k̀\" (U+006B U+0300) must sort before \"K̀\" (U+004B U+0300)"
+    },
+    {
+      "id": "order-171",
+      "fn": "compare",
+      "a": "K̀",
+      "b": "k̉",
+      "expected": -1,
+      "note": "\"K̀\" (U+004B U+0300) must sort before \"k̉\" (U+006B U+0309)"
+    },
+    {
+      "id": "order-172",
+      "fn": "compare",
+      "a": "k̉",
+      "b": "K̉",
+      "expected": -1,
+      "note": "\"k̉\" (U+006B U+0309) must sort before \"K̉\" (U+004B U+0309)"
+    },
+    {
+      "id": "order-173",
+      "fn": "compare",
+      "a": "K̉",
+      "b": "k̃",
+      "expected": -1,
+      "note": "\"K̉\" (U+004B U+0309) must sort before \"k̃\" (U+006B U+0303)"
+    },
+    {
+      "id": "order-174",
+      "fn": "compare",
+      "a": "k̃",
+      "b": "K̃",
+      "expected": -1,
+      "note": "\"k̃\" (U+006B U+0303) must sort before \"K̃\" (U+004B U+0303)"
+    },
+    {
+      "id": "order-175",
+      "fn": "compare",
+      "a": "K̃",
+      "b": "ḱ",
+      "expected": -1,
+      "note": "\"K̃\" (U+004B U+0303) must sort before \"ḱ\" (U+1E31)"
+    },
+    {
+      "id": "order-176",
+      "fn": "compare",
+      "a": "ḱ",
+      "b": "Ḱ",
+      "expected": -1,
+      "note": "\"ḱ\" (U+1E31) must sort before \"Ḱ\" (U+1E30)"
+    },
+    {
+      "id": "order-177",
+      "fn": "compare",
+      "a": "Ḱ",
+      "b": "ḳ",
+      "expected": -1,
+      "note": "\"Ḱ\" (U+1E30) must sort before \"ḳ\" (U+1E33)"
+    },
+    {
+      "id": "order-178",
+      "fn": "compare",
+      "a": "ḳ",
+      "b": "Ḳ",
+      "expected": -1,
+      "note": "\"ḳ\" (U+1E33) must sort before \"Ḳ\" (U+1E32)"
+    },
+    {
+      "id": "order-179",
+      "fn": "compare",
+      "a": "Ḳ",
+      "b": "l",
+      "expected": -1,
+      "note": "\"Ḳ\" (U+1E32) must sort before \"l\" (U+006C)"
+    },
+    {
+      "id": "order-180",
+      "fn": "compare",
+      "a": "l",
+      "b": "L",
+      "expected": -1,
+      "note": "\"l\" (U+006C) must sort before \"L\" (U+004C)"
+    },
+    {
+      "id": "order-181",
+      "fn": "compare",
+      "a": "L",
+      "b": "l̀",
+      "expected": -1,
+      "note": "\"L\" (U+004C) must sort before \"l̀\" (U+006C U+0300)"
+    },
+    {
+      "id": "order-182",
+      "fn": "compare",
+      "a": "l̀",
+      "b": "L̀",
+      "expected": -1,
+      "note": "\"l̀\" (U+006C U+0300) must sort before \"L̀\" (U+004C U+0300)"
+    },
+    {
+      "id": "order-183",
+      "fn": "compare",
+      "a": "L̀",
+      "b": "l̉",
+      "expected": -1,
+      "note": "\"L̀\" (U+004C U+0300) must sort before \"l̉\" (U+006C U+0309)"
+    },
+    {
+      "id": "order-184",
+      "fn": "compare",
+      "a": "l̉",
+      "b": "L̉",
+      "expected": -1,
+      "note": "\"l̉\" (U+006C U+0309) must sort before \"L̉\" (U+004C U+0309)"
+    },
+    {
+      "id": "order-185",
+      "fn": "compare",
+      "a": "L̉",
+      "b": "l̃",
+      "expected": -1,
+      "note": "\"L̉\" (U+004C U+0309) must sort before \"l̃\" (U+006C U+0303)"
+    },
+    {
+      "id": "order-186",
+      "fn": "compare",
+      "a": "l̃",
+      "b": "L̃",
+      "expected": -1,
+      "note": "\"l̃\" (U+006C U+0303) must sort before \"L̃\" (U+004C U+0303)"
+    },
+    {
+      "id": "order-187",
+      "fn": "compare",
+      "a": "L̃",
+      "b": "ĺ",
+      "expected": -1,
+      "note": "\"L̃\" (U+004C U+0303) must sort before \"ĺ\" (U+013A)"
+    },
+    {
+      "id": "order-188",
+      "fn": "compare",
+      "a": "ĺ",
+      "b": "Ĺ",
+      "expected": -1,
+      "note": "\"ĺ\" (U+013A) must sort before \"Ĺ\" (U+0139)"
+    },
+    {
+      "id": "order-189",
+      "fn": "compare",
+      "a": "Ĺ",
+      "b": "ḷ",
+      "expected": -1,
+      "note": "\"Ĺ\" (U+0139) must sort before \"ḷ\" (U+1E37)"
+    },
+    {
+      "id": "order-190",
+      "fn": "compare",
+      "a": "ḷ",
+      "b": "Ḷ",
+      "expected": -1,
+      "note": "\"ḷ\" (U+1E37) must sort before \"Ḷ\" (U+1E36)"
+    },
+    {
+      "id": "order-191",
+      "fn": "compare",
+      "a": "Ḷ",
+      "b": "m",
+      "expected": -1,
+      "note": "\"Ḷ\" (U+1E36) must sort before \"m\" (U+006D)"
+    },
+    {
+      "id": "order-192",
+      "fn": "compare",
+      "a": "m",
+      "b": "M",
+      "expected": -1,
+      "note": "\"m\" (U+006D) must sort before \"M\" (U+004D)"
+    },
+    {
+      "id": "order-193",
+      "fn": "compare",
+      "a": "M",
+      "b": "m̀",
+      "expected": -1,
+      "note": "\"M\" (U+004D) must sort before \"m̀\" (U+006D U+0300)"
+    },
+    {
+      "id": "order-194",
+      "fn": "compare",
+      "a": "m̀",
+      "b": "M̀",
+      "expected": -1,
+      "note": "\"m̀\" (U+006D U+0300) must sort before \"M̀\" (U+004D U+0300)"
+    },
+    {
+      "id": "order-195",
+      "fn": "compare",
+      "a": "M̀",
+      "b": "m̉",
+      "expected": -1,
+      "note": "\"M̀\" (U+004D U+0300) must sort before \"m̉\" (U+006D U+0309)"
+    },
+    {
+      "id": "order-196",
+      "fn": "compare",
+      "a": "m̉",
+      "b": "M̉",
+      "expected": -1,
+      "note": "\"m̉\" (U+006D U+0309) must sort before \"M̉\" (U+004D U+0309)"
+    },
+    {
+      "id": "order-197",
+      "fn": "compare",
+      "a": "M̉",
+      "b": "m̃",
+      "expected": -1,
+      "note": "\"M̉\" (U+004D U+0309) must sort before \"m̃\" (U+006D U+0303)"
+    },
+    {
+      "id": "order-198",
+      "fn": "compare",
+      "a": "m̃",
+      "b": "M̃",
+      "expected": -1,
+      "note": "\"m̃\" (U+006D U+0303) must sort before \"M̃\" (U+004D U+0303)"
+    },
+    {
+      "id": "order-199",
+      "fn": "compare",
+      "a": "M̃",
+      "b": "ḿ",
+      "expected": -1,
+      "note": "\"M̃\" (U+004D U+0303) must sort before \"ḿ\" (U+1E3F)"
+    },
+    {
+      "id": "order-200",
+      "fn": "compare",
+      "a": "ḿ",
+      "b": "Ḿ",
+      "expected": -1,
+      "note": "\"ḿ\" (U+1E3F) must sort before \"Ḿ\" (U+1E3E)"
+    },
+    {
+      "id": "order-201",
+      "fn": "compare",
+      "a": "Ḿ",
+      "b": "ṃ",
+      "expected": -1,
+      "note": "\"Ḿ\" (U+1E3E) must sort before \"ṃ\" (U+1E43)"
+    },
+    {
+      "id": "order-202",
+      "fn": "compare",
+      "a": "ṃ",
+      "b": "Ṃ",
+      "expected": -1,
+      "note": "\"ṃ\" (U+1E43) must sort before \"Ṃ\" (U+1E42)"
+    },
+    {
+      "id": "order-203",
+      "fn": "compare",
+      "a": "Ṃ",
+      "b": "n",
+      "expected": -1,
+      "note": "\"Ṃ\" (U+1E42) must sort before \"n\" (U+006E)"
+    },
+    {
+      "id": "order-204",
+      "fn": "compare",
+      "a": "n",
+      "b": "N",
+      "expected": -1,
+      "note": "\"n\" (U+006E) must sort before \"N\" (U+004E)"
+    },
+    {
+      "id": "order-205",
+      "fn": "compare",
+      "a": "N",
+      "b": "ǹ",
+      "expected": -1,
+      "note": "\"N\" (U+004E) must sort before \"ǹ\" (U+01F9)"
+    },
+    {
+      "id": "order-206",
+      "fn": "compare",
+      "a": "ǹ",
+      "b": "Ǹ",
+      "expected": -1,
+      "note": "\"ǹ\" (U+01F9) must sort before \"Ǹ\" (U+01F8)"
+    },
+    {
+      "id": "order-207",
+      "fn": "compare",
+      "a": "Ǹ",
+      "b": "n̉",
+      "expected": -1,
+      "note": "\"Ǹ\" (U+01F8) must sort before \"n̉\" (U+006E U+0309)"
+    },
+    {
+      "id": "order-208",
+      "fn": "compare",
+      "a": "n̉",
+      "b": "N̉",
+      "expected": -1,
+      "note": "\"n̉\" (U+006E U+0309) must sort before \"N̉\" (U+004E U+0309)"
+    },
+    {
+      "id": "order-209",
+      "fn": "compare",
+      "a": "N̉",
+      "b": "ñ",
+      "expected": -1,
+      "note": "\"N̉\" (U+004E U+0309) must sort before \"ñ\" (U+00F1)"
+    },
+    {
+      "id": "order-210",
+      "fn": "compare",
+      "a": "ñ",
+      "b": "Ñ",
+      "expected": -1,
+      "note": "\"ñ\" (U+00F1) must sort before \"Ñ\" (U+00D1)"
+    },
+    {
+      "id": "order-211",
+      "fn": "compare",
+      "a": "Ñ",
+      "b": "ń",
+      "expected": -1,
+      "note": "\"Ñ\" (U+00D1) must sort before \"ń\" (U+0144)"
+    },
+    {
+      "id": "order-212",
+      "fn": "compare",
+      "a": "ń",
+      "b": "Ń",
+      "expected": -1,
+      "note": "\"ń\" (U+0144) must sort before \"Ń\" (U+0143)"
+    },
+    {
+      "id": "order-213",
+      "fn": "compare",
+      "a": "Ń",
+      "b": "ṇ",
+      "expected": -1,
+      "note": "\"Ń\" (U+0143) must sort before \"ṇ\" (U+1E47)"
+    },
+    {
+      "id": "order-214",
+      "fn": "compare",
+      "a": "ṇ",
+      "b": "Ṇ",
+      "expected": -1,
+      "note": "\"ṇ\" (U+1E47) must sort before \"Ṇ\" (U+1E46)"
+    },
+    {
+      "id": "order-215",
+      "fn": "compare",
+      "a": "Ṇ",
+      "b": "o",
+      "expected": -1,
+      "note": "\"Ṇ\" (U+1E46) must sort before \"o\" (U+006F)"
+    },
+    {
+      "id": "order-216",
+      "fn": "compare",
+      "a": "o",
+      "b": "O",
+      "expected": -1,
+      "note": "\"o\" (U+006F) must sort before \"O\" (U+004F)"
+    },
+    {
+      "id": "order-217",
+      "fn": "compare",
+      "a": "O",
+      "b": "ò",
+      "expected": -1,
+      "note": "\"O\" (U+004F) must sort before \"ò\" (U+00F2)"
+    },
+    {
+      "id": "order-218",
+      "fn": "compare",
+      "a": "ò",
+      "b": "Ò",
+      "expected": -1,
+      "note": "\"ò\" (U+00F2) must sort before \"Ò\" (U+00D2)"
+    },
+    {
+      "id": "order-219",
+      "fn": "compare",
+      "a": "Ò",
+      "b": "ỏ",
+      "expected": -1,
+      "note": "\"Ò\" (U+00D2) must sort before \"ỏ\" (U+1ECF)"
+    },
+    {
+      "id": "order-220",
+      "fn": "compare",
+      "a": "ỏ",
+      "b": "Ỏ",
+      "expected": -1,
+      "note": "\"ỏ\" (U+1ECF) must sort before \"Ỏ\" (U+1ECE)"
+    },
+    {
+      "id": "order-221",
+      "fn": "compare",
+      "a": "Ỏ",
+      "b": "õ",
+      "expected": -1,
+      "note": "\"Ỏ\" (U+1ECE) must sort before \"õ\" (U+00F5)"
+    },
+    {
+      "id": "order-222",
+      "fn": "compare",
+      "a": "õ",
+      "b": "Õ",
+      "expected": -1,
+      "note": "\"õ\" (U+00F5) must sort before \"Õ\" (U+00D5)"
+    },
+    {
+      "id": "order-223",
+      "fn": "compare",
+      "a": "Õ",
+      "b": "ó",
+      "expected": -1,
+      "note": "\"Õ\" (U+00D5) must sort before \"ó\" (U+00F3)"
+    },
+    {
+      "id": "order-224",
+      "fn": "compare",
+      "a": "ó",
+      "b": "Ó",
+      "expected": -1,
+      "note": "\"ó\" (U+00F3) must sort before \"Ó\" (U+00D3)"
+    },
+    {
+      "id": "order-225",
+      "fn": "compare",
+      "a": "Ó",
+      "b": "ọ",
+      "expected": -1,
+      "note": "\"Ó\" (U+00D3) must sort before \"ọ\" (U+1ECD)"
+    },
+    {
+      "id": "order-226",
+      "fn": "compare",
+      "a": "ọ",
+      "b": "Ọ",
+      "expected": -1,
+      "note": "\"ọ\" (U+1ECD) must sort before \"Ọ\" (U+1ECC)"
+    },
+    {
+      "id": "order-227",
+      "fn": "compare",
+      "a": "Ọ",
+      "b": "ô",
+      "expected": -1,
+      "note": "\"Ọ\" (U+1ECC) must sort before \"ô\" (U+00F4)"
+    },
+    {
+      "id": "order-228",
+      "fn": "compare",
+      "a": "ô",
+      "b": "Ô",
+      "expected": -1,
+      "note": "\"ô\" (U+00F4) must sort before \"Ô\" (U+00D4)"
+    },
+    {
+      "id": "order-229",
+      "fn": "compare",
+      "a": "Ô",
+      "b": "ồ",
+      "expected": -1,
+      "note": "\"Ô\" (U+00D4) must sort before \"ồ\" (U+1ED3)"
+    },
+    {
+      "id": "order-230",
+      "fn": "compare",
+      "a": "ồ",
+      "b": "Ồ",
+      "expected": -1,
+      "note": "\"ồ\" (U+1ED3) must sort before \"Ồ\" (U+1ED2)"
+    },
+    {
+      "id": "order-231",
+      "fn": "compare",
+      "a": "Ồ",
+      "b": "ổ",
+      "expected": -1,
+      "note": "\"Ồ\" (U+1ED2) must sort before \"ổ\" (U+1ED5)"
+    },
+    {
+      "id": "order-232",
+      "fn": "compare",
+      "a": "ổ",
+      "b": "Ổ",
+      "expected": -1,
+      "note": "\"ổ\" (U+1ED5) must sort before \"Ổ\" (U+1ED4)"
+    },
+    {
+      "id": "order-233",
+      "fn": "compare",
+      "a": "Ổ",
+      "b": "ỗ",
+      "expected": -1,
+      "note": "\"Ổ\" (U+1ED4) must sort before \"ỗ\" (U+1ED7)"
+    },
+    {
+      "id": "order-234",
+      "fn": "compare",
+      "a": "ỗ",
+      "b": "Ỗ",
+      "expected": -1,
+      "note": "\"ỗ\" (U+1ED7) must sort before \"Ỗ\" (U+1ED6)"
+    },
+    {
+      "id": "order-235",
+      "fn": "compare",
+      "a": "Ỗ",
+      "b": "ố",
+      "expected": -1,
+      "note": "\"Ỗ\" (U+1ED6) must sort before \"ố\" (U+1ED1)"
+    },
+    {
+      "id": "order-236",
+      "fn": "compare",
+      "a": "ố",
+      "b": "Ố",
+      "expected": -1,
+      "note": "\"ố\" (U+1ED1) must sort before \"Ố\" (U+1ED0)"
+    },
+    {
+      "id": "order-237",
+      "fn": "compare",
+      "a": "Ố",
+      "b": "ộ",
+      "expected": -1,
+      "note": "\"Ố\" (U+1ED0) must sort before \"ộ\" (U+1ED9)"
+    },
+    {
+      "id": "order-238",
+      "fn": "compare",
+      "a": "ộ",
+      "b": "Ộ",
+      "expected": -1,
+      "note": "\"ộ\" (U+1ED9) must sort before \"Ộ\" (U+1ED8)"
+    },
+    {
+      "id": "order-239",
+      "fn": "compare",
+      "a": "Ộ",
+      "b": "ơ",
+      "expected": -1,
+      "note": "\"Ộ\" (U+1ED8) must sort before \"ơ\" (U+01A1)"
+    },
+    {
+      "id": "order-240",
+      "fn": "compare",
+      "a": "ơ",
+      "b": "Ơ",
+      "expected": -1,
+      "note": "\"ơ\" (U+01A1) must sort before \"Ơ\" (U+01A0)"
+    },
+    {
+      "id": "order-241",
+      "fn": "compare",
+      "a": "Ơ",
+      "b": "ờ",
+      "expected": -1,
+      "note": "\"Ơ\" (U+01A0) must sort before \"ờ\" (U+1EDD)"
+    },
+    {
+      "id": "order-242",
+      "fn": "compare",
+      "a": "ờ",
+      "b": "Ờ",
+      "expected": -1,
+      "note": "\"ờ\" (U+1EDD) must sort before \"Ờ\" (U+1EDC)"
+    },
+    {
+      "id": "order-243",
+      "fn": "compare",
+      "a": "Ờ",
+      "b": "ở",
+      "expected": -1,
+      "note": "\"Ờ\" (U+1EDC) must sort before \"ở\" (U+1EDF)"
+    },
+    {
+      "id": "order-244",
+      "fn": "compare",
+      "a": "ở",
+      "b": "Ở",
+      "expected": -1,
+      "note": "\"ở\" (U+1EDF) must sort before \"Ở\" (U+1EDE)"
+    },
+    {
+      "id": "order-245",
+      "fn": "compare",
+      "a": "Ở",
+      "b": "ỡ",
+      "expected": -1,
+      "note": "\"Ở\" (U+1EDE) must sort before \"ỡ\" (U+1EE1)"
+    },
+    {
+      "id": "order-246",
+      "fn": "compare",
+      "a": "ỡ",
+      "b": "Ỡ",
+      "expected": -1,
+      "note": "\"ỡ\" (U+1EE1) must sort before \"Ỡ\" (U+1EE0)"
+    },
+    {
+      "id": "order-247",
+      "fn": "compare",
+      "a": "Ỡ",
+      "b": "ớ",
+      "expected": -1,
+      "note": "\"Ỡ\" (U+1EE0) must sort before \"ớ\" (U+1EDB)"
+    },
+    {
+      "id": "order-248",
+      "fn": "compare",
+      "a": "ớ",
+      "b": "Ớ",
+      "expected": -1,
+      "note": "\"ớ\" (U+1EDB) must sort before \"Ớ\" (U+1EDA)"
+    },
+    {
+      "id": "order-249",
+      "fn": "compare",
+      "a": "Ớ",
+      "b": "ợ",
+      "expected": -1,
+      "note": "\"Ớ\" (U+1EDA) must sort before \"ợ\" (U+1EE3)"
+    },
+    {
+      "id": "order-250",
+      "fn": "compare",
+      "a": "ợ",
+      "b": "Ợ",
+      "expected": -1,
+      "note": "\"ợ\" (U+1EE3) must sort before \"Ợ\" (U+1EE2)"
+    },
+    {
+      "id": "order-251",
+      "fn": "compare",
+      "a": "Ợ",
+      "b": "p",
+      "expected": -1,
+      "note": "\"Ợ\" (U+1EE2) must sort before \"p\" (U+0070)"
+    },
+    {
+      "id": "order-252",
+      "fn": "compare",
+      "a": "p",
+      "b": "P",
+      "expected": -1,
+      "note": "\"p\" (U+0070) must sort before \"P\" (U+0050)"
+    },
+    {
+      "id": "order-253",
+      "fn": "compare",
+      "a": "P",
+      "b": "p̀",
+      "expected": -1,
+      "note": "\"P\" (U+0050) must sort before \"p̀\" (U+0070 U+0300)"
+    },
+    {
+      "id": "order-254",
+      "fn": "compare",
+      "a": "p̀",
+      "b": "P̀",
+      "expected": -1,
+      "note": "\"p̀\" (U+0070 U+0300) must sort before \"P̀\" (U+0050 U+0300)"
+    },
+    {
+      "id": "order-255",
+      "fn": "compare",
+      "a": "P̀",
+      "b": "p̉",
+      "expected": -1,
+      "note": "\"P̀\" (U+0050 U+0300) must sort before \"p̉\" (U+0070 U+0309)"
+    },
+    {
+      "id": "order-256",
+      "fn": "compare",
+      "a": "p̉",
+      "b": "P̉",
+      "expected": -1,
+      "note": "\"p̉\" (U+0070 U+0309) must sort before \"P̉\" (U+0050 U+0309)"
+    },
+    {
+      "id": "order-257",
+      "fn": "compare",
+      "a": "P̉",
+      "b": "p̃",
+      "expected": -1,
+      "note": "\"P̉\" (U+0050 U+0309) must sort before \"p̃\" (U+0070 U+0303)"
+    },
+    {
+      "id": "order-258",
+      "fn": "compare",
+      "a": "p̃",
+      "b": "P̃",
+      "expected": -1,
+      "note": "\"p̃\" (U+0070 U+0303) must sort before \"P̃\" (U+0050 U+0303)"
+    },
+    {
+      "id": "order-259",
+      "fn": "compare",
+      "a": "P̃",
+      "b": "ṕ",
+      "expected": -1,
+      "note": "\"P̃\" (U+0050 U+0303) must sort before \"ṕ\" (U+1E55)"
+    },
+    {
+      "id": "order-260",
+      "fn": "compare",
+      "a": "ṕ",
+      "b": "Ṕ",
+      "expected": -1,
+      "note": "\"ṕ\" (U+1E55) must sort before \"Ṕ\" (U+1E54)"
+    },
+    {
+      "id": "order-261",
+      "fn": "compare",
+      "a": "Ṕ",
+      "b": "p̣",
+      "expected": -1,
+      "note": "\"Ṕ\" (U+1E54) must sort before \"p̣\" (U+0070 U+0323)"
+    },
+    {
+      "id": "order-262",
+      "fn": "compare",
+      "a": "p̣",
+      "b": "P̣",
+      "expected": -1,
+      "note": "\"p̣\" (U+0070 U+0323) must sort before \"P̣\" (U+0050 U+0323)"
+    },
+    {
+      "id": "order-263",
+      "fn": "compare",
+      "a": "P̣",
+      "b": "q",
+      "expected": -1,
+      "note": "\"P̣\" (U+0050 U+0323) must sort before \"q\" (U+0071)"
+    },
+    {
+      "id": "order-264",
+      "fn": "compare",
+      "a": "q",
+      "b": "Q",
+      "expected": -1,
+      "note": "\"q\" (U+0071) must sort before \"Q\" (U+0051)"
+    },
+    {
+      "id": "order-265",
+      "fn": "compare",
+      "a": "Q",
+      "b": "q̀",
+      "expected": -1,
+      "note": "\"Q\" (U+0051) must sort before \"q̀\" (U+0071 U+0300)"
+    },
+    {
+      "id": "order-266",
+      "fn": "compare",
+      "a": "q̀",
+      "b": "Q̀",
+      "expected": -1,
+      "note": "\"q̀\" (U+0071 U+0300) must sort before \"Q̀\" (U+0051 U+0300)"
+    },
+    {
+      "id": "order-267",
+      "fn": "compare",
+      "a": "Q̀",
+      "b": "q̉",
+      "expected": -1,
+      "note": "\"Q̀\" (U+0051 U+0300) must sort before \"q̉\" (U+0071 U+0309)"
+    },
+    {
+      "id": "order-268",
+      "fn": "compare",
+      "a": "q̉",
+      "b": "Q̉",
+      "expected": -1,
+      "note": "\"q̉\" (U+0071 U+0309) must sort before \"Q̉\" (U+0051 U+0309)"
+    },
+    {
+      "id": "order-269",
+      "fn": "compare",
+      "a": "Q̉",
+      "b": "q̃",
+      "expected": -1,
+      "note": "\"Q̉\" (U+0051 U+0309) must sort before \"q̃\" (U+0071 U+0303)"
+    },
+    {
+      "id": "order-270",
+      "fn": "compare",
+      "a": "q̃",
+      "b": "Q̃",
+      "expected": -1,
+      "note": "\"q̃\" (U+0071 U+0303) must sort before \"Q̃\" (U+0051 U+0303)"
+    },
+    {
+      "id": "order-271",
+      "fn": "compare",
+      "a": "Q̃",
+      "b": "q́",
+      "expected": -1,
+      "note": "\"Q̃\" (U+0051 U+0303) must sort before \"q́\" (U+0071 U+0301)"
+    },
+    {
+      "id": "order-272",
+      "fn": "compare",
+      "a": "q́",
+      "b": "Q́",
+      "expected": -1,
+      "note": "\"q́\" (U+0071 U+0301) must sort before \"Q́\" (U+0051 U+0301)"
+    },
+    {
+      "id": "order-273",
+      "fn": "compare",
+      "a": "Q́",
+      "b": "q̣",
+      "expected": -1,
+      "note": "\"Q́\" (U+0051 U+0301) must sort before \"q̣\" (U+0071 U+0323)"
+    },
+    {
+      "id": "order-274",
+      "fn": "compare",
+      "a": "q̣",
+      "b": "Q̣",
+      "expected": -1,
+      "note": "\"q̣\" (U+0071 U+0323) must sort before \"Q̣\" (U+0051 U+0323)"
+    },
+    {
+      "id": "order-275",
+      "fn": "compare",
+      "a": "Q̣",
+      "b": "r",
+      "expected": -1,
+      "note": "\"Q̣\" (U+0051 U+0323) must sort before \"r\" (U+0072)"
+    },
+    {
+      "id": "order-276",
+      "fn": "compare",
+      "a": "r",
+      "b": "R",
+      "expected": -1,
+      "note": "\"r\" (U+0072) must sort before \"R\" (U+0052)"
+    },
+    {
+      "id": "order-277",
+      "fn": "compare",
+      "a": "R",
+      "b": "r̀",
+      "expected": -1,
+      "note": "\"R\" (U+0052) must sort before \"r̀\" (U+0072 U+0300)"
+    },
+    {
+      "id": "order-278",
+      "fn": "compare",
+      "a": "r̀",
+      "b": "R̀",
+      "expected": -1,
+      "note": "\"r̀\" (U+0072 U+0300) must sort before \"R̀\" (U+0052 U+0300)"
+    },
+    {
+      "id": "order-279",
+      "fn": "compare",
+      "a": "R̀",
+      "b": "r̉",
+      "expected": -1,
+      "note": "\"R̀\" (U+0052 U+0300) must sort before \"r̉\" (U+0072 U+0309)"
+    },
+    {
+      "id": "order-280",
+      "fn": "compare",
+      "a": "r̉",
+      "b": "R̉",
+      "expected": -1,
+      "note": "\"r̉\" (U+0072 U+0309) must sort before \"R̉\" (U+0052 U+0309)"
+    },
+    {
+      "id": "order-281",
+      "fn": "compare",
+      "a": "R̉",
+      "b": "r̃",
+      "expected": -1,
+      "note": "\"R̉\" (U+0052 U+0309) must sort before \"r̃\" (U+0072 U+0303)"
+    },
+    {
+      "id": "order-282",
+      "fn": "compare",
+      "a": "r̃",
+      "b": "R̃",
+      "expected": -1,
+      "note": "\"r̃\" (U+0072 U+0303) must sort before \"R̃\" (U+0052 U+0303)"
+    },
+    {
+      "id": "order-283",
+      "fn": "compare",
+      "a": "R̃",
+      "b": "ŕ",
+      "expected": -1,
+      "note": "\"R̃\" (U+0052 U+0303) must sort before \"ŕ\" (U+0155)"
+    },
+    {
+      "id": "order-284",
+      "fn": "compare",
+      "a": "ŕ",
+      "b": "Ŕ",
+      "expected": -1,
+      "note": "\"ŕ\" (U+0155) must sort before \"Ŕ\" (U+0154)"
+    },
+    {
+      "id": "order-285",
+      "fn": "compare",
+      "a": "Ŕ",
+      "b": "ṛ",
+      "expected": -1,
+      "note": "\"Ŕ\" (U+0154) must sort before \"ṛ\" (U+1E5B)"
+    },
+    {
+      "id": "order-286",
+      "fn": "compare",
+      "a": "ṛ",
+      "b": "Ṛ",
+      "expected": -1,
+      "note": "\"ṛ\" (U+1E5B) must sort before \"Ṛ\" (U+1E5A)"
+    },
+    {
+      "id": "order-287",
+      "fn": "compare",
+      "a": "Ṛ",
+      "b": "s",
+      "expected": -1,
+      "note": "\"Ṛ\" (U+1E5A) must sort before \"s\" (U+0073)"
+    },
+    {
+      "id": "order-288",
+      "fn": "compare",
+      "a": "s",
+      "b": "S",
+      "expected": -1,
+      "note": "\"s\" (U+0073) must sort before \"S\" (U+0053)"
+    },
+    {
+      "id": "order-289",
+      "fn": "compare",
+      "a": "S",
+      "b": "s̀",
+      "expected": -1,
+      "note": "\"S\" (U+0053) must sort before \"s̀\" (U+0073 U+0300)"
+    },
+    {
+      "id": "order-290",
+      "fn": "compare",
+      "a": "s̀",
+      "b": "S̀",
+      "expected": -1,
+      "note": "\"s̀\" (U+0073 U+0300) must sort before \"S̀\" (U+0053 U+0300)"
+    },
+    {
+      "id": "order-291",
+      "fn": "compare",
+      "a": "S̀",
+      "b": "s̉",
+      "expected": -1,
+      "note": "\"S̀\" (U+0053 U+0300) must sort before \"s̉\" (U+0073 U+0309)"
+    },
+    {
+      "id": "order-292",
+      "fn": "compare",
+      "a": "s̉",
+      "b": "S̉",
+      "expected": -1,
+      "note": "\"s̉\" (U+0073 U+0309) must sort before \"S̉\" (U+0053 U+0309)"
+    },
+    {
+      "id": "order-293",
+      "fn": "compare",
+      "a": "S̉",
+      "b": "s̃",
+      "expected": -1,
+      "note": "\"S̉\" (U+0053 U+0309) must sort before \"s̃\" (U+0073 U+0303)"
+    },
+    {
+      "id": "order-294",
+      "fn": "compare",
+      "a": "s̃",
+      "b": "S̃",
+      "expected": -1,
+      "note": "\"s̃\" (U+0073 U+0303) must sort before \"S̃\" (U+0053 U+0303)"
+    },
+    {
+      "id": "order-295",
+      "fn": "compare",
+      "a": "S̃",
+      "b": "ś",
+      "expected": -1,
+      "note": "\"S̃\" (U+0053 U+0303) must sort before \"ś\" (U+015B)"
+    },
+    {
+      "id": "order-296",
+      "fn": "compare",
+      "a": "ś",
+      "b": "Ś",
+      "expected": -1,
+      "note": "\"ś\" (U+015B) must sort before \"Ś\" (U+015A)"
+    },
+    {
+      "id": "order-297",
+      "fn": "compare",
+      "a": "Ś",
+      "b": "ṣ",
+      "expected": -1,
+      "note": "\"Ś\" (U+015A) must sort before \"ṣ\" (U+1E63)"
+    },
+    {
+      "id": "order-298",
+      "fn": "compare",
+      "a": "ṣ",
+      "b": "Ṣ",
+      "expected": -1,
+      "note": "\"ṣ\" (U+1E63) must sort before \"Ṣ\" (U+1E62)"
+    },
+    {
+      "id": "order-299",
+      "fn": "compare",
+      "a": "Ṣ",
+      "b": "t",
+      "expected": -1,
+      "note": "\"Ṣ\" (U+1E62) must sort before \"t\" (U+0074)"
+    },
+    {
+      "id": "order-300",
+      "fn": "compare",
+      "a": "t",
+      "b": "T",
+      "expected": -1,
+      "note": "\"t\" (U+0074) must sort before \"T\" (U+0054)"
+    },
+    {
+      "id": "order-301",
+      "fn": "compare",
+      "a": "T",
+      "b": "t̀",
+      "expected": -1,
+      "note": "\"T\" (U+0054) must sort before \"t̀\" (U+0074 U+0300)"
+    },
+    {
+      "id": "order-302",
+      "fn": "compare",
+      "a": "t̀",
+      "b": "T̀",
+      "expected": -1,
+      "note": "\"t̀\" (U+0074 U+0300) must sort before \"T̀\" (U+0054 U+0300)"
+    },
+    {
+      "id": "order-303",
+      "fn": "compare",
+      "a": "T̀",
+      "b": "t̉",
+      "expected": -1,
+      "note": "\"T̀\" (U+0054 U+0300) must sort before \"t̉\" (U+0074 U+0309)"
+    },
+    {
+      "id": "order-304",
+      "fn": "compare",
+      "a": "t̉",
+      "b": "T̉",
+      "expected": -1,
+      "note": "\"t̉\" (U+0074 U+0309) must sort before \"T̉\" (U+0054 U+0309)"
+    },
+    {
+      "id": "order-305",
+      "fn": "compare",
+      "a": "T̉",
+      "b": "t̃",
+      "expected": -1,
+      "note": "\"T̉\" (U+0054 U+0309) must sort before \"t̃\" (U+0074 U+0303)"
+    },
+    {
+      "id": "order-306",
+      "fn": "compare",
+      "a": "t̃",
+      "b": "T̃",
+      "expected": -1,
+      "note": "\"t̃\" (U+0074 U+0303) must sort before \"T̃\" (U+0054 U+0303)"
+    },
+    {
+      "id": "order-307",
+      "fn": "compare",
+      "a": "T̃",
+      "b": "t́",
+      "expected": -1,
+      "note": "\"T̃\" (U+0054 U+0303) must sort before \"t́\" (U+0074 U+0301)"
+    },
+    {
+      "id": "order-308",
+      "fn": "compare",
+      "a": "t́",
+      "b": "T́",
+      "expected": -1,
+      "note": "\"t́\" (U+0074 U+0301) must sort before \"T́\" (U+0054 U+0301)"
+    },
+    {
+      "id": "order-309",
+      "fn": "compare",
+      "a": "T́",
+      "b": "ṭ",
+      "expected": -1,
+      "note": "\"T́\" (U+0054 U+0301) must sort before \"ṭ\" (U+1E6D)"
+    },
+    {
+      "id": "order-310",
+      "fn": "compare",
+      "a": "ṭ",
+      "b": "Ṭ",
+      "expected": -1,
+      "note": "\"ṭ\" (U+1E6D) must sort before \"Ṭ\" (U+1E6C)"
+    },
+    {
+      "id": "order-311",
+      "fn": "compare",
+      "a": "Ṭ",
+      "b": "u",
+      "expected": -1,
+      "note": "\"Ṭ\" (U+1E6C) must sort before \"u\" (U+0075)"
+    },
+    {
+      "id": "order-312",
+      "fn": "compare",
+      "a": "u",
+      "b": "U",
+      "expected": -1,
+      "note": "\"u\" (U+0075) must sort before \"U\" (U+0055)"
+    },
+    {
+      "id": "order-313",
+      "fn": "compare",
+      "a": "U",
+      "b": "ù",
+      "expected": -1,
+      "note": "\"U\" (U+0055) must sort before \"ù\" (U+00F9)"
+    },
+    {
+      "id": "order-314",
+      "fn": "compare",
+      "a": "ù",
+      "b": "Ù",
+      "expected": -1,
+      "note": "\"ù\" (U+00F9) must sort before \"Ù\" (U+00D9)"
+    },
+    {
+      "id": "order-315",
+      "fn": "compare",
+      "a": "Ù",
+      "b": "ủ",
+      "expected": -1,
+      "note": "\"Ù\" (U+00D9) must sort before \"ủ\" (U+1EE7)"
+    },
+    {
+      "id": "order-316",
+      "fn": "compare",
+      "a": "ủ",
+      "b": "Ủ",
+      "expected": -1,
+      "note": "\"ủ\" (U+1EE7) must sort before \"Ủ\" (U+1EE6)"
+    },
+    {
+      "id": "order-317",
+      "fn": "compare",
+      "a": "Ủ",
+      "b": "ũ",
+      "expected": -1,
+      "note": "\"Ủ\" (U+1EE6) must sort before \"ũ\" (U+0169)"
+    },
+    {
+      "id": "order-318",
+      "fn": "compare",
+      "a": "ũ",
+      "b": "Ũ",
+      "expected": -1,
+      "note": "\"ũ\" (U+0169) must sort before \"Ũ\" (U+0168)"
+    },
+    {
+      "id": "order-319",
+      "fn": "compare",
+      "a": "Ũ",
+      "b": "ú",
+      "expected": -1,
+      "note": "\"Ũ\" (U+0168) must sort before \"ú\" (U+00FA)"
+    },
+    {
+      "id": "order-320",
+      "fn": "compare",
+      "a": "ú",
+      "b": "Ú",
+      "expected": -1,
+      "note": "\"ú\" (U+00FA) must sort before \"Ú\" (U+00DA)"
+    },
+    {
+      "id": "order-321",
+      "fn": "compare",
+      "a": "Ú",
+      "b": "ụ",
+      "expected": -1,
+      "note": "\"Ú\" (U+00DA) must sort before \"ụ\" (U+1EE5)"
+    },
+    {
+      "id": "order-322",
+      "fn": "compare",
+      "a": "ụ",
+      "b": "Ụ",
+      "expected": -1,
+      "note": "\"ụ\" (U+1EE5) must sort before \"Ụ\" (U+1EE4)"
+    },
+    {
+      "id": "order-323",
+      "fn": "compare",
+      "a": "Ụ",
+      "b": "ư",
+      "expected": -1,
+      "note": "\"Ụ\" (U+1EE4) must sort before \"ư\" (U+01B0)"
+    },
+    {
+      "id": "order-324",
+      "fn": "compare",
+      "a": "ư",
+      "b": "Ư",
+      "expected": -1,
+      "note": "\"ư\" (U+01B0) must sort before \"Ư\" (U+01AF)"
+    },
+    {
+      "id": "order-325",
+      "fn": "compare",
+      "a": "Ư",
+      "b": "ừ",
+      "expected": -1,
+      "note": "\"Ư\" (U+01AF) must sort before \"ừ\" (U+1EEB)"
+    },
+    {
+      "id": "order-326",
+      "fn": "compare",
+      "a": "ừ",
+      "b": "Ừ",
+      "expected": -1,
+      "note": "\"ừ\" (U+1EEB) must sort before \"Ừ\" (U+1EEA)"
+    },
+    {
+      "id": "order-327",
+      "fn": "compare",
+      "a": "Ừ",
+      "b": "ử",
+      "expected": -1,
+      "note": "\"Ừ\" (U+1EEA) must sort before \"ử\" (U+1EED)"
+    },
+    {
+      "id": "order-328",
+      "fn": "compare",
+      "a": "ử",
+      "b": "Ử",
+      "expected": -1,
+      "note": "\"ử\" (U+1EED) must sort before \"Ử\" (U+1EEC)"
+    },
+    {
+      "id": "order-329",
+      "fn": "compare",
+      "a": "Ử",
+      "b": "ữ",
+      "expected": -1,
+      "note": "\"Ử\" (U+1EEC) must sort before \"ữ\" (U+1EEF)"
+    },
+    {
+      "id": "order-330",
+      "fn": "compare",
+      "a": "ữ",
+      "b": "Ữ",
+      "expected": -1,
+      "note": "\"ữ\" (U+1EEF) must sort before \"Ữ\" (U+1EEE)"
+    },
+    {
+      "id": "order-331",
+      "fn": "compare",
+      "a": "Ữ",
+      "b": "ứ",
+      "expected": -1,
+      "note": "\"Ữ\" (U+1EEE) must sort before \"ứ\" (U+1EE9)"
+    },
+    {
+      "id": "order-332",
+      "fn": "compare",
+      "a": "ứ",
+      "b": "Ứ",
+      "expected": -1,
+      "note": "\"ứ\" (U+1EE9) must sort before \"Ứ\" (U+1EE8)"
+    },
+    {
+      "id": "order-333",
+      "fn": "compare",
+      "a": "Ứ",
+      "b": "ự",
+      "expected": -1,
+      "note": "\"Ứ\" (U+1EE8) must sort before \"ự\" (U+1EF1)"
+    },
+    {
+      "id": "order-334",
+      "fn": "compare",
+      "a": "ự",
+      "b": "Ự",
+      "expected": -1,
+      "note": "\"ự\" (U+1EF1) must sort before \"Ự\" (U+1EF0)"
+    },
+    {
+      "id": "order-335",
+      "fn": "compare",
+      "a": "Ự",
+      "b": "v",
+      "expected": -1,
+      "note": "\"Ự\" (U+1EF0) must sort before \"v\" (U+0076)"
+    },
+    {
+      "id": "order-336",
+      "fn": "compare",
+      "a": "v",
+      "b": "V",
+      "expected": -1,
+      "note": "\"v\" (U+0076) must sort before \"V\" (U+0056)"
+    },
+    {
+      "id": "order-337",
+      "fn": "compare",
+      "a": "V",
+      "b": "v̀",
+      "expected": -1,
+      "note": "\"V\" (U+0056) must sort before \"v̀\" (U+0076 U+0300)"
+    },
+    {
+      "id": "order-338",
+      "fn": "compare",
+      "a": "v̀",
+      "b": "V̀",
+      "expected": -1,
+      "note": "\"v̀\" (U+0076 U+0300) must sort before \"V̀\" (U+0056 U+0300)"
+    },
+    {
+      "id": "order-339",
+      "fn": "compare",
+      "a": "V̀",
+      "b": "v̉",
+      "expected": -1,
+      "note": "\"V̀\" (U+0056 U+0300) must sort before \"v̉\" (U+0076 U+0309)"
+    },
+    {
+      "id": "order-340",
+      "fn": "compare",
+      "a": "v̉",
+      "b": "V̉",
+      "expected": -1,
+      "note": "\"v̉\" (U+0076 U+0309) must sort before \"V̉\" (U+0056 U+0309)"
+    },
+    {
+      "id": "order-341",
+      "fn": "compare",
+      "a": "V̉",
+      "b": "ṽ",
+      "expected": -1,
+      "note": "\"V̉\" (U+0056 U+0309) must sort before \"ṽ\" (U+1E7D)"
+    },
+    {
+      "id": "order-342",
+      "fn": "compare",
+      "a": "ṽ",
+      "b": "Ṽ",
+      "expected": -1,
+      "note": "\"ṽ\" (U+1E7D) must sort before \"Ṽ\" (U+1E7C)"
+    },
+    {
+      "id": "order-343",
+      "fn": "compare",
+      "a": "Ṽ",
+      "b": "v́",
+      "expected": -1,
+      "note": "\"Ṽ\" (U+1E7C) must sort before \"v́\" (U+0076 U+0301)"
+    },
+    {
+      "id": "order-344",
+      "fn": "compare",
+      "a": "v́",
+      "b": "V́",
+      "expected": -1,
+      "note": "\"v́\" (U+0076 U+0301) must sort before \"V́\" (U+0056 U+0301)"
+    },
+    {
+      "id": "order-345",
+      "fn": "compare",
+      "a": "V́",
+      "b": "ṿ",
+      "expected": -1,
+      "note": "\"V́\" (U+0056 U+0301) must sort before \"ṿ\" (U+1E7F)"
+    },
+    {
+      "id": "order-346",
+      "fn": "compare",
+      "a": "ṿ",
+      "b": "Ṿ",
+      "expected": -1,
+      "note": "\"ṿ\" (U+1E7F) must sort before \"Ṿ\" (U+1E7E)"
+    },
+    {
+      "id": "order-347",
+      "fn": "compare",
+      "a": "Ṿ",
+      "b": "w",
+      "expected": -1,
+      "note": "\"Ṿ\" (U+1E7E) must sort before \"w\" (U+0077)"
+    },
+    {
+      "id": "order-348",
+      "fn": "compare",
+      "a": "w",
+      "b": "W",
+      "expected": -1,
+      "note": "\"w\" (U+0077) must sort before \"W\" (U+0057)"
+    },
+    {
+      "id": "order-349",
+      "fn": "compare",
+      "a": "W",
+      "b": "ẁ",
+      "expected": -1,
+      "note": "\"W\" (U+0057) must sort before \"ẁ\" (U+1E81)"
+    },
+    {
+      "id": "order-350",
+      "fn": "compare",
+      "a": "ẁ",
+      "b": "Ẁ",
+      "expected": -1,
+      "note": "\"ẁ\" (U+1E81) must sort before \"Ẁ\" (U+1E80)"
+    },
+    {
+      "id": "order-351",
+      "fn": "compare",
+      "a": "Ẁ",
+      "b": "w̉",
+      "expected": -1,
+      "note": "\"Ẁ\" (U+1E80) must sort before \"w̉\" (U+0077 U+0309)"
+    },
+    {
+      "id": "order-352",
+      "fn": "compare",
+      "a": "w̉",
+      "b": "W̉",
+      "expected": -1,
+      "note": "\"w̉\" (U+0077 U+0309) must sort before \"W̉\" (U+0057 U+0309)"
+    },
+    {
+      "id": "order-353",
+      "fn": "compare",
+      "a": "W̉",
+      "b": "w̃",
+      "expected": -1,
+      "note": "\"W̉\" (U+0057 U+0309) must sort before \"w̃\" (U+0077 U+0303)"
+    },
+    {
+      "id": "order-354",
+      "fn": "compare",
+      "a": "w̃",
+      "b": "W̃",
+      "expected": -1,
+      "note": "\"w̃\" (U+0077 U+0303) must sort before \"W̃\" (U+0057 U+0303)"
+    },
+    {
+      "id": "order-355",
+      "fn": "compare",
+      "a": "W̃",
+      "b": "ẃ",
+      "expected": -1,
+      "note": "\"W̃\" (U+0057 U+0303) must sort before \"ẃ\" (U+1E83)"
+    },
+    {
+      "id": "order-356",
+      "fn": "compare",
+      "a": "ẃ",
+      "b": "Ẃ",
+      "expected": -1,
+      "note": "\"ẃ\" (U+1E83) must sort before \"Ẃ\" (U+1E82)"
+    },
+    {
+      "id": "order-357",
+      "fn": "compare",
+      "a": "Ẃ",
+      "b": "ẉ",
+      "expected": -1,
+      "note": "\"Ẃ\" (U+1E82) must sort before \"ẉ\" (U+1E89)"
+    },
+    {
+      "id": "order-358",
+      "fn": "compare",
+      "a": "ẉ",
+      "b": "Ẉ",
+      "expected": -1,
+      "note": "\"ẉ\" (U+1E89) must sort before \"Ẉ\" (U+1E88)"
+    },
+    {
+      "id": "order-359",
+      "fn": "compare",
+      "a": "Ẉ",
+      "b": "x",
+      "expected": -1,
+      "note": "\"Ẉ\" (U+1E88) must sort before \"x\" (U+0078)"
+    },
+    {
+      "id": "order-360",
+      "fn": "compare",
+      "a": "x",
+      "b": "X",
+      "expected": -1,
+      "note": "\"x\" (U+0078) must sort before \"X\" (U+0058)"
+    },
+    {
+      "id": "order-361",
+      "fn": "compare",
+      "a": "X",
+      "b": "x̀",
+      "expected": -1,
+      "note": "\"X\" (U+0058) must sort before \"x̀\" (U+0078 U+0300)"
+    },
+    {
+      "id": "order-362",
+      "fn": "compare",
+      "a": "x̀",
+      "b": "X̀",
+      "expected": -1,
+      "note": "\"x̀\" (U+0078 U+0300) must sort before \"X̀\" (U+0058 U+0300)"
+    },
+    {
+      "id": "order-363",
+      "fn": "compare",
+      "a": "X̀",
+      "b": "x̉",
+      "expected": -1,
+      "note": "\"X̀\" (U+0058 U+0300) must sort before \"x̉\" (U+0078 U+0309)"
+    },
+    {
+      "id": "order-364",
+      "fn": "compare",
+      "a": "x̉",
+      "b": "X̉",
+      "expected": -1,
+      "note": "\"x̉\" (U+0078 U+0309) must sort before \"X̉\" (U+0058 U+0309)"
+    },
+    {
+      "id": "order-365",
+      "fn": "compare",
+      "a": "X̉",
+      "b": "x̃",
+      "expected": -1,
+      "note": "\"X̉\" (U+0058 U+0309) must sort before \"x̃\" (U+0078 U+0303)"
+    },
+    {
+      "id": "order-366",
+      "fn": "compare",
+      "a": "x̃",
+      "b": "X̃",
+      "expected": -1,
+      "note": "\"x̃\" (U+0078 U+0303) must sort before \"X̃\" (U+0058 U+0303)"
+    },
+    {
+      "id": "order-367",
+      "fn": "compare",
+      "a": "X̃",
+      "b": "x́",
+      "expected": -1,
+      "note": "\"X̃\" (U+0058 U+0303) must sort before \"x́\" (U+0078 U+0301)"
+    },
+    {
+      "id": "order-368",
+      "fn": "compare",
+      "a": "x́",
+      "b": "X́",
+      "expected": -1,
+      "note": "\"x́\" (U+0078 U+0301) must sort before \"X́\" (U+0058 U+0301)"
+    },
+    {
+      "id": "order-369",
+      "fn": "compare",
+      "a": "X́",
+      "b": "x̣",
+      "expected": -1,
+      "note": "\"X́\" (U+0058 U+0301) must sort before \"x̣\" (U+0078 U+0323)"
+    },
+    {
+      "id": "order-370",
+      "fn": "compare",
+      "a": "x̣",
+      "b": "X̣",
+      "expected": -1,
+      "note": "\"x̣\" (U+0078 U+0323) must sort before \"X̣\" (U+0058 U+0323)"
+    },
+    {
+      "id": "order-371",
+      "fn": "compare",
+      "a": "X̣",
+      "b": "y",
+      "expected": -1,
+      "note": "\"X̣\" (U+0058 U+0323) must sort before \"y\" (U+0079)"
+    },
+    {
+      "id": "order-372",
+      "fn": "compare",
+      "a": "y",
+      "b": "Y",
+      "expected": -1,
+      "note": "\"y\" (U+0079) must sort before \"Y\" (U+0059)"
+    },
+    {
+      "id": "order-373",
+      "fn": "compare",
+      "a": "Y",
+      "b": "ỳ",
+      "expected": -1,
+      "note": "\"Y\" (U+0059) must sort before \"ỳ\" (U+1EF3)"
+    },
+    {
+      "id": "order-374",
+      "fn": "compare",
+      "a": "ỳ",
+      "b": "Ỳ",
+      "expected": -1,
+      "note": "\"ỳ\" (U+1EF3) must sort before \"Ỳ\" (U+1EF2)"
+    },
+    {
+      "id": "order-375",
+      "fn": "compare",
+      "a": "Ỳ",
+      "b": "ỷ",
+      "expected": -1,
+      "note": "\"Ỳ\" (U+1EF2) must sort before \"ỷ\" (U+1EF7)"
+    },
+    {
+      "id": "order-376",
+      "fn": "compare",
+      "a": "ỷ",
+      "b": "Ỷ",
+      "expected": -1,
+      "note": "\"ỷ\" (U+1EF7) must sort before \"Ỷ\" (U+1EF6)"
+    },
+    {
+      "id": "order-377",
+      "fn": "compare",
+      "a": "Ỷ",
+      "b": "ỹ",
+      "expected": -1,
+      "note": "\"Ỷ\" (U+1EF6) must sort before \"ỹ\" (U+1EF9)"
+    },
+    {
+      "id": "order-378",
+      "fn": "compare",
+      "a": "ỹ",
+      "b": "Ỹ",
+      "expected": -1,
+      "note": "\"ỹ\" (U+1EF9) must sort before \"Ỹ\" (U+1EF8)"
+    },
+    {
+      "id": "order-379",
+      "fn": "compare",
+      "a": "Ỹ",
+      "b": "ý",
+      "expected": -1,
+      "note": "\"Ỹ\" (U+1EF8) must sort before \"ý\" (U+00FD)"
+    },
+    {
+      "id": "order-380",
+      "fn": "compare",
+      "a": "ý",
+      "b": "Ý",
+      "expected": -1,
+      "note": "\"ý\" (U+00FD) must sort before \"Ý\" (U+00DD)"
+    },
+    {
+      "id": "order-381",
+      "fn": "compare",
+      "a": "Ý",
+      "b": "ỵ",
+      "expected": -1,
+      "note": "\"Ý\" (U+00DD) must sort before \"ỵ\" (U+1EF5)"
+    },
+    {
+      "id": "order-382",
+      "fn": "compare",
+      "a": "ỵ",
+      "b": "Ỵ",
+      "expected": -1,
+      "note": "\"ỵ\" (U+1EF5) must sort before \"Ỵ\" (U+1EF4)"
+    },
+    {
+      "id": "order-383",
+      "fn": "compare",
+      "a": "Ỵ",
+      "b": "z",
+      "expected": -1,
+      "note": "\"Ỵ\" (U+1EF4) must sort before \"z\" (U+007A)"
+    },
+    {
+      "id": "order-384",
+      "fn": "compare",
+      "a": "z",
+      "b": "Z",
+      "expected": -1,
+      "note": "\"z\" (U+007A) must sort before \"Z\" (U+005A)"
+    },
+    {
+      "id": "order-385",
+      "fn": "compare",
+      "a": "Z",
+      "b": "z̀",
+      "expected": -1,
+      "note": "\"Z\" (U+005A) must sort before \"z̀\" (U+007A U+0300)"
+    },
+    {
+      "id": "order-386",
+      "fn": "compare",
+      "a": "z̀",
+      "b": "Z̀",
+      "expected": -1,
+      "note": "\"z̀\" (U+007A U+0300) must sort before \"Z̀\" (U+005A U+0300)"
+    },
+    {
+      "id": "order-387",
+      "fn": "compare",
+      "a": "Z̀",
+      "b": "z̉",
+      "expected": -1,
+      "note": "\"Z̀\" (U+005A U+0300) must sort before \"z̉\" (U+007A U+0309)"
+    },
+    {
+      "id": "order-388",
+      "fn": "compare",
+      "a": "z̉",
+      "b": "Z̉",
+      "expected": -1,
+      "note": "\"z̉\" (U+007A U+0309) must sort before \"Z̉\" (U+005A U+0309)"
+    },
+    {
+      "id": "order-389",
+      "fn": "compare",
+      "a": "Z̉",
+      "b": "z̃",
+      "expected": -1,
+      "note": "\"Z̉\" (U+005A U+0309) must sort before \"z̃\" (U+007A U+0303)"
+    },
+    {
+      "id": "order-390",
+      "fn": "compare",
+      "a": "z̃",
+      "b": "Z̃",
+      "expected": -1,
+      "note": "\"z̃\" (U+007A U+0303) must sort before \"Z̃\" (U+005A U+0303)"
+    },
+    {
+      "id": "order-391",
+      "fn": "compare",
+      "a": "Z̃",
+      "b": "ź",
+      "expected": -1,
+      "note": "\"Z̃\" (U+005A U+0303) must sort before \"ź\" (U+017A)"
+    },
+    {
+      "id": "order-392",
+      "fn": "compare",
+      "a": "ź",
+      "b": "Ź",
+      "expected": -1,
+      "note": "\"ź\" (U+017A) must sort before \"Ź\" (U+0179)"
+    },
+    {
+      "id": "order-393",
+      "fn": "compare",
+      "a": "Ź",
+      "b": "ẓ",
+      "expected": -1,
+      "note": "\"Ź\" (U+0179) must sort before \"ẓ\" (U+1E93)"
+    },
+    {
+      "id": "order-394",
+      "fn": "compare",
+      "a": "ẓ",
+      "b": "Ẓ",
+      "expected": -1,
+      "note": "\"ẓ\" (U+1E93) must sort before \"Ẓ\" (U+1E92)"
+    },
+    {
+      "id": "order-rev-000",
+      "fn": "compare",
+      "a": "A",
+      "b": "a",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-007",
+      "fn": "compare",
+      "a": "á",
+      "b": "Ã",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-014",
+      "fn": "compare",
+      "a": "Ằ",
+      "b": "ằ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-021",
+      "fn": "compare",
+      "a": "ặ",
+      "b": "Ắ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-028",
+      "fn": "compare",
+      "a": "Ẩ",
+      "b": "ẩ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-035",
+      "fn": "compare",
+      "a": "b",
+      "b": "Ậ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-042",
+      "fn": "compare",
+      "a": "B̃",
+      "b": "b̃",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-049",
+      "fn": "compare",
+      "a": "c̀",
+      "b": "C",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-056",
+      "fn": "compare",
+      "a": "Ć",
+      "b": "ć",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-063",
+      "fn": "compare",
+      "a": "d̉",
+      "b": "D̀",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-070",
+      "fn": "compare",
+      "a": "Ḍ",
+      "b": "ḍ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-077",
+      "fn": "compare",
+      "a": "đ̃",
+      "b": "Đ̉",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-084",
+      "fn": "compare",
+      "a": "E",
+      "b": "e",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-091",
+      "fn": "compare",
+      "a": "é",
+      "b": "Ẽ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-098",
+      "fn": "compare",
+      "a": "Ề",
+      "b": "ề",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-105",
+      "fn": "compare",
+      "a": "ệ",
+      "b": "Ế",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-112",
+      "fn": "compare",
+      "a": "F̉",
+      "b": "f̉",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-119",
+      "fn": "compare",
+      "a": "g",
+      "b": "F̣",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-126",
+      "fn": "compare",
+      "a": "G̃",
+      "b": "g̃",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-133",
+      "fn": "compare",
+      "a": "h̀",
+      "b": "H",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-140",
+      "fn": "compare",
+      "a": "H́",
+      "b": "h́",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-147",
+      "fn": "compare",
+      "a": "ỉ",
+      "b": "Ì",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-154",
+      "fn": "compare",
+      "a": "Ị",
+      "b": "ị",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-161",
+      "fn": "compare",
+      "a": "j̃",
+      "b": "J̉",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-168",
+      "fn": "compare",
+      "a": "K",
+      "b": "k",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-175",
+      "fn": "compare",
+      "a": "ḱ",
+      "b": "K̃",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-182",
+      "fn": "compare",
+      "a": "L̀",
+      "b": "l̀",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-189",
+      "fn": "compare",
+      "a": "ḷ",
+      "b": "Ĺ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-196",
+      "fn": "compare",
+      "a": "M̉",
+      "b": "m̉",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-203",
+      "fn": "compare",
+      "a": "n",
+      "b": "Ṃ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-210",
+      "fn": "compare",
+      "a": "Ñ",
+      "b": "ñ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-217",
+      "fn": "compare",
+      "a": "ò",
+      "b": "O",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-224",
+      "fn": "compare",
+      "a": "Ó",
+      "b": "ó",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-231",
+      "fn": "compare",
+      "a": "ổ",
+      "b": "Ồ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-238",
+      "fn": "compare",
+      "a": "Ộ",
+      "b": "ộ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-245",
+      "fn": "compare",
+      "a": "ỡ",
+      "b": "Ở",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-252",
+      "fn": "compare",
+      "a": "P",
+      "b": "p",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-259",
+      "fn": "compare",
+      "a": "ṕ",
+      "b": "P̃",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-266",
+      "fn": "compare",
+      "a": "Q̀",
+      "b": "q̀",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-273",
+      "fn": "compare",
+      "a": "q̣",
+      "b": "Q́",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-280",
+      "fn": "compare",
+      "a": "R̉",
+      "b": "r̉",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-287",
+      "fn": "compare",
+      "a": "s",
+      "b": "Ṛ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-294",
+      "fn": "compare",
+      "a": "S̃",
+      "b": "s̃",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-301",
+      "fn": "compare",
+      "a": "t̀",
+      "b": "T",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-308",
+      "fn": "compare",
+      "a": "T́",
+      "b": "t́",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-315",
+      "fn": "compare",
+      "a": "ủ",
+      "b": "Ù",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-322",
+      "fn": "compare",
+      "a": "Ụ",
+      "b": "ụ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-329",
+      "fn": "compare",
+      "a": "ữ",
+      "b": "Ử",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-336",
+      "fn": "compare",
+      "a": "V",
+      "b": "v",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-343",
+      "fn": "compare",
+      "a": "v́",
+      "b": "Ṽ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-350",
+      "fn": "compare",
+      "a": "Ẁ",
+      "b": "ẁ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-357",
+      "fn": "compare",
+      "a": "ẉ",
+      "b": "Ẃ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-364",
+      "fn": "compare",
+      "a": "X̉",
+      "b": "x̉",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-371",
+      "fn": "compare",
+      "a": "y",
+      "b": "X̣",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-378",
+      "fn": "compare",
+      "a": "Ỹ",
+      "b": "ỹ",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-385",
+      "fn": "compare",
+      "a": "z̀",
+      "b": "Z",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "order-rev-392",
+      "fn": "compare",
+      "a": "Ź",
+      "b": "ź",
+      "expected": 1,
+      "note": "reverse of an adjacent pair, so a constant comparator cannot pass"
+    },
+    {
+      "id": "self-000",
+      "fn": "compare",
+      "a": "a",
+      "b": "a",
+      "expected": 0
+    },
+    {
+      "id": "self-011",
+      "fn": "compare",
+      "a": "Ạ",
+      "b": "Ạ",
+      "expected": 0
+    },
+    {
+      "id": "self-022",
+      "fn": "compare",
+      "a": "ặ",
+      "b": "ặ",
+      "expected": 0
+    },
+    {
+      "id": "self-033",
+      "fn": "compare",
+      "a": "Ấ",
+      "b": "Ấ",
+      "expected": 0
+    },
+    {
+      "id": "self-044",
+      "fn": "compare",
+      "a": "b́",
+      "b": "b́",
+      "expected": 0
+    },
+    {
+      "id": "self-055",
+      "fn": "compare",
+      "a": "C̃",
+      "b": "C̃",
+      "expected": 0
+    },
+    {
+      "id": "self-066",
+      "fn": "compare",
+      "a": "d̃",
+      "b": "d̃",
+      "expected": 0
+    },
+    {
+      "id": "self-077",
+      "fn": "compare",
+      "a": "Đ̉",
+      "b": "Đ̉",
+      "expected": 0
+    },
+    {
+      "id": "self-088",
+      "fn": "compare",
+      "a": "ẻ",
+      "b": "ẻ",
+      "expected": 0
+    },
+    {
+      "id": "self-099",
+      "fn": "compare",
+      "a": "Ề",
+      "b": "Ề",
+      "expected": 0
+    },
+    {
+      "id": "self-110",
+      "fn": "compare",
+      "a": "f̀",
+      "b": "f̀",
+      "expected": 0
+    },
+    {
+      "id": "self-121",
+      "fn": "compare",
+      "a": "G",
+      "b": "G",
+      "expected": 0
+    },
+    {
+      "id": "self-132",
+      "fn": "compare",
+      "a": "h",
+      "b": "h",
+      "expected": 0
+    },
+    {
+      "id": "self-143",
+      "fn": "compare",
+      "a": "Ḥ",
+      "b": "Ḥ",
+      "expected": 0
+    },
+    {
+      "id": "self-154",
+      "fn": "compare",
+      "a": "ị",
+      "b": "ị",
+      "expected": 0
+    },
+    {
+      "id": "self-165",
+      "fn": "compare",
+      "a": "J́",
+      "b": "J́",
+      "expected": 0
+    },
+    {
+      "id": "self-176",
+      "fn": "compare",
+      "a": "ḱ",
+      "b": "ḱ",
+      "expected": 0
+    },
+    {
+      "id": "self-187",
+      "fn": "compare",
+      "a": "L̃",
+      "b": "L̃",
+      "expected": 0
+    },
+    {
+      "id": "self-198",
+      "fn": "compare",
+      "a": "m̃",
+      "b": "m̃",
+      "expected": 0
+    },
+    {
+      "id": "self-209",
+      "fn": "compare",
+      "a": "N̉",
+      "b": "N̉",
+      "expected": 0
+    },
+    {
+      "id": "self-220",
+      "fn": "compare",
+      "a": "ỏ",
+      "b": "ỏ",
+      "expected": 0
+    },
+    {
+      "id": "self-231",
+      "fn": "compare",
+      "a": "Ồ",
+      "b": "Ồ",
+      "expected": 0
+    },
+    {
+      "id": "self-242",
+      "fn": "compare",
+      "a": "ờ",
+      "b": "ờ",
+      "expected": 0
+    },
+    {
+      "id": "self-253",
+      "fn": "compare",
+      "a": "P",
+      "b": "P",
+      "expected": 0
+    },
+    {
+      "id": "self-264",
+      "fn": "compare",
+      "a": "q",
+      "b": "q",
+      "expected": 0
+    },
+    {
+      "id": "self-275",
+      "fn": "compare",
+      "a": "Q̣",
+      "b": "Q̣",
+      "expected": 0
+    },
+    {
+      "id": "self-286",
+      "fn": "compare",
+      "a": "ṛ",
+      "b": "ṛ",
+      "expected": 0
+    },
+    {
+      "id": "self-297",
+      "fn": "compare",
+      "a": "Ś",
+      "b": "Ś",
+      "expected": 0
+    },
+    {
+      "id": "self-308",
+      "fn": "compare",
+      "a": "t́",
+      "b": "t́",
+      "expected": 0
+    },
+    {
+      "id": "self-319",
+      "fn": "compare",
+      "a": "Ũ",
+      "b": "Ũ",
+      "expected": 0
+    },
+    {
+      "id": "self-330",
+      "fn": "compare",
+      "a": "ữ",
+      "b": "ữ",
+      "expected": 0
+    },
+    {
+      "id": "self-341",
+      "fn": "compare",
+      "a": "V̉",
+      "b": "V̉",
+      "expected": 0
+    },
+    {
+      "id": "self-352",
+      "fn": "compare",
+      "a": "w̉",
+      "b": "w̉",
+      "expected": 0
+    },
+    {
+      "id": "self-363",
+      "fn": "compare",
+      "a": "X̀",
+      "b": "X̀",
+      "expected": 0
+    },
+    {
+      "id": "self-374",
+      "fn": "compare",
+      "a": "ỳ",
+      "b": "ỳ",
+      "expected": 0
+    },
+    {
+      "id": "self-385",
+      "fn": "compare",
+      "a": "Z",
+      "b": "Z",
+      "expected": 0
+    },
+    {
+      "id": "nfc-vs-nfd-0097",
+      "fn": "compare",
+      "a": "a",
+      "b": "a",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0258",
+      "fn": "compare",
+      "a": "Ă",
+      "b": "Ă",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-7847",
+      "fn": "compare",
+      "a": "ầ",
+      "b": "ầ",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0066",
+      "fn": "compare",
+      "a": "B̀",
+      "b": "B̀",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0099",
+      "fn": "compare",
+      "a": "c̉",
+      "b": "c̉",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0068",
+      "fn": "compare",
+      "a": "D̉",
+      "b": "D̉",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0273",
+      "fn": "compare",
+      "a": "đ̃",
+      "b": "đ̃",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-7868",
+      "fn": "compare",
+      "a": "Ẽ",
+      "b": "Ẽ",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-7871",
+      "fn": "compare",
+      "a": "ế",
+      "b": "ế",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0070",
+      "fn": "compare",
+      "a": "F́",
+      "b": "F́",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0103",
+      "fn": "compare",
+      "a": "g̣",
+      "b": "g̣",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-7716",
+      "fn": "compare",
+      "a": "Ḥ",
+      "b": "Ḥ",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0106",
+      "fn": "compare",
+      "a": "j",
+      "b": "j",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0075",
+      "fn": "compare",
+      "a": "K",
+      "b": "K",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0108",
+      "fn": "compare",
+      "a": "l̀",
+      "b": "l̀",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0077",
+      "fn": "compare",
+      "a": "M̀",
+      "b": "M̀",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0110",
+      "fn": "compare",
+      "a": "n̉",
+      "b": "n̉",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-7886",
+      "fn": "compare",
+      "a": "Ỏ",
+      "b": "Ỏ",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-7895",
+      "fn": "compare",
+      "a": "ỗ",
+      "b": "ỗ",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-7904",
+      "fn": "compare",
+      "a": "Ỡ",
+      "b": "Ỡ",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-7765",
+      "fn": "compare",
+      "a": "ṕ",
+      "b": "ṕ",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0081",
+      "fn": "compare",
+      "a": "Q́",
+      "b": "Q́",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-7771",
+      "fn": "compare",
+      "a": "ṛ",
+      "b": "ṛ",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-7778",
+      "fn": "compare",
+      "a": "Ṣ",
+      "b": "Ṣ",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0117",
+      "fn": "compare",
+      "a": "u",
+      "b": "u",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0431",
+      "fn": "compare",
+      "a": "Ư",
+      "b": "Ư",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0118",
+      "fn": "compare",
+      "a": "v̀",
+      "b": "v̀",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-7808",
+      "fn": "compare",
+      "a": "Ẁ",
+      "b": "Ẁ",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0120",
+      "fn": "compare",
+      "a": "x̉",
+      "b": "x̉",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-7926",
+      "fn": "compare",
+      "a": "Ỷ",
+      "b": "Ỷ",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    },
+    {
+      "id": "nfc-vs-nfd-0122",
+      "fn": "compare",
+      "a": "z̃",
+      "b": "z̃",
+      "expected": 0,
+      "note": "ICU collates composed and decomposed forms equally, so the key must normalise to NFC first"
+    }
+  ]
+}

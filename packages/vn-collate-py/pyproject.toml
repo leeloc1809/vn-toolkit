@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vn-collate"
+version = "0.1.0"
+description = "Vietnamese collation sort keys, derived from ICU. Store the key in a binary column and ORDER BY it, because Postgres and MySQL have no Vietnamese collation. Standard library only."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+keywords = [
+  "vietnamese",
+  "collation",
+  "collate",
+  "sort",
+  "sort-key",
+  "unicode",
+  "icu",
+  "postgres",
+  "mysql",
+  "i18n",
+  "vietnam",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: Vietnamese",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Text Processing :: Linguistic",
+  "Typing :: Typed",
+]
+# Intentionally empty. A collation library that drags in dependencies is a
+# dependency every consumer has to audit, and this one has to stay auditable
+# itself.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vn_collate"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/vn_collate", "tests", "README.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

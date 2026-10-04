@@ -7,9 +7,15 @@ you do not need to be the author to improve it.
 
 ## The one thing to understand first
 
-`conformance/vn-text-1.0.0.json` is the contract. Both the TypeScript and the
-Python port are validated against that exact same file. If you change behaviour
-in one port, the other must change with it, or CI fails.
+The conformance suites are the contract. Each one is read by both the
+TypeScript and the Python port of its package:
+
+```
+conformance/vn-text-1.0.0.json      156 cases, hand-authored
+conformance/vn-collate-1.0.0.json   519 cases, generated from ICU
+```
+
+If you change behaviour in one port, the other must change with it, or CI fails.
 
 Three things follow from that:
 
@@ -27,28 +33,43 @@ Three things follow from that:
 
 ```bash
 npm ci
-npm run verify          # typecheck + TypeScript suite + cross-port parity
+npm run verify          # typecheck + both TypeScript suites + both parity checks
 
-python packages/py/tests/test_conformance.py   # Python, no install needed
+python packages/vn-text-py/tests/test_conformance.py
+python packages/vn-collate-py/tests/test_conformance.py
 ```
 
 `npm run verify` is the same thing CI runs. If it passes locally, CI will pass.
 
-`scripts/verify-port-parity.mjs` is worth understanding: it re-implements the
-Python algorithm in JavaScript and checks it against the conformance file, then
-measures whether `str.isalnum()` and `\p{L}\p{N}` disagree on any character in
-the corpus. It runs without a Python interpreter, which is how a change to one
-port gets caught before the Python job even starts.
+Two parity scripts, and they answer different questions.
+
+`scripts/verify-port-parity.mjs` re-implements the `vn-text` Python algorithm
+in JavaScript and checks it against the conformance file, then measures whether
+`str.isalnum()` and `\p{L}\p{N}` disagree on any character in the corpus. It
+runs without a Python interpreter, which is how a change to one port gets caught
+before the Python job even starts.
+
+`scripts/verify-collate-parity.mjs` does the opposite and is the stronger check:
+it runs both *real* ports over 445 strings and compares sort keys byte for byte.
+A suite pins the order, which a self-consistent port satisfies on its own — two
+implementations can order identically and still emit keys a database sorts
+differently, and that stays invisible until someone stores a key written by Node
+next to one written by Python.
 
 ## Good first issues
 
 These are all real gaps, sized to be approachable:
 
-- **Add conformance cases.** The corpus is hand-authored and Vietnamese coverage
-  is thin outside names, provinces and a handful of everyday words. Product
-  listings, street addresses, menu items, legal text, banking terms — all
-  untested. A PR that adds cases *and* finds a bug in an implementation is
-  especially welcome.
+- **Add conformance cases.** The `vn-text` corpus is hand-authored and
+  Vietnamese coverage is thin outside names, provinces and a handful of everyday
+  words. Product listings, street addresses, menu items, legal text, banking
+  terms — all untested. A PR that adds cases *and* finds a bug in an
+  implementation is especially welcome.
+- **Extend the collation coverage.** `vn-collate` currently handles the
+  Vietnamese letters, the ten digits and case. Punctuation, spacing and Latin
+  Extended are deliberately not done, and the README says exactly where the
+  current behaviour diverges from ICU. See "Known limitations" in the
+  `vn-collate` README — that section is the work list.
 - **Add tone-mark canonicalisation.** `hóa` and `hòa` are not unified yet,
   because the answer depends on whether a syllable is open or closed, and the
   nucleus table needs native-speaker validation. See "What this is not" in the
@@ -64,10 +85,15 @@ These are all real gaps, sized to be approachable:
 - Keep it in `core.py` / `index.ts` as a pure function. No I/O, no configuration
   object, no options bag. Every current function is a pure string transform and
   that is what makes the conformance suite possible.
-- The Python module must stay pure ASCII source. Code points are written as
-  `chr(0xNNNN)`, never as literal characters or `\uXXXX` escapes — combining
-  marks are invisible in an editor and a stray reformat can corrupt a character
-  class that still compiles. `_unicode.py` has the reasoning.
+- The Python module must not contain **literal combining marks** — anything in
+  Unicode categories `Mn`, `Mc` or `Me`. Write those as `chr(0xNNNN)`. A
+  combining mark is invisible in an editor, so one typed by accident survives a
+  reformat, still imports, and still passes a smoke test; `_unicode.py` has the
+  reasoning. CI enforces this.
+  Precomposed letters are the opposite case and stay as literals: `Đ` (U+0110) is
+  fully visible and is what a Vietnamese developer expects to read. Forcing it
+  through `chr()` would trade correctness-by-inspection for nothing. READMEs and
+  the JSON suites are meant to be read, so they are exempt entirely.
 - Add the function name to `functions` in the conformance file and give it at
   least one case. CI asserts that every declared function has coverage.
 
