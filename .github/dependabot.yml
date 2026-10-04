@@ -23,6 +23,20 @@ updates:
     labels:
       - dependencies
 
+  # One entry per package, not a glob. Dependabot has no glob for directories,
+  # and a new package that is not listed here is silently never updated -- the
+  # failure mode is invisible, because nothing reports an unwatched directory.
+  - package-ecosystem: pip
+    directory: "/packages/vn-collate-py"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    labels:
+      - dependencies
+
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
