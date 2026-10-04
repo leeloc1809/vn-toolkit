@@ -1,5 +1,14 @@
 name: CI
 
+# Runner images are pinned deliberately, not for convenience.
+#
+# `ubuntu-latest` migrates to a new image without warning, which turns a
+# conformance suite into a moving target: a green build on main and a red build
+# on a PR would differ for reasons nobody can find in a diff. Dependabot flags
+# the migration as an error, which is what surfaced this in the first place.
+#
+# When bumping the pin, change all three jobs together and let CI confirm.
+
 on:
   push:
     branches: [main]
@@ -13,7 +22,7 @@ concurrency:
 jobs:
   typescript:
     name: TypeScript
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
@@ -37,7 +46,7 @@ jobs:
 
   python:
     name: Python
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
@@ -61,7 +70,7 @@ jobs:
 
   conformance-file:
     name: Conformance file is well-formed
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
