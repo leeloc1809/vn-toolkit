@@ -4,6 +4,15 @@
   "description": "Correct Unicode primitives for Vietnamese text: deaccent, fold, normalize, stripStroke. Ships a cross-language conformance suite shared with the Python port.",
   "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leeloc1809/vn-toolkit.git",
+    "directory": "packages/vn-text-ts"
+  },
+  "bugs": {
+    "url": "https://github.com/leeloc1809/vn-toolkit/issues"
+  },
+  "homepage": "https://github.com/leeloc1809/vn-toolkit#readme",
   "engines": {
     "node": ">=18"
   },
@@ -18,8 +27,14 @@
   },
   "files": [
     "dist",
+    "src",
     "README.md"
   ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  },
   "keywords": [
     "vietnamese",
     "unicode",
@@ -37,7 +52,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepublishOnly": "npm run build"
+    "prepack": "npm run build && node ../../scripts/stage-license.mjs ."
   },
   "devDependencies": {
     "@types/node": "^26.6.3",

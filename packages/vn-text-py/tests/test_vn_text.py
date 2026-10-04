@@ -38,6 +38,20 @@ CONFORMANCE_PATH = (
 )
 
 
+def test_package_ships_a_py_typed_marker() -> None:
+    # The package declares "Typing :: Typed" on the PyPI page. Without this
+    # marker a type checker ignores every annotation in the module, so the claim
+    # is false and a consumer running mypy gets "untyped import" from a library
+    # that is annotated throughout.
+    import vn_text
+
+    marker = Path(vn_text.__file__).resolve().parent / "py.typed"
+    assert marker.exists(), (
+        f"{marker} is missing. The wheel must contain it, or drop the "
+        f"Typing :: Typed classifier instead of advertising types it hides."
+    )
+
+
 def load_suite() -> dict[str, Any]:
     with CONFORMANCE_PATH.open(encoding="utf-8") as fh:
         return json.load(fh)

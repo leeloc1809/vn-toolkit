@@ -4,6 +4,15 @@
   "description": "Vietnamese collation sort keys, derived from ICU. Store the key in a binary column and ORDER BY it, because Postgres and MySQL have no Vietnamese collation. Zero runtime dependencies.",
   "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leeloc1809/vn-toolkit.git",
+    "directory": "packages/vn-collate-ts"
+  },
+  "bugs": {
+    "url": "https://github.com/leeloc1809/vn-toolkit/issues"
+  },
+  "homepage": "https://github.com/leeloc1809/vn-toolkit#readme",
   "engines": {
     "node": ">=18"
   },
@@ -18,8 +27,14 @@
   },
   "files": [
     "dist",
+    "src",
     "README.md"
   ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  },
   "keywords": [
     "vietnamese",
     "collation",
@@ -38,7 +53,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepublishOnly": "npm run build"
+    "prepack": "npm run build && node ../../scripts/stage-license.mjs ."
   },
   "devDependencies": {
     "@types/node": "^22.7.5",

@@ -9,6 +9,7 @@ description = "Vietnamese collation sort keys, derived from ICU. Store the key i
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
+license-files = { paths = ["LICENSE"] }
 keywords = [
   "vietnamese",
   "collation",
@@ -36,6 +37,7 @@ classifiers = [
   "Topic :: Text Processing :: Linguistic",
   "Typing :: Typed",
 ]
+
 # Intentionally empty. A collation library that drags in dependencies is a
 # dependency every consumer has to audit, and this one has to stay auditable
 # itself.
@@ -44,11 +46,16 @@ dependencies = []
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
 
+[project.urls]
+Homepage = "https://github.com/leeloc1809/vn-toolkit"
+Repository = "https://github.com/leeloc1809/vn-toolkit"
+Issues = "https://github.com/leeloc1809/vn-toolkit/issues"
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/vn_collate"]
 
 [tool.hatch.build.targets.sdist]
-include = ["src/vn_collate", "tests", "README.md"]
+include = ["src/vn_collate", "tests", "README.md", "LICENSE"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

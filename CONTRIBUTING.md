@@ -29,6 +29,21 @@ Three things follow from that:
 3. **A fix needs to land in both ports** unless the change is genuinely
    language-specific, in which case say so in the PR description.
 
+## Releasing
+
+See [RELEASING.md](./RELEASING.md). The short version: push a `v*` tag, and the
+release workflow runs the whole test suite as a gate before anything is
+published.
+
+Two rules that apply to releases specifically, because both failures are
+permanent:
+
+- **A published version cannot be reused.** npm and PyPI treat the name as
+  taken forever. Getting a version wrong costs it permanently, and the mistake
+  is invisible until someone tries to fix it.
+- **Never publish from a branch.** Only a tag publishes, and only after
+  `verify` is green.
+
 ## Running the tests
 
 ```bash

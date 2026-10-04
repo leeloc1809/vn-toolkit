@@ -1,0 +1,195 @@
+name: Release
+
+# Publishing is the one irreversible thing this repository does, so it is gated
+# on a tag and on the full test suite passing. Nothing publishes from a branch.
+#
+#   git tag v0.1.0 && git push origin v0.1.0
+#
+# The tag has to agree with the version in all four manifests. That is checked
+# here rather than trusted, because a mismatch publishes 0.1.0 under a v0.2.0
+# tag and nobody notices until someone tries to install the tag.
+#
+# Authentication works two ways and the workflow picks whichever is available:
+#
+#   - Trusted publishing (OIDC, no secret). Preferred. Configure it once per
+#     package on the registry's website, then delete the token secrets.
+#   - API token in a repository secret. Set up in a minute, and it does not
+#     expire on a schedule you have to remember.
+#
+# See RELEASING.md.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  # Manual run, for a version already tagged. The tag is taken from the release
+  # field so it still has to exist.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag to publish, e.g. v0.1.0'
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Verify
+    runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '20'
+          cache: npm
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Check the tag matches every manifest
+        id: version
+        env:
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+          REF: ${{ github.ref }}
+        run: |
+          set -euo pipefail
+          # A tag push reports refs/tags/v0.1.0; a manual run reports whatever
+          # was typed into the dispatch field.
+          source_tag="${INPUT_TAG:-${REF#refs/tags/}}"
+          if [ -z "$source_tag" ]; then
+            echo "::error::no tag given and this is not a tag push"
+            exit 1
+          fi
+          if [ "${source_tag#v}" = "$source_tag" ]; then
+            echo "::error::tag '$source_tag' must start with v, e.g. v0.1.0"
+            exit 1
+          fi
+          tag="${source_tag#v}"
+          echo "tag version: $tag"
+
+          for f in packages/vn-text-ts/package.json packages/vn-collate-ts/package.json; do
+            got=$(node -p "require('./$f').version")
+            if [ "$got" != "$tag" ]; then
+              echo "::error::$f says $got but the tag says $tag"
+              exit 1
+            fi
+            echo "  $f -> $got"
+          done
+
+          for f in packages/vn-text-py/pyproject.toml packages/vn-collate-py/pyproject.toml; do
+            got=$(sed -n 's/^version = "\(.*\)"/\1/p' "$f" | head -1)
+            if [ "$got" != "$tag" ]; then
+              echo "::error::$f says $got but the tag says $tag"
+              exit 1
+            fi
+            echo "  $f -> $got"
+          done
+
+          echo "version=$tag" >> "$GITHUB_OUTPUT"
+
+      - run: npm ci
+      - name: Typecheck, test, build, both parity checks
+        run: npm run verify
+
+      - name: Python conformance, both ports
+        run: |
+          python packages/vn-text-py/tests/test_vn_text.py
+          python packages/vn-collate-py/tests/test_vn_collate.py
+          python -m pip install --quiet pytest
+          pytest packages/vn-text-py/tests packages/vn-collate-py/tests -q
+
+  npm:
+    name: Publish to npm
+    needs: verify
+    runs-on: ubuntu-24.04
+    # id-token: write is what makes trusted publishing possible. Without a
+    # secret set, the npm CLI exchanges this token for a short-lived credential.
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '20'
+          cache: npm
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: npm ci
+
+      - name: Authenticate
+        # Only set the token if one exists. Trusted publishing needs no token,
+        # and passing an empty NODE_AUTH_TOKEN is worse than passing none.
+        run: |
+          if [ -n "${{ secrets.NPM_TOKEN }}" ]; then
+            echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" \
+              > ~/.npmrc
+            echo "using the NPM_TOKEN secret"
+          else
+            echo "no NPM_TOKEN secret, using trusted publishing"
+          fi
+
+      - name: Publish
+        run: |
+          set -euo pipefail
+          for pkg in @vntoolkit/vn-text @vntoolkit/vn-collate; do
+            echo "::group::npm publish $pkg"
+            # --provenance attaches the build to the commit, which is what
+            # makes the registry badge meaningful. It needs id-token: write.
+            npm publish --workspace "$pkg" --provenance --access public
+            echo "::endgroup::"
+          done
+
+  pypi:
+    name: Publish to PyPI
+    needs: verify
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Build
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet build
+          for pkg in packages/vn-text-py packages/vn-collate-py; do
+            node scripts/stage-license.mjs "$pkg"
+            python -m build --outdir dist "$pkg"
+          done
+
+      - name: Check the artefacts
+        run: |
+          set -euo pipefail
+          ls -la dist
+          for f in dist/*.whl; do
+            echo "::group::$f"
+            python -m zipfile -l "$f"
+            echo "::endgroup::"
+          done
+
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          # Omit the password entirely to use trusted publishing. pypa skips the
+          # token when it is absent and falls back to the OIDC exchange.
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          packages-dir: dist
+          skip-existing: true

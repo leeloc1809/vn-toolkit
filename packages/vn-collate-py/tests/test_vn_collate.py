@@ -46,6 +46,20 @@ def test_schema_is_understood() -> None:
     assert SUITE["schema"] == "vn-collate-conformance/1", SUITE["schema"]
 
 
+def test_package_ships_a_py_typed_marker() -> None:
+    # The package declares "Typing :: Typed" on the PyPI page. Without this
+    # marker a type checker ignores every annotation in the module, so the claim
+    # is false and a consumer running mypy gets "untyped import" from a library
+    # that is annotated throughout.
+    import vn_collate
+
+    marker = Path(vn_collate.__file__).resolve().parent / "py.typed"
+    assert marker.exists(), (
+        f"{marker} is missing. The wheel must contain it, or drop the "
+        f"Typing :: Typed classifier instead of advertising types it hides."
+    )
+
+
 def test_suite_records_its_provenance() -> None:
     # If a future ICU disagrees, this string is how you find out what moved.
     assert "ICU " in SUITE["derivedFrom"], SUITE["derivedFrom"]

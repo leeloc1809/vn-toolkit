@@ -1,4 +1,4 @@
-name: CI
+﻿name: CI
 
 # Runner images are pinned deliberately, not for convenience.
 #
@@ -171,3 +171,51 @@ jobs:
           print("primary order:", " ".join(suite["primaryOrder"]))
           print("derived from:", suite["derivedFrom"])
           PY
+
+  packaging:
+    name: Published artefacts are complete
+    runs-on: ubuntu-24.04
+    # Everything here catches a class of bug no unit test can see. A file missing
+    # from a tarball still imports perfectly from the repository and only fails
+    # once somebody installs the published package -- which is the worst time.
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '20'
+          cache: npm
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - run: npm ci
+      - run: npm run build
+
+      # Each of these has been proven to fail when the thing it checks is broken.
+      # A check that cannot fail is decoration, so they are not written inline in
+      # YAML where nobody would notice they stopped working.
+      - name: npm tarballs are complete
+        run: node scripts/check-tarballs.mjs
+
+      - name: Wheels and sdists are complete
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet build
+          for pkg in packages/vn-text-py packages/vn-collate-py; do
+            node scripts/stage-license.mjs "$pkg"
+            python -m build --outdir dist "$pkg"
+          done
+          python scripts/check-artifacts.py dist
+
+      - name: The four manifests agree on one version
+        run: bash scripts/check-release-tag.sh
+
+      - name: The staged LICENSE is never committed
+        run: |
+          set -euo pipefail
+          if git status --porcelain -- 'packages/*/LICENSE' 'packages/*/*/LICENSE' | grep -q .; then
+            echo "::error::a staged LICENSE copy is tracked in git"
+            git status --porcelain -- 'packages/*/LICENSE' 'packages/*/*/LICENSE'
+            exit 1
+          fi
+          echo "no staged LICENSE copies in git"
