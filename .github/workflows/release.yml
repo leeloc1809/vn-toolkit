@@ -80,8 +80,14 @@ jobs:
 
       - name: Python conformance, every port
         run: |
-          for pkg in packages/vn-*-py; do
-            python "$pkg/tests/test_$(basename "$pkg" | sed 's/-py$//').py"
+          set -euo pipefail
+          # Glob the test files themselves rather than deriving a name from the
+          # package directory. The directory is vn-collate-py and the file is
+          # test_vn_collate.py, and a derivation that forgets to swap the hyphen
+          # for an underscore fails at the worst possible moment: during a
+          # release, after the tag exists, for a file that was there all along.
+          for test in packages/vn-*-py/tests/test_*.py; do
+            python "$test"
           done
           python -m pip install --quiet pytest
           pytest packages/vn-*-py/tests -q

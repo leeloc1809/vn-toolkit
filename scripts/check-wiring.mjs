@@ -279,6 +279,51 @@ check('npm run verify reaches every parity script', () => {
   return `${parityScripts.length} parity scripts, all reachable`;
 });
 
+/* 12. No workflow names a file under packages/ that does not exist. */
+check('every file path a workflow names actually exists', () => {
+  // The failure this is for: a workflow that names a file under packages/ that
+  // is not there. It caught a renamed test file, and it catches the class of
+  // typo where a path is edited and a package is renamed in one commit.
+  //
+  // What it does NOT catch, and this needs saying: a path built at run time
+  // from a directory name. The original bug in release.yml was
+  // `python "$pkg/tests/test_$(basename "$pkg" | sed 's/-py$//').py"`, which
+  // derives test_vn-collate.py from vn-collate-py and fails only during a
+  // release. There is no literal path in the YAML for this check to look at.
+  // The fix for that class is not a better check, it is a glob, so the name is
+  // never derived in the first place.
+  //
+  // Globs are skipped: they are the correct way to write this, and they resolve
+  // themselves.
+  const workflowDir = resolve(ROOT, '.github/workflows');
+  const workflows = readdirSync(workflowDir).filter((f) => /\.ya?ml$/.test(f));
+  const missing = [];
+  let checked = 0;
+
+  for (const name of workflows) {
+    const text = read(`.github/workflows/${name}`);
+    for (const match of text.matchAll(/packages\/[A-Za-z0-9_*.\/-]+/g)) {
+      const path = match[0].replace(/[.,)]*$/, '');
+      // A glob is the correct way to write this and it resolves itself. The
+      // asterisk has to be inside the character class or the match stops short
+      // of it and "packages/vn-" gets reported as a missing file.
+      if (path.includes('*')) continue;
+      checked += 1;
+      if (!existsSync(resolve(ROOT, path))) {
+        missing.push(`${name} names ${path}`);
+      }
+    }
+  }
+
+  if (missing.length > 0) {
+    throw new Error(
+      `a workflow names a path that does not exist:\n    ${missing.join('\n    ')}\n` +
+        `  Prefer a glob over packages/vn-*-py/... so the name is never derived.`,
+    );
+  }
+  return `${checked} paths across ${workflows.length} workflows, all present`;
+});
+
 for (const line of checks) console.log(line);
 console.log();
 
