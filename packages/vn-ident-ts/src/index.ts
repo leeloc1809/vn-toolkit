@@ -1,5 +1,5 @@
 /**
- * @vntoolkit/vn-ident
+ * vn-ident
  *
  * Vietnamese tax codes, mobile numbers and card numbers, validated against the
  * sources that define them rather than against a regex somebody liked.

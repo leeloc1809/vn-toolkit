@@ -1,13 +1,13 @@
-# @vntoolkit/vn-text
+# vn-text
 
 Correct Unicode primitives for Vietnamese text. Zero runtime dependencies.
 
 ```bash
-npm install @vntoolkit/vn-text
+npm install vn-text
 ```
 
 ```ts
-import { fold, deaccent, stripStroke, normalize, isVietnamese } from '@vntoolkit/vn-text';
+import { fold, deaccent, stripStroke, normalize, isVietnamese } from 'vn-text';
 
 fold('Đặng Minh Anh');    // 'dang minh anh'
 fold('Hà Nội, Việt Nam!'); // 'ha noi viet nam'
@@ -43,7 +43,7 @@ npm run build
 
 Deliberately narrow. Tone-mark canonicalisation (`hóa` vs `hòa`) and fuzzy
 matching for unaccented-keyboard input are not here. Sorting is not here
-either — it is [`@vntoolkit/vn-collate`](../vn-collate-ts), which shares this
+either — it is [`vn-collate`](../vn-collate-ts), which shares this
 repository's conformance infrastructure. See the
 [root README](../../README.md#what-this-is-not) for the reasoning.
 

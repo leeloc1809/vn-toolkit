@@ -1,15 +1,15 @@
-# @vntoolkit/vn-ident
+# vn-ident
 
 Vietnamese tax codes, mobile numbers and card numbers — validated against the
 sources that define them, not against a regex somebody liked. Zero runtime
 dependencies.
 
 ```bash
-npm install @vntoolkit/vn-ident
+npm install vn-ident
 ```
 
 ```ts
-import { isValidMst, mstCheckDigit, detectCarrier, isValidCccd, parseCccd, classifyId } from '@vntoolkit/vn-ident';
+import { isValidMst, mstCheckDigit, detectCarrier, isValidCccd, parseCccd, classifyId } from 'vn-ident';
 
 isValidMst('0100047516');      // true  — the tenth digit is computed, not pattern-matched
 isValidMst('0100047517');      // false

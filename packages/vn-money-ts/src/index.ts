@@ -1,5 +1,5 @@
 /**
- * @vntoolkit/vn-money
+ * vn-money
  *
  * Vietnamese money, on integers, because VND has no minor unit.
  *

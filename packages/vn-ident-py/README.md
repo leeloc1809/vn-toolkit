@@ -24,7 +24,7 @@ parse_cccd("001087123456")       # CardNumber(province_code='001', province='Hà
 classify_id("0912345678")        # 'phone'
 ```
 
-The TypeScript port is [`@vntoolkit/vn-ident`](https://www.npmjs.com/package/@vntoolkit/vn-ident)
+The TypeScript port is [`vn-ident`](https://www.npmjs.com/package/vn-ident)
 and the two are held to the same
 [conformance suite](../../conformance/vn-ident-1.0.0.json) — 258 cases, read by
 both. That suite is the contract; this package is one implementation of it.

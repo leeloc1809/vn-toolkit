@@ -1,5 +1,5 @@
 {
-  "name": "@vntoolkit/vn-text",
+  "name": "vn-text",
   "version": "0.1.0",
   "description": "Correct Unicode primitives for Vietnamese text: deaccent, fold, normalize, stripStroke. Ships a cross-language conformance suite shared with the Python port.",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@vntoolkit/vn-ident",
+  "name": "vn-ident",
   "version": "0.1.0",
   "description": "Vietnamese tax codes, mobile numbers and card numbers, validated against the sources that define them. A tax code has a check digit; a card number does not, and this says so. Zero runtime dependencies.",
   "license": "MIT",

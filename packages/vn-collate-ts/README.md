@@ -1,13 +1,13 @@
-# @vntoolkit/vn-collate
+# vn-collate
 
 Vietnamese collation sort keys, derived from ICU. Zero runtime dependencies.
 
 ```bash
-npm install @vntoolkit/vn-collate
+npm install vn-collate
 ```
 
 ```ts
-import { collateKey, compare, sort } from '@vntoolkit/vn-collate';
+import { collateKey, compare, sort } from 'vn-collate';
 
 sort(['Đặng Minh', 'An Nguyễn', 'Bảo Châu', 'Lê Duẩn']);
 // ['An Nguyễn', 'Bảo Châu', 'Đặng Minh', 'Lê Duẩn']

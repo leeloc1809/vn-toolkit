@@ -1,5 +1,5 @@
 {
-  "name": "@vntoolkit/vn-money",
+  "name": "vn-money",
   "version": "0.1.0",
   "description": "Vietnamese money on integers, because VND has no minor unit. Format, parse, apportion without losing a single dong, and read an amount out in Vietnamese words. Zero runtime dependencies.",
   "license": "MIT",

@@ -99,7 +99,7 @@ const CASES = [
     script: 'check-wiring.mjs',
     name: 'the release job builds a package and never publishes it',
     apply: () => {
-      write(TARGETS.release, originals.release.replace('@vntoolkit/vn-money', '@vntoolkit/vn-money-DISABLED'));
+      write(TARGETS.release, originals.release.replace('vn-money', 'vn-money-DISABLED'));
     },
     expect: /never publishes/i,
   },

@@ -221,8 +221,8 @@ check('the release job publishes every TypeScript package', () => {
   const missing = tsDirs.filter((d) => {
     // Whole token, not a substring, and not a whitespace boundary either: a
     // publish loop ends the name with ";", not a space. What matters is whether
-    // the name could still be extended -- "@vntoolkit/vn-money" is a prefix of
-    // "@vntoolkit/vn-money-DISABLED" and of a commented-out line, and a plain
+    // the name could still be extended -- "vn-money" is a prefix of
+    // "vn-money-DISABLED" and of a commented-out line, and a plain
     // includes() would call both of those published.
     const name = readJson(join('packages', d, 'package.json')).name.replace(
       /[.*+?^${}()|[\]\\]/g,

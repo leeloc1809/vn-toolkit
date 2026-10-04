@@ -1,5 +1,5 @@
 {
-  "name": "@vntoolkit/vn-collate",
+  "name": "vn-collate",
   "version": "0.1.0",
   "description": "Vietnamese collation sort keys, derived from ICU. Store the key in a binary column and ORDER BY it, because Postgres and MySQL have no Vietnamese collation. Zero runtime dependencies.",
   "license": "MIT",

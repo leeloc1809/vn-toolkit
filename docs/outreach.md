@@ -14,10 +14,10 @@ Checked against the live registries on 2026-10-04:
 
 | package | npm | PyPI |
 |---|---|---|
-| `@vntoolkit/vn-text` | **404** | 0.1.0 |
-| `@vntoolkit/vn-collate` | **404** | 0.1.0 |
-| `@vntoolkit/vn-money` | **404** | **404** |
-| `@vntoolkit/vn-ident` | **404** | **404** |
+| `vn-text` | **404** | 0.1.0 |
+| `vn-collate` | **404** | 0.1.0 |
+| `vn-money` | **404** | **404** |
+| `vn-ident` | **404** | **404** |
 
 Every draft below contains an install command. A post that sends a reader to a
 404 costs more credibility than it earns, and on Reddit it is the kind of thing
@@ -267,10 +267,10 @@ dư bằng nhau, ai được thêm đồng?
 Đã xong 4 package cho tiếng Việt, mỗi cái có TypeScript + Python + cùng một
 file conformance, và cả hai port đều đọc chính file đó.
 
-  npm i @vntoolkit/vn-text      pip i vn-text
-  npm i @vntoolkit/vn-collate   pip i vn-collate
-  npm i @vntoolkit/vn-money     pip i vn-money
-  npm i @vntoolkit/vn-ident     pip i vn-ident
+  npm i vn-text      pip i vn-text
+  npm i vn-collate   pip i vn-collate
+  npm i vn-money     pip i vn-money
+  npm i vn-ident     pip i vn-ident
 
 Số download hiện tại: 0. Mới đăng hôm nay.
 ```

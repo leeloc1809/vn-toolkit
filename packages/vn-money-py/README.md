@@ -19,7 +19,7 @@ to_words(15000)                 # 'mười lăm nghìn'
 is_vnd(0.1 + 0.2)               # False
 ```
 
-The TypeScript port is [`@vntoolkit/vn-money`](https://www.npmjs.com/package/@vntoolkit/vn-money)
+The TypeScript port is [`vn-money`](https://www.npmjs.com/package/vn-money)
 and the two are held to the same
 [conformance suite](../../conformance/vn-money-1.0.0.json) — 1232 cases, read by
 both. That suite is the contract; this package is one implementation of it.

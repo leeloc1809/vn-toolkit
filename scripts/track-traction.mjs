@@ -27,7 +27,7 @@
  */
 
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -36,6 +36,38 @@ const ROOT = resolve(HERE, '..');
 const HISTORY = resolve(ROOT, '.traction/history.json');
 
 const REPO = 'leeloc1809/vn-toolkit';
+
+/**
+ * The published names, read out of the manifests rather than listed here.
+ *
+ * This was a hardcoded pair of names and it went stale the moment a third
+ * package landed: vn-money and vn-ident were published, and this reported two
+ * of four, which is a wrong number rather than a missing one. Nothing else in
+ * the repository would have caught it either, because a list of registry names
+ * in a reporting script looks like data, not like a list that has to be
+ * maintained.
+ *
+ * The npm and PyPI names are read separately rather than assumed equal. They
+ * are the same strings today, and if they ever diverge this is where the
+ * divergence becomes visible instead of silently reporting one package's
+ * numbers under another's name.
+ */
+function publishedNames() {
+  const npm = readdirSync(resolve(ROOT, 'packages'))
+    .filter((d) => d.endsWith('-ts'))
+    .sort()
+    .map((d) => JSON.parse(readFileSync(resolve(ROOT, 'packages', d, 'package.json'), 'utf8')).name);
+
+  const pypi = readdirSync(resolve(ROOT, 'packages'))
+    .filter((d) => d.endsWith('-py'))
+    .sort()
+    .map((d) => /^name\s*=\s*"([^"]+)"/m.exec(
+      readFileSync(resolve(ROOT, 'packages', d, 'pyproject.toml'), 'utf8'),
+    )?.[1])
+    .filter(Boolean);
+
+  return { npm, pypi };
+}
 
 /**
  * Logins that count as the project itself rather than as community.
@@ -48,8 +80,8 @@ const REPO = 'leeloc1809/vn-toolkit';
  */
 const OWN_LOGINS = new Set([REPO.split('/')[0].toLowerCase()]);
 
-const NPM_PACKAGES = ['@vntoolkit/vn-text', '@vntoolkit/vn-collate'];
-const PYPI_PACKAGES = ['vn-text', 'vn-collate'];
+const NPM_PACKAGES = publishedNames().npm;
+const PYPI_PACKAGES = publishedNames().pypi;
 
 const args = new Set(process.argv.slice(2));
 const SAVE = args.has('--save');
@@ -126,36 +158,68 @@ async function githubMetrics() {
   };
 }
 
-async function npmDownloads(name) {
-  const scoped = name.replace('/', '%2F');
-  const month = await fetchJson(
-    `https://api.npmjs.org/downloads/point/last-month/${name}`,
-  );
-  const week = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${name}`);
+/**
+ * Is this name on the registry?
+ *
+ * The registry, not the stats API. The downloads endpoints answer a different
+ * question, and inferring "published" from them is how a published package
+ * gets reported as unpublished: pypistats has no record at all for a package
+ * nobody has downloaded yet and answers 404, which is the same answer it gives
+ * for a package that does not exist. npm's downloads API is 404 for the same
+ * reason on a package that has never been fetched.
+ *
+ * Both were wrong in the same direction and neither looked like a bug -- the
+ * fields were present, the numbers were zero, and the report said four
+ * packages had never been published when all four were live on PyPI.
+ */
+async function isPublished(registryUrl) {
+  const response = await fetch(registryUrl, {
+    headers: { accept: 'application/json', 'user-agent': 'vn-toolkit-traction-tracker' },
+    signal: AbortSignal.timeout(20_000),
+  });
+  if (response.status === 404) return false;
+  if (!response.ok) return UNKNOWN;
+  return true;
+}
 
-  // A 404 means the package does not exist on npm yet, which is different from
-  // a package nobody is downloading.
-  const published = month !== UNKNOWN && !month?.__error;
-  if (!published) {
+async function npmDownloads(name) {
+  const escaped = name.replace('/', '%2F');
+  const published = await isPublished(`https://registry.npmjs.org/${escaped}`);
+
+  // A package on the registry that nobody has downloaded is published with a
+  // count of zero. A package the downloads API has never heard of has an
+  // unknown count, which is not the same claim and is reported as such.
+  const month = await fetchJson(
+    `https://api.npmjs.org/downloads/point/last-month/${escaped}`,
+  );
+  const week = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${escaped}`);
+
+  const count = (response) =>
+    response === UNKNOWN || response?.__error ? UNKNOWN : (response.downloads ?? UNKNOWN);
+
+  if (published === false) {
     return { published: false, monthly: UNKNOWN, weekly: UNKNOWN };
   }
-  return {
-    published: true,
-    monthly: month.downloads ?? UNKNOWN,
-    weekly: week?.downloads ?? UNKNOWN,
-  };
+  return { published, monthly: count(month), weekly: count(week) };
 }
 
 async function pypiDownloads(name) {
+  const published = await isPublished(`https://pypi.org/pypi/${encodeURIComponent(name)}/json`);
+
+  // pypistats 404s until a package has its first download. That is missing data
+  // about a live package, not evidence that the package is absent, so the
+  // counts are unknown and `published` is whatever the registry says.
   const stats = await fetchJson(`https://pypistats.org/api/packages/${name}/recent`);
-  if (stats === UNKNOWN || stats?.__error) {
+  const haveStats = stats !== UNKNOWN && !stats?.__error;
+
+  if (published === false) {
     return { published: false, lastMonth: UNKNOWN, lastWeek: UNKNOWN, lastDay: UNKNOWN };
   }
   return {
-    published: true,
-    lastMonth: stats.data?.last_month ?? UNKNOWN,
-    lastWeek: stats.data?.last_week ?? UNKNOWN,
-    lastDay: stats.data?.last_day ?? UNKNOWN,
+    published,
+    lastMonth: haveStats ? (stats.data?.last_month ?? UNKNOWN) : UNKNOWN,
+    lastWeek: haveStats ? (stats.data?.last_week ?? UNKNOWN) : UNKNOWN,
+    lastDay: haveStats ? (stats.data?.last_day ?? UNKNOWN) : UNKNOWN,
   };
 }
 

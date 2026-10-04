@@ -25,6 +25,12 @@ Thumbs.db
 # not something to review in a diff.
 .traction/
 
+# Captured output of `npm run verify`. A log of a run that already happened, on
+# a machine nobody else has: it goes stale silently and it was tracked by
+# accident, which is how a diff ends up full of a package name that changed
+# three commits ago.
+.verify.log
+
 # LICENSE copies staged into each package at pack time by
 # scripts/stage-license.mjs. One canonical file at the repository root; these
 # are build output, and a staged one in a diff is a bug, not a licence update.

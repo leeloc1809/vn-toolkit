@@ -1,15 +1,15 @@
-# @vntoolkit/vn-money
+# vn-money
 
 Vietnamese money on integers, because VND has no minor unit. Format, parse,
 apportion without losing a single dong, and read an amount out in Vietnamese
 words. Zero runtime dependencies.
 
 ```bash
-npm install @vntoolkit/vn-money
+npm install vn-money
 ```
 
 ```ts
-import { formatVnd, parseVnd, allocate, toWords, isVnd } from '@vntoolkit/vn-money';
+import { formatVnd, parseVnd, allocate, toWords, isVnd } from 'vn-money';
 
 formatVnd(12345678);          // '12.345.678 ₫'  (U+00A0, then U+20AB)
 parseVnd('12.345.678');       // 12345678
@@ -100,7 +100,7 @@ which of the two the author meant:
 Every failure carries a machine-readable `reason`, so you can branch on it:
 
 ```ts
-import { parseVnd, isVndError } from '@vntoolkit/vn-money';
+import { parseVnd, isVndError } from 'vn-money';
 
 try {
   parseVnd(input);

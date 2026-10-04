@@ -171,7 +171,7 @@ jobs:
       - name: Publish
         run: |
           set -euo pipefail
-          for pkg in @vntoolkit/vn-text @vntoolkit/vn-collate @vntoolkit/vn-money @vntoolkit/vn-ident; do
+          for pkg in vn-text vn-collate vn-money vn-ident; do
             echo "::group::npm publish $pkg"
             # --provenance attaches the build to the commit, which is what
             # makes the registry badge meaningful. It needs id-token: write.

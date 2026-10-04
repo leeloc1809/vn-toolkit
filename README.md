@@ -6,15 +6,15 @@ conformance suite that both ports read.
 
 | package | what it does | npm | PyPI |
 |---|---|---|---|
-| [`vn-text`](./packages/vn-text-ts) | Search keys and text repair — the `Đ` problem | `@vntoolkit/vn-text` | [`vn-text`](./packages/vn-text-py) |
-| [`vn-collate`](./packages/vn-collate-ts) | Vietnamese sort order, as a key you can store | `@vntoolkit/vn-collate` | [`vn-collate`](./packages/vn-collate-py) |
-| [`vn-money`](./packages/vn-money-ts) | VND on integers — format, parse, split, read out | `@vntoolkit/vn-money` | [`vn-money`](./packages/vn-money-py) |
-| [`vn-ident`](./packages/vn-ident-ts) | Tax codes, phone numbers, card numbers | `@vntoolkit/vn-ident` | [`vn-ident`](./packages/vn-ident-py) |
+| [`vn-text`](./packages/vn-text-ts) | Search keys and text repair — the `Đ` problem | `vn-text` | [`vn-text`](./packages/vn-text-py) |
+| [`vn-collate`](./packages/vn-collate-ts) | Vietnamese sort order, as a key you can store | `vn-collate` | [`vn-collate`](./packages/vn-collate-py) |
+| [`vn-money`](./packages/vn-money-ts) | VND on integers — format, parse, split, read out | `vn-money` | [`vn-money`](./packages/vn-money-py) |
+| [`vn-ident`](./packages/vn-ident-ts) | Tax codes, phone numbers, card numbers | `vn-ident` | [`vn-ident`](./packages/vn-ident-py) |
 
 ```ts
-import { fold } from '@vntoolkit/vn-text';
-import { sort } from '@vntoolkit/vn-collate';
-import { formatVnd, allocate } from '@vntoolkit/vn-money';
+import { fold } from 'vn-text';
+import { sort } from 'vn-collate';
+import { formatVnd, allocate } from 'vn-money';
 
 fold('Đặng Minh Anh');     // 'dang minh anh'
 sort(['Đặng', 'Anh', 'Bảo', 'bao']);
