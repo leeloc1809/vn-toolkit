@@ -52,16 +52,28 @@ missing package rather than a missing permission to create one.
 
 1. Create a token: <https://www.npmjs.com/settings/leeloc/access-tokens>
 
-   Use a **granular access token**, not a legacy automation token, and tick
-   **Bypass 2FA**. The account has 2FA on, and without that box npm refuses to
-   publish with
+   Use a **granular access token**, and set **Packages → Read and write
+   (publish and stage)**. That exact option matters, and picking the other one
+   is not obviously wrong:
+
+   - **Read and write (publish and stage)** publishes straight to the registry.
+   - **Read and write (stage only)** uploads to a staging area instead, and a
+     maintainer has to approve it by hand with 2FA. `npm publish` with that
+     token fails with `E_STAGE_REQUIRED` on a version that does not exist yet.
+
+   Tick **Bypass 2FA** as well. The account has 2FA on, and without that box
+   npm refuses to publish with
 
    ```
    403 Two-factor authentication or granular access token with
        bypass 2fa enabled is required to publish packages
    ```
 
-   Packages: read and write. Copy it once; npm shows it once.
+   Under **Select Packages**, choose **All Packages**. Choosing specific
+   packages cannot work for a release that publishes new names: a token minted
+   before a package exists has no way to cover it.
+
+   Copy it once; npm shows it once.
 
 2. Add it as a repository secret:
    <https://github.com/leeloc1809/vn-toolkit/settings/secrets/actions/new>
@@ -80,6 +92,25 @@ missing package rather than a missing permission to create one.
    cost two release runs and reported itself as a 404 on a scope, which is a
    misleading error for a file that was never read. `check-wiring` fails the
    build if the write target goes back to `~/.npmrc`.
+
+### What npm is going to change
+
+Direct publishing with a bypass-2FA token is deprecated and is removed in
+**January 2027**. After that the release has to stage:
+
+```bash
+npm stage publish          # in the workflow instead of npm publish
+```
+
+and a maintainer approves it once, with 2FA, from the CLI or from npmjs.com.
+A brand-new package staged this way is created immediately as a placeholder
+version `0.0.0-stage`.
+
+The version this repository published as `0.1.0` predates that change, and the
+token setting above is the one that works today. Switching the release job to
+`npm stage publish` is a separate piece of work, and it cannot be done by
+editing one word: a staged release is not published until a human approves it,
+so the tag would no longer mean "this is live".
 
 ### PyPI
 
