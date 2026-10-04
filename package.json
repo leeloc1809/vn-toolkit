@@ -18,7 +18,8 @@
     "check:tarballs": "node scripts/check-tarballs.mjs",
     "check:tag": "bash scripts/check-release-tag.sh",
     "test:py": "python packages/vn-text-py/tests/test_vn_text.py",
-    "test:py:collate": "python packages/vn-collate-py/tests/test_vn_collate.py"
+    "test:py:collate": "python packages/vn-collate-py/tests/test_vn_collate.py",
+    "track:traction": "node scripts/track-traction.mjs"
   },
   "engines": {
     "node": ">=18"

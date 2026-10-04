@@ -21,6 +21,10 @@ Thumbs.db
 # Build output of the conformance tooling
 .tmp/
 
+# Traction snapshots. Machine-generated history for scripts/track-traction.mjs,
+# not something to review in a diff.
+.traction/
+
 # LICENSE copies staged into each package at pack time by
 # scripts/stage-license.mjs. One canonical file at the repository root; these
 # are build output, and a staged one in a diff is a bug, not a licence update.
