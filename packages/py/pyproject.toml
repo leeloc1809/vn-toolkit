@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vn-text"
+version = "0.1.0"
+description = "Correct Unicode primitives for Vietnamese text: deaccent, fold, normalize, strip_stroke. Standard library only. Ships a cross-language conformance suite shared with the TypeScript port."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+keywords = [
+  "vietnamese",
+  "unicode",
+  "normalization",
+  "search",
+  "nfc",
+  "nfd",
+  "diacritics",
+  "slugify",
+  "i18n",
+  "vietnam",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: Vietnamese",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Text Processing :: Linguistic",
+  "Typing :: Typed",
+]
+# Intentionally empty. A text-normalisation library that drags in a
+# dependency is a dependency every consumer has to audit, and this one has to
+# stay auditable itself.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vn_text"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/vn_text", "tests", "README.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

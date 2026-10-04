@@ -1,0 +1,47 @@
+{
+  "name": "@vntoolkit/vn-text",
+  "version": "0.1.0",
+  "description": "Correct Unicode primitives for Vietnamese text: deaccent, fold, normalize, stripStroke. Ships a cross-language conformance suite shared with the Python port.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "vietnamese",
+    "unicode",
+    "normalization",
+    "search",
+    "nfc",
+    "nfd",
+    "diacritics",
+    "slugify",
+    "i18n",
+    "vietnam"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.3"
+  }
+}

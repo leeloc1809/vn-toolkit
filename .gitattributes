@@ -1,0 +1,21 @@
+# Normalise line endings to LF in the repository and in working trees.
+#
+# Without this, core.autocrlf on Windows rewrites every text file to CRLF on
+# checkout, which produces whole-file diffs the moment a contributor on another
+# operating system touches it. That is exactly the kind of churn that makes a
+# pull request sit unmerged.
+* text=auto eol=lf
+
+# Files Git should never touch.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.pdf binary
+
+# Lockfiles and generated output.
+package-lock.json -diff linguist-generated=true
+dist/** linguist-generated=true

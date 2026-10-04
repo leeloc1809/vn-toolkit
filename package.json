@@ -1,0 +1,21 @@
+{
+  "name": "vn-toolkit",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Vietnamese-first engineering primitives. Working name — branding not yet finalised.",
+  "type": "module",
+  "workspaces": [
+    "packages/ts"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace @vntoolkit/vn-text",
+    "typecheck": "npm run typecheck --workspace @vntoolkit/vn-text",
+    "test": "npm run test --workspace @vntoolkit/vn-text",
+    "verify:ports": "node scripts/verify-port-parity.mjs",
+    "verify": "npm run typecheck && npm run test && npm run verify:ports",
+    "test:py": "python packages/py/tests/test_conformance.py"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
