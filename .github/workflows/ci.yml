@@ -57,6 +57,26 @@ jobs:
       - name: Cross-port sort-key parity (vn-collate)
         run: npm run verify:collate
 
+      # Formats, parses, apportions and reads out 17000-odd amounts through
+      # both real ports and compares the answers directly. The suite pins both
+      # to the same expectations; this compares them to each other, which also
+      # covers the inputs nobody thought to write a case for.
+      - name: Cross-port money parity (vn-money)
+        run: npm run verify:money
+
+      # The hand-maintained lists of packages are where a new one gets
+      # forgotten, and the failure is silence: an unwatched directory, a
+      # package that is built and never released. This is the only thing that
+      # reports it.
+      - name: Every package is wired into everything that enumerates packages
+        run: npm run check:wiring
+
+      # A no-break space or a thin space written as a literal is invisible in
+      # an editor, so it survives review and is then silently replaced by a
+      # reformat. The VND formatter depends on U+00A0 to match ICU exactly.
+      - name: No literal invisible space characters
+        run: npm run check:invisible
+
   python:
     name: Python
     runs-on: ubuntu-24.04
@@ -72,6 +92,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install ./packages/vn-text-py
           pip install ./packages/vn-collate-py
+          pip install ./packages/vn-money-py
           pip install pytest
 
       # Runs the real interpreter against the shared conformance file, which
@@ -82,8 +103,13 @@ jobs:
       - name: Conformance suite (vn-collate)
         run: python packages/vn-collate-py/tests/test_vn_collate.py
 
+      - name: Conformance suite (vn-money)
+        run: python packages/vn-money-py/tests/test_vn_money.py
+
       - name: Pytest
-        run: pytest packages/vn-text-py/tests packages/vn-collate-py/tests -q
+        run: |
+          pytest packages/vn-text-py/tests packages/vn-collate-py/tests \
+                 packages/vn-money-py/tests -q
 
       # A combining mark is invisible in an editor, so one typed by accident
       # into a lookup table survives a reformat, still imports, and still
@@ -172,6 +198,64 @@ jobs:
           print("derived from:", suite["derivedFrom"])
           PY
 
+      - name: Money suite still matches ICU and still covers 0-999
+        run: |
+          python - <<'PY'
+          import json, sys
+          suite = json.load(open("conformance/vn-money-1.0.0.json", encoding="utf-8"))
+          cases = suite["cases"]
+          print(f"{len(cases)} cases, {len(suite['functions'])} functions")
+
+          # A case count below this means someone deleted cases instead of
+          # fixing the port. See CONTRIBUTING.md: a red case is replaced with a
+          # new one, never deleted.
+          if len(cases) < 1232:
+              sys.exit(f"corpus shrank: {len(cases)} < 1232")
+
+          ids = [c["id"] for c in cases]
+          if len(set(ids)) != len(ids):
+              sys.exit("duplicate case ids")
+
+          # The whole triplet range, not a sample of it. The reading rules for
+          # mốt, tư and lăm all live between 0 and 999, and the values that
+          # break them are the ones nobody thinks to write down.
+          words = {c["input"]["amount"] for c in cases if c["fn"] == "toWords"}
+          gaps = [n for n in range(1000) if n not in words]
+          if gaps:
+              sys.exit(f"{len(gaps)} values below 1000 are not covered, e.g. {gaps[:5]}")
+
+          # The currency facts every function is defined in terms of. VND having
+          # a minor unit of 0 is the reason the whole package works on
+          # integers; if ISO ever says otherwise, that is a breaking change and
+          # it has to land as a diff, not silently.
+          currency = suite["currency"]
+          if currency["code"] != "VND":
+              sys.exit(f"currency code changed: {currency['code']}")
+          if currency["minorUnits"] != 0:
+              sys.exit(f"minor units changed: {currency['minorUnits']}")
+
+          # There is no platform to defer to for Vietnamese number reading, so
+          # the suite has to state its choice. An unstated convention cannot be
+          # reviewed, and a convention that changes is a breaking change.
+          convention = suite["readingConvention"]
+          for key in ("fillerWord", "unitOne", "unitFour", "unitFive",
+                      "tensOne", "emptyTriplet", "magnitudeNames"):
+              if key not in convention:
+                  sys.exit(f"readingConvention lost {key}")
+          for key in ("unitOne", "unitFour", "unitFive", "tensOne", "emptyTriplet"):
+              if "alternative" not in convention[key]:
+                  sys.exit(f"readingConvention.{key} names no rejected reading")
+
+          if "ICU " not in suite["derivedFrom"]:
+              sys.exit(f"derivedFrom does not record the runtime: {suite['derivedFrom']}")
+
+          unnoted = [c["id"] for c in cases if not c.get("note")]
+          if unnoted:
+              print(f"note: {len(unnoted)} cases have no explanatory note")
+          print("covered values below 1000:", len(words))
+          print("derived from:", suite["derivedFrom"])
+          PY
+
   packaging:
     name: Published artefacts are complete
     runs-on: ubuntu-24.04
@@ -201,7 +285,7 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install --quiet build
-          for pkg in packages/vn-text-py packages/vn-collate-py; do
+          for pkg in packages/vn-*-py; do
             node scripts/stage-license.mjs "$pkg"
             python -m build --outdir dist "$pkg"
           done

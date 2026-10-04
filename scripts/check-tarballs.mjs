@@ -19,6 +19,7 @@ const ROOT = resolve(HERE, '..');
 const PACKAGES = [
   { name: '@vntoolkit/vn-text', dir: 'vn-text-ts' },
   { name: '@vntoolkit/vn-collate', dir: 'vn-collate-ts' },
+  { name: '@vntoolkit/vn-money', dir: 'vn-money-ts' },
 ];
 
 // On Windows npm is a .cmd shim. Node 20 refuses to spawn one without a shell,

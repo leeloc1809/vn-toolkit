@@ -8,23 +8,30 @@ conformance suite that both ports read.
 |---|---|---|---|
 | [`vn-text`](./packages/vn-text-ts) | Search keys and text repair — the `Đ` problem | `@vntoolkit/vn-text` | [`vn-text`](./packages/vn-text-py) |
 | [`vn-collate`](./packages/vn-collate-ts) | Vietnamese sort order, as a key you can store | `@vntoolkit/vn-collate` | [`vn-collate`](./packages/vn-collate-py) |
+| [`vn-money`](./packages/vn-money-ts) | VND on integers — format, parse, split, read out | `@vntoolkit/vn-money` | [`vn-money`](./packages/vn-money-py) |
 
 ```ts
 import { fold } from '@vntoolkit/vn-text';
 import { sort } from '@vntoolkit/vn-collate';
+import { formatVnd, allocate } from '@vntoolkit/vn-money';
 
 fold('Đặng Minh Anh');     // 'dang minh anh'
 sort(['Đặng', 'Anh', 'Bảo', 'bao']);
 // ['Anh', 'bao', 'Bảo', 'Đặng']
+formatVnd(12345678);      // '12.345.678 ₫'
+allocate(1000000, [1, 1, 1]);   // [333334, 333333, 333333]
 ```
 
 ```python
 from vn_text import fold
 from vn_collate import sort
+from vn_money import format_vnd, allocate
 
 fold('Đặng Minh Anh')     # 'dang minh anh'
 sort(['Đặng', 'Anh', 'Bảo', 'bao'])
 # ['Anh', 'bao', 'Bảo', 'Đặng']
+format_vnd(12345678)      # '12.345.678 ₫'
+allocate(1_000_000, [1, 1, 1])   # [333334, 333333, 333333]
 ```
 
 ## The idea
@@ -46,8 +53,9 @@ So rather than shipping opinions, this repository ships **corpora**.
 ## The conformance suites are the asset
 
 ```
-conformance/vn-text-1.0.0.json      156 cases / 6 functions
+conformance/vn-text-1.0.0.json      156 cases /  6 functions
 conformance/vn-collate-1.0.0.json   519 cases / 33 letters
+conformance/vn-money-1.0.0.json    1232 cases /  5 functions
 ```
 
 Each suite is read by **both** the TypeScript port and the Python port. The
@@ -57,7 +65,7 @@ to test.
 
 ```
 conformance/vn-collate-1.0.0.json
-packages/vn-collate-ts/test/conformance.test.ts   <- reads it
+packages/vn-collate-ts/test/collate.test.ts    <- reads it
 packages/vn-collate-py/tests/test_vn_collate.py  <- reads the same file
 ```
 
@@ -71,11 +79,13 @@ Three levels of check, because each catches a different class of mistake.
    both ports, so they stay visible in test output instead of hiding in a JSON
    file.
 
-And one check that the suite cannot make on its own, because it needs both
-runtimes at once:
+And checks that a single-language suite cannot make on its own, because they need
+both runtimes at once:
 
 ```bash
-node scripts/verify-collate-parity.mjs
+node scripts/verify-port-parity.mjs       # 445 strings
+node scripts/verify-collate-parity.mjs    # 445 sort keys, byte for byte
+node scripts/verify-money-parity.mjs      # 17091 operations
 ```
 
 A suite pins the **order**, which a self-consistent port satisfies on its own.
@@ -84,17 +94,29 @@ database sorts differently — and that stays invisible until someone stores a
 key written by Node next to one written by Python. So that script runs both real
 ports over 445 strings and compares the keys byte for byte.
 
-The collation suite is also **generated, not hand-written**:
-`scripts/generate-collation-conformance.mjs` probes `Intl.Collator('vi-VN')` and
-emits both the table and the cases, recording the runtime in a `derivedFrom`
-field. Weights are never written from memory, and an ICU change surfaces as a
-diff in review rather than as a silent behaviour change in production.
+`vn-money` goes further, because a second parser that agrees on the cases nobody
+thought of is still a bug waiting for a user. Its parity check builds its own
+corpus of 17091 operations, runs both real ports, and compares the answers
+directly:
 
-```bash
-npm run verify        # typecheck, tests, build, both parity checks
+```text
+money parity: 17091/17091 operations identical across both ports
 ```
 
-## The two problems
+The collation and money suites are also **generated, not hand-written**:
+`scripts/generate-collation-conformance.mjs` probes `Intl.Collator('vi-VN')` and
+`scripts/generate-money-conformance.mjs` probes
+`Intl.NumberFormat('vi-VN', {style: 'currency'})`, emitting both the tables and
+the cases and recording the runtime in a `derivedFrom` field. Weights are never
+written from memory, and an ICU change surfaces as a diff in review rather than
+as a silent behaviour change in production. The generator **refuses to emit a
+case the platform disagrees with**, so the suite cannot quietly drift.
+
+```bash
+npm run verify        # typecheck, tests, build, all three parity checks
+```
+
+## The three problems
 
 ### `vn-text` — `Đ` has no decomposition
 
@@ -149,6 +171,40 @@ the only one where a Node service and a Python service agree on the bytes.
 
 → [Full API, SQL examples and known limitations](./packages/vn-collate-ts/README.md)
 
+### `vn-money` — a comma that means something else
+
+vi-VN groups thousands with a dot and separates decimals with a comma. `en-US`
+does the exact opposite, using the same two characters. Every JavaScript
+developer has `toLocaleString` in muscle memory and every one of them, once,
+produces `1.100.000` where they meant `1,100,000` — a wrong number that still
+looks entirely plausible, on an invoice.
+
+| | thousands | decimals |
+|---|---|---|
+| `vi-VN` | `1.000.000` | `1,5` |
+| `en-US` | `1,000,000` | `1.5` |
+
+Then there is ISO 4217 giving VND a **minor unit of 0**, so the library works on
+integers and *refuses* a fractional amount instead of rounding it — a money
+parser that guesses is worse than one that fails.
+
+```ts
+parseVnd('1.5');     // throws, reason 'has-decimal'   — not 1, not 2
+allocate(100, [1, 1, 1]);   // [34, 33, 33]  — the parts add back up exactly
+```
+
+`allocate` is largest-remainder apportionment with a stated tie-break, so
+splitting a bill between three people gives the same answer on a server in
+Hanoi and in Frankfurt, and no dong is created or lost. `toWords` reads an
+amount out for a cheque, pinned to one of several published Vietnamese
+conventions — and naming the reading it rejects at every point they disagree.
+
+The formatting cases were **read out of** `Intl.NumberFormat('vi-VN')`, so
+`formatVnd` agrees with the platform byte for byte, including the `U+00A0`
+between the digits and the symbol.
+
+→ [Full API, the reading convention and known limitations](./packages/vn-money-ts/README.md)
+
 ## This is a small problem with mature solutions around it
 
 Use the right tool. These are all worth knowing about, and none of them is
@@ -160,11 +216,15 @@ replaced by anything here.
 | [**VietnameseTextNormalizer**](https://github.com/langmaninternet/VietnameseTextNormalizer) | C++, the reference implementation for tone-mark placement and vowel composition (`hoà` → `hòa`). |
 | [**vietnormalizer**](https://github.com/nghimestudio/vietnormalizer) | Pure Python, zero-dependency, aimed at TTS. Has a published paper. |
 | [**undertheseanlp/NLP-Vietnamese-progress**](https://github.com/undertheseanlp/NLP-Vietnamese-progress) | The community's task-and-tool index for Vietnamese NLP. |
+| [**Babel.js / CLDR**](https://github.com/unicode-org/cldr) | The platform's own answer to sorting and formatting. `Intl` is genuinely good, and `vn-collate` and `vn-money` are pinned to it rather than to an opinion. Use `Intl` when you have it. |
 
 `vn-text` does not overlap with those on canonicalisation — they produce a
 *correct spelling*, this produces a *search key* and a *sort key*. `vn-collate`
 does not overlap with anything: search keys are the well-served part of this
-space, collation is the part nobody has done.
+space, collation is the part nobody has done. `vn-money` is not a text problem
+at all — it is here because every other part of this stack ends up formatting a
+number somewhere, and because there is no money library here that refuses a
+decimal rather than inventing one.
 
 The two approaches disagree about `Ð` on purpose. `underthesea` maps it to `Đ`
 because in Vietnamese data it is essentially always damage. `repairMojibake`
@@ -202,6 +262,18 @@ honest about what it covers.
 - **`deaccent` applies to all Unicode.** `café` → `cafe`. That is intentional:
   it uses NFD, not NFKD, so compatibility characters like the `ﬁ` ligature
   survive. NFKD would silently rewrite English text.
+- **`vn-money`'s `toWords` follows one reading convention, not all of them.**
+  `linh` against `lẻ`, `một` against `mốt`, `bốn` against `tư` are all in
+  current use. The choice is stated, pinned and names the alternative it
+  rejects — see
+  [the convention table](./packages/vn-money-ts/README.md#reading-an-amount-out).
+- **`vn-money`'s `allocate` takes whole shares, not arbitrary ratios.**
+  `allocate(100, [1, 3])` works; `allocate(100, [0.5, 0.5])` raises. Fractional
+  weights would need a scaling denominator, and getting that wrong is a silent
+  redistribution rather than a crash.
+- **`vn-money` reads at most 15 significant digits**, because `2^53 - 1` is the
+  largest amount a JavaScript number holds exactly and the Python port takes the
+  same input type.
 
 ## The one real port risk
 
@@ -215,6 +287,24 @@ surface it, and adding a character to the corpus is how you pin it down.
 `vn-collate` has no equivalent risk. It runs both real interpreters and
 compares keys byte for byte, so the question is answered rather than measured.
 
+`vn-money` has one of its own, and it is the reason the parity check exists.
+Python's `\d` and `\s` are **Unicode-aware**; JavaScript's are not in the same
+way. A parser written with `re.compile(r"\d+")` accepts `١٢٣`, and a TypeScript
+port written with the same pattern does not. That is invisible in every test
+anybody would write by hand, and it is exactly the kind of thing that reaches a
+user as "the form accepted my number and the total is wrong".
+
+So the check breaks the Python port four ways on purpose and confirms each one
+is caught — the `\d` widening, a narrowed whitespace class, and both halves of
+the `mốt`/`tư` threshold:
+
+```bash
+node scripts/prove-money-parity-fails.mjs
+# 4/4 real port breakages were caught
+```
+
+A check that cannot fail is decoration. These have been seen to fail.
+
 ## Contributing
 
 Three rules, in [CONTRIBUTING.md](./CONTRIBUTING.md), non-negotiable:
@@ -226,6 +316,36 @@ Three rules, in [CONTRIBUTING.md](./CONTRIBUTING.md), non-negotiable:
    explaining what changed. Deleting a case is deleting the test.
 3. **Fix one port, fix both.** A behaviour change in TypeScript that is not
    mirrored in Python is a regression, not a feature.
+
+### The guards, and why they exist
+
+Two of the things this repository is careful about fail *silently* when they
+break, so both are checked rather than trusted:
+
+```bash
+npm run check:wiring      # every package is in every list that enumerates packages
+npm run check:invisible  # no literal U+00A0 / U+2007 / U+2009 in source
+```
+
+`check:wiring` exists because a package added to `packages/` and not added to
+`.github/dependabot.yml` is never reported by anything. Dependabot has no glob
+for directories, so that package's dependencies would silently fall years
+behind, and the only symptom would be a stale version number nobody remembers
+choosing. The same goes for a package that CI installs but never tests, or that
+the release job builds and never publishes.
+
+`check:invisible` exists because a literal no-break space is invisible in an
+editor. The VND formatter depends on `U+00A0` to match ICU exactly; a reformat
+that turns it into an ordinary space breaks that by one code point, and nothing
+fails in a way that points at the cause. (The Python port has the same problem
+with combining marks, checked separately in CI.)
+
+Both have been seen to fail:
+
+```bash
+node scripts/prove-checks-fail.mjs
+# 5/5 real mistakes were caught
+```
 
 ## Licence
 

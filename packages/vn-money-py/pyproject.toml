@@ -1,0 +1,59 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vn-money"
+version = "0.1.0"
+description = "Vietnamese money on integers, because VND has no minor unit. Format, parse, apportion without losing a single dong, and read an amount out in Vietnamese words. Standard library only."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+license-files = { paths = ["LICENSE"] }
+keywords = [
+  "vietnamese",
+  "vnd",
+  "currency",
+  "money",
+  "format",
+  "apportionment",
+  "invoice",
+  "i18n",
+  "vietnam",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: Vietnamese",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Office/Business :: Financial :: Accounting",
+  "Typing :: Typed",
+]
+
+# Intentionally empty. A money library that drags in dependencies is a
+# dependency every consumer has to audit, and this one has to stay auditable
+# itself.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.urls]
+Homepage = "https://github.com/leeloc1809/vn-toolkit"
+Repository = "https://github.com/leeloc1809/vn-toolkit"
+Issues = "https://github.com/leeloc1809/vn-toolkit/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vn_money"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/vn_money", "tests", "README.md", "LICENSE"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

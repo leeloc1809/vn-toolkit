@@ -6,7 +6,8 @@
   "type": "module",
   "workspaces": [
     "packages/vn-text-ts",
-    "packages/vn-collate-ts"
+    "packages/vn-collate-ts",
+    "packages/vn-money-ts"
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
@@ -14,11 +15,17 @@
     "test": "npm run test --workspaces --if-present",
     "verify:ports": "node scripts/verify-port-parity.mjs",
     "verify:collate": "node scripts/verify-collate-parity.mjs",
-    "verify": "npm run typecheck && npm run test && npm run build && npm run verify:ports && npm run verify:collate",
+    "verify:money": "node scripts/verify-money-parity.mjs",
+    "verify": "npm run typecheck && npm run test && npm run build && npm run verify:ports && npm run verify:collate && npm run verify:money",
     "check:tarballs": "node scripts/check-tarballs.mjs",
+    "check:wiring": "node scripts/check-wiring.mjs",
+    "check:invisible": "node scripts/check-invisible-spaces.mjs",
     "check:tag": "bash scripts/check-release-tag.sh",
     "test:py": "python packages/vn-text-py/tests/test_vn_text.py",
     "test:py:collate": "python packages/vn-collate-py/tests/test_vn_collate.py",
+    "test:py:money": "python packages/vn-money-py/tests/test_vn_money.py",
+    "generate:collate": "node scripts/generate-collation-conformance.mjs",
+    "generate:money": "node scripts/generate-money-conformance.mjs",
     "track:traction": "node scripts/track-traction.mjs"
   },
   "engines": {

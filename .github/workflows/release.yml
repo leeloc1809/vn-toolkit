@@ -67,43 +67,27 @@ jobs:
             echo "::error::no tag given and this is not a tag push"
             exit 1
           fi
-          if [ "${source_tag#v}" = "$source_tag" ]; then
-            echo "::error::tag '$source_tag' must start with v, e.g. v0.1.0"
-            exit 1
-          fi
-          tag="${source_tag#v}"
-          echo "tag version: $tag"
-
-          for f in packages/vn-text-ts/package.json packages/vn-collate-ts/package.json; do
-            got=$(node -p "require('./$f').version")
-            if [ "$got" != "$tag" ]; then
-              echo "::error::$f says $got but the tag says $tag"
-              exit 1
-            fi
-            echo "  $f -> $got"
-          done
-
-          for f in packages/vn-text-py/pyproject.toml packages/vn-collate-py/pyproject.toml; do
-            got=$(sed -n 's/^version = "\(.*\)"/\1/p' "$f" | head -1)
-            if [ "$got" != "$tag" ]; then
-              echo "::error::$f says $got but the tag says $tag"
-              exit 1
-            fi
-            echo "  $f -> $got"
-          done
-
-          echo "version=$tag" >> "$GITHUB_OUTPUT"
+          # The manifest list lives in the script, where it is globbed. A second
+          # copy here is a second thing to forget when a package is added, and
+          # forgetting it means the release refuses forever for a reason nobody
+          # can find.
+          bash scripts/check-release-tag.sh "$source_tag"
+          echo "version=${source_tag#v}" >> "$GITHUB_OUTPUT"
 
       - run: npm ci
       - name: Typecheck, test, build, both parity checks
         run: npm run verify
 
-      - name: Python conformance, both ports
+      - name: Python conformance, every port
         run: |
-          python packages/vn-text-py/tests/test_vn_text.py
-          python packages/vn-collate-py/tests/test_vn_collate.py
+          for pkg in packages/vn-*-py; do
+            python "$pkg/tests/test_$(basename "$pkg" | sed 's/-py$//').py"
+          done
           python -m pip install --quiet pytest
-          pytest packages/vn-text-py/tests packages/vn-collate-py/tests -q
+          pytest packages/vn-*-py/tests -q
+
+      - name: Every package is wired into everything that enumerates packages
+        run: npm run check:wiring
 
   npm:
     name: Publish to npm
@@ -154,7 +138,7 @@ jobs:
       - name: Publish
         run: |
           set -euo pipefail
-          for pkg in @vntoolkit/vn-text @vntoolkit/vn-collate; do
+          for pkg in @vntoolkit/vn-text @vntoolkit/vn-collate @vntoolkit/vn-money; do
             echo "::group::npm publish $pkg"
             # --provenance attaches the build to the commit, which is what
             # makes the registry badge meaningful. It needs id-token: write.
@@ -182,7 +166,7 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install --quiet build
-          for pkg in packages/vn-text-py packages/vn-collate-py; do
+          for pkg in packages/vn-*-py; do
             node scripts/stage-license.mjs "$pkg"
             python -m build --outdir dist "$pkg"
           done
