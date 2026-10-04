@@ -1,0 +1,62 @@
+{
+  "name": "@vntoolkit/vn-ident",
+  "version": "0.1.0",
+  "description": "Vietnamese tax codes, mobile numbers and card numbers, validated against the sources that define them. A tax code has a check digit; a card number does not, and this says so. Zero runtime dependencies.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leeloc1809/vn-toolkit.git",
+    "directory": "packages/vn-ident-ts"
+  },
+  "bugs": {
+    "url": "https://github.com/leeloc1809/vn-toolkit/issues"
+  },
+  "homepage": "https://github.com/leeloc1809/vn-toolkit#readme",
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  },
+  "keywords": [
+    "vietnamese",
+    "tax-code",
+    "mst",
+    "phone",
+    "carrier",
+    "id-card",
+    "cccd",
+    "validation",
+    "i18n",
+    "vietnam"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepack": "npm run build && node ../../scripts/stage-license.mjs ."
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
+  }
+}

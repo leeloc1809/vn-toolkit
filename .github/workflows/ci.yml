@@ -64,6 +64,14 @@ jobs:
       - name: Cross-port money parity (vn-money)
         run: npm run verify:money
 
+      # 673k operations: every carrier prefix, every province code, every
+      # fourth digit, and ten thousand generated tax codes. The generated ones
+      # are the point -- a transposed pair of weights still produces
+      # well-formed check digits, so the hand-picked cases cannot tell you the
+      # weight table is right.
+      - name: Cross-port identity parity (vn-ident)
+        run: npm run verify:ident
+
       # The hand-maintained lists of packages are where a new one gets
       # forgotten, and the failure is silence: an unwatched directory, a
       # package that is built and never released. This is the only thing that
@@ -93,6 +101,7 @@ jobs:
           pip install ./packages/vn-text-py
           pip install ./packages/vn-collate-py
           pip install ./packages/vn-money-py
+          pip install ./packages/vn-ident-py
           pip install pytest
 
       # Runs the real interpreter against the shared conformance file, which
@@ -106,10 +115,13 @@ jobs:
       - name: Conformance suite (vn-money)
         run: python packages/vn-money-py/tests/test_vn_money.py
 
+      - name: Conformance suite (vn-ident)
+        run: python packages/vn-ident-py/tests/test_vn_ident.py
+
       - name: Pytest
         run: |
           pytest packages/vn-text-py/tests packages/vn-collate-py/tests \
-                 packages/vn-money-py/tests -q
+                 packages/vn-money-py/tests packages/vn-ident-py/tests -q
 
       # A combining mark is invisible in an editor, so one typed by accident
       # into a lookup table survives a reformat, still imports, and still
@@ -211,7 +223,6 @@ jobs:
           # new one, never deleted.
           if len(cases) < 1232:
               sys.exit(f"corpus shrank: {len(cases)} < 1232")
-
           ids = [c["id"] for c in cases]
           if len(set(ids)) != len(ids):
               sys.exit("duplicate case ids")
@@ -254,6 +265,82 @@ jobs:
               print(f"note: {len(unnoted)} cases have no explanatory note")
           print("covered values below 1000:", len(words))
           print("derived from:", suite["derivedFrom"])
+          PY
+
+      - name: Identity tables still match the sources
+        run: |
+          python - <<'PY'
+          import json, sys
+          suite = json.load(open("conformance/vn-ident-1.0.0.json", encoding="utf-8"))
+          cases = suite["cases"]
+          print(f"{len(cases)} cases")
+
+          # A case count below this means someone deleted cases instead of
+          # fixing the port. See CONTRIBUTING.md: a red case is replaced with a
+          # new one, never deleted.
+          if len(cases) < 258:
+              sys.exit(f"corpus shrank: {len(cases)} < 258")
+
+          ids = [c["id"] for c in cases]
+          if len(set(ids)) != len(ids):
+              sys.exit("duplicate case ids")
+
+          tables = suite["tables"]
+
+          # The nine tax weights, from Thông tư 105/2020/TT-BTC. They are not a
+          # progression, which is why they are transcribed and pinned rather
+          # than computed -- a transposed pair still produces a well-formed
+          # check digit for every code, so nothing downstream would notice.
+          weights = tables["mstWeights"]
+          if len(weights) != 9:
+              sys.exit(f"tax weight count changed: {len(weights)}")
+          if weights != [31, 29, 23, 19, 17, 13, 7, 5, 3]:
+              sys.exit(f"tax weights changed: {weights}")
+          if tables["mstModulus"] != 11:
+              sys.exit(f"modulus changed: {tables['mstModulus']}")
+
+          # Zero remainder means the circular skips the sequence number. If that
+          # ever changes, isValidMst's contract changes with it.
+          if "null" not in tables["mstCheckDigitOfZeroRemainder"]:
+              sys.exit("the zero-remainder rule is no longer recorded")
+
+          # 63 province codes, no duplicates. One of the four published tables
+          # prints Bắc Giang as 023; the other three and the decree say 024.
+          provinces = tables["provinces"]
+          if len(provinces) != 63:
+              sys.exit(f"province count changed: {len(provinces)}")
+          codes = [p["code"] for p in provinces]
+          if len(set(codes)) != len(codes):
+              sys.exit("duplicate province codes")
+          if "024" not in codes:
+              sys.exit("024 is missing; check the province table against the decree")
+
+          # Ten fourth digits, two per century from the twentieth to the
+          # twenty-fourth.
+          digits = sorted(entry["digit"] for entry in tables["centuryGender"])
+          if digits != list(range(10)):
+              sys.exit(f"century/gender table changed: {digits}")
+
+          # 34 carrier prefixes, none assigned twice. 34 is not 100, and the
+          # gap is the point: a well-formed number can belong to nobody.
+          prefixes = [p for c in tables["carriers"] for p in c["prefixes"]]
+          if len(prefixes) != 34:
+              sys.exit(f"carrier prefix count changed: {len(prefixes)}")
+          if len(set(prefixes)) != 34:
+              sys.exit("a carrier prefix is assigned to two carriers")
+          if tables["carrierCount"] != 34:
+              sys.exit(f"carrierCount disagrees: {tables['carrierCount']}")
+
+          # Four sources, not one. A single-source transcription of a weight or
+          # a province list is a typo waiting to be shipped.
+          derived = suite["derivedFrom"]
+          for needed in ("105/2020/TT-BTC", "124/2004", "cross-checked"):
+              if needed not in derived:
+                  sys.exit(f"derivedFrom no longer records {needed!r}")
+
+          print("tax weights:", " ".join(str(w) for w in weights))
+          print("provinces:", len(provinces), "carrier prefixes:", len(prefixes))
+          print("derived from:", derived)
           PY
 
   packaging:

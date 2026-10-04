@@ -7,7 +7,8 @@
   "workspaces": [
     "packages/vn-text-ts",
     "packages/vn-collate-ts",
-    "packages/vn-money-ts"
+    "packages/vn-money-ts",
+    "packages/vn-ident-ts"
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
@@ -16,7 +17,7 @@
     "verify:ports": "node scripts/verify-port-parity.mjs",
     "verify:collate": "node scripts/verify-collate-parity.mjs",
     "verify:money": "node scripts/verify-money-parity.mjs",
-    "verify": "npm run typecheck && npm run test && npm run build && npm run verify:ports && npm run verify:collate && npm run verify:money",
+    "verify": "npm run typecheck && npm run test && npm run build && npm run verify:ports && npm run verify:collate && npm run verify:money && npm run verify:ident",
     "check:tarballs": "node scripts/check-tarballs.mjs",
     "check:wiring": "node scripts/check-wiring.mjs",
     "check:invisible": "node scripts/check-invisible-spaces.mjs",
@@ -26,7 +27,10 @@
     "test:py:money": "python packages/vn-money-py/tests/test_vn_money.py",
     "generate:collate": "node scripts/generate-collation-conformance.mjs",
     "generate:money": "node scripts/generate-money-conformance.mjs",
-    "track:traction": "node scripts/track-traction.mjs"
+    "track:traction": "node scripts/track-traction.mjs",
+    "verify:ident": "node scripts/verify-ident-parity.mjs",
+    "test:py:ident": "python packages/vn-ident-py/tests/test_vn_ident.py",
+    "generate:ident": "node scripts/generate-ident-conformance.mjs"
   },
   "engines": {
     "node": ">=18"

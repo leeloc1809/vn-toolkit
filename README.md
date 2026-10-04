@@ -9,6 +9,7 @@ conformance suite that both ports read.
 | [`vn-text`](./packages/vn-text-ts) | Search keys and text repair — the `Đ` problem | `@vntoolkit/vn-text` | [`vn-text`](./packages/vn-text-py) |
 | [`vn-collate`](./packages/vn-collate-ts) | Vietnamese sort order, as a key you can store | `@vntoolkit/vn-collate` | [`vn-collate`](./packages/vn-collate-py) |
 | [`vn-money`](./packages/vn-money-ts) | VND on integers — format, parse, split, read out | `@vntoolkit/vn-money` | [`vn-money`](./packages/vn-money-py) |
+| [`vn-ident`](./packages/vn-ident-ts) | Tax codes, phone numbers, card numbers | `@vntoolkit/vn-ident` | [`vn-ident`](./packages/vn-ident-py) |
 
 ```ts
 import { fold } from '@vntoolkit/vn-text';
@@ -56,6 +57,7 @@ So rather than shipping opinions, this repository ships **corpora**.
 conformance/vn-text-1.0.0.json      156 cases /  6 functions
 conformance/vn-collate-1.0.0.json   519 cases / 33 letters
 conformance/vn-money-1.0.0.json    1232 cases /  5 functions
+conformance/vn-ident-1.0.0.json     258 cases / 10 functions, 63 provinces
 ```
 
 Each suite is read by **both** the TypeScript port and the Python port. The
@@ -86,6 +88,7 @@ both runtimes at once:
 node scripts/verify-port-parity.mjs       # 445 strings
 node scripts/verify-collate-parity.mjs    # 445 sort keys, byte for byte
 node scripts/verify-money-parity.mjs      # 17091 operations
+node scripts/verify-ident-parity.mjs      # 673311 operations
 ```
 
 A suite pins the **order**, which a self-consistent port satisfies on its own.
@@ -116,7 +119,7 @@ case the platform disagrees with**, so the suite cannot quietly drift.
 npm run verify        # typecheck, tests, build, all three parity checks
 ```
 
-## The three problems
+## The four problems
 
 ### `vn-text` — `Đ` has no decomposition
 
@@ -205,6 +208,30 @@ between the digits and the symbol.
 
 → [Full API, the reading convention and known limitations](./packages/vn-money-ts/README.md)
 
+### `vn-ident` — one of these has a check digit and the other does not
+
+A Vietnamese tax code's tenth digit is computed from its first nine, using nine
+weights that are deliberately not a progression. A card number has **no check
+digit at all** — the last six digits are random.
+
+Libraries that treat both as "a regex" will tell you a well-formed card number
+is valid, which is true and nearly useless. The more interesting failure is
+silent: a transposed pair of tax weights still produces a well-formed digit for
+every code, so a hand-picked test suite sails past it.
+
+```ts
+mstCheckDigit('000000000');    // null, not 10 — and null is the whole point
+isValidMst('0100047516');      // true
+detectCarrier('0953456780');   // null — 34 of 100 prefixes are assigned
+parseCccd('001285123456');     // birthYear 2085; with digit 0 it is 1985
+```
+
+The tables come from Thông tư 105/2020/TT-BTC and Quyết định 124/2004/QĐ-TTg,
+cross-checked against four published sources — because one of the four prints
+Bắc Giang as `023` where the other three and the decree say `024`.
+
+→ [Full API, the sources, and what this cannot verify](./packages/vn-ident-ts/README.md)
+
 ## This is a small problem with mature solutions around it
 
 Use the right tool. These are all worth knowing about, and none of them is
@@ -274,6 +301,11 @@ honest about what it covers.
 - **`vn-money` reads at most 15 significant digits**, because `2^53 - 1` is the
   largest amount a JavaScript number holds exactly and the Python port takes the
   same input type.
+- **`vn-ident` cannot verify a card number.** There is no check digit. It checks
+  shape, a province code that exists, and a defined fourth digit — and it says
+  so rather than implying more. It also cannot distinguish an unchipped 12-digit
+  card from a chip one; they have the same structure, and the 2025 reduction to
+  34 provincial units did not renumber any card.
 
 ## The one real port risk
 
@@ -301,6 +333,17 @@ the `mốt`/`tư` threshold:
 ```bash
 node scripts/prove-money-parity-fails.mjs
 # 4/4 real port breakages were caught
+```
+
+`vn-ident` has a larger version of the same problem, because its tables are
+transcriptions rather than platform behaviour. A transposed pair of tax weights,
+the `023`/`024` province typo that one of the four published tables actually
+carries, a swapped carrier prefix: each of these is a real way to ship something
+that passes every hand-written test.
+
+```bash
+node scripts/prove-ident-parity-fails.mjs
+# 6/6 real port breakages were caught
 ```
 
 A check that cannot fail is decoration. These have been seen to fail.

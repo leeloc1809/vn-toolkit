@@ -1,0 +1,2853 @@
+{
+  "schema": "vn-ident-conformance/1",
+  "library": "vn-ident",
+  "version": "0.1.0",
+  "created": "2026-10-04",
+  "derivedFrom": "Thông tư 105/2020/TT-BTC Điều 5 and Phụ lục 1, read from the official VBQPPL portal at moj.gov.vn; Quyết định 124/2004/QĐ-TTg for the 63 province codes, cross-checked against chinhphu.gov.vn, thuvienphapluat.vn and vietnamnet.vn; Published mobile prefix ranges for Viettel, Vinaphone, Mobifone, Vietnamobile and Gmobile; Nghị định 137/2015 and Thông tư 07/2016/TT-BCA for the card number structure",
+  "description": "Vietnamese identity numbers, pinned as a contract between two ports. A tax code has a check digit and can be verified. A card number has none, so \"valid\" here means well-formed with a province code that exists, and the suite says so rather than implying more.",
+  "tables": {
+    "mstWeights": [
+      31,
+      29,
+      23,
+      19,
+      17,
+      13,
+      7,
+      5,
+      3
+    ],
+    "mstModulus": 11,
+    "mstSource": "Thông tư 105/2020/TT-BTC Điều 5 and Phụ lục 1, read from the official VBQPPL portal at moj.gov.vn",
+    "mstCheckDigitOfZeroRemainder": "null -- Thông tư 105/2020/TT-BTC skips the sequence number when the weighted sum divides exactly by 11, because 10 - 0 is 10 and is not a digit",
+    "provinces": [
+      {
+        "code": "001",
+        "name": "Hà Nội"
+      },
+      {
+        "code": "002",
+        "name": "Hà Giang"
+      },
+      {
+        "code": "004",
+        "name": "Cao Bằng"
+      },
+      {
+        "code": "006",
+        "name": "Bắc Kạn"
+      },
+      {
+        "code": "008",
+        "name": "Tuyên Quang"
+      },
+      {
+        "code": "010",
+        "name": "Lào Cai"
+      },
+      {
+        "code": "011",
+        "name": "Điện Biên"
+      },
+      {
+        "code": "012",
+        "name": "Lai Châu"
+      },
+      {
+        "code": "014",
+        "name": "Sơn La"
+      },
+      {
+        "code": "015",
+        "name": "Yên Bái"
+      },
+      {
+        "code": "017",
+        "name": "Hòa Bình"
+      },
+      {
+        "code": "019",
+        "name": "Thái Nguyên"
+      },
+      {
+        "code": "020",
+        "name": "Lạng Sơn"
+      },
+      {
+        "code": "022",
+        "name": "Quảng Ninh"
+      },
+      {
+        "code": "024",
+        "name": "Bắc Giang"
+      },
+      {
+        "code": "025",
+        "name": "Phú Thọ"
+      },
+      {
+        "code": "026",
+        "name": "Vĩnh Phúc"
+      },
+      {
+        "code": "027",
+        "name": "Bắc Ninh"
+      },
+      {
+        "code": "030",
+        "name": "Hải Dương"
+      },
+      {
+        "code": "031",
+        "name": "Hải Phòng"
+      },
+      {
+        "code": "033",
+        "name": "Hưng Yên"
+      },
+      {
+        "code": "034",
+        "name": "Thái Bình"
+      },
+      {
+        "code": "035",
+        "name": "Hà Nam"
+      },
+      {
+        "code": "036",
+        "name": "Nam Định"
+      },
+      {
+        "code": "037",
+        "name": "Ninh Bình"
+      },
+      {
+        "code": "038",
+        "name": "Thanh Hóa"
+      },
+      {
+        "code": "040",
+        "name": "Nghệ An"
+      },
+      {
+        "code": "042",
+        "name": "Hà Tĩnh"
+      },
+      {
+        "code": "044",
+        "name": "Quảng Bình"
+      },
+      {
+        "code": "045",
+        "name": "Quảng Trị"
+      },
+      {
+        "code": "046",
+        "name": "Thừa Thiên Huế"
+      },
+      {
+        "code": "048",
+        "name": "Đà Nẵng"
+      },
+      {
+        "code": "049",
+        "name": "Quảng Nam"
+      },
+      {
+        "code": "051",
+        "name": "Quảng Ngãi"
+      },
+      {
+        "code": "052",
+        "name": "Bình Định"
+      },
+      {
+        "code": "054",
+        "name": "Phú Yên"
+      },
+      {
+        "code": "056",
+        "name": "Khánh Hòa"
+      },
+      {
+        "code": "058",
+        "name": "Ninh Thuận"
+      },
+      {
+        "code": "060",
+        "name": "Bình Thuận"
+      },
+      {
+        "code": "062",
+        "name": "Kon Tum"
+      },
+      {
+        "code": "064",
+        "name": "Gia Lai"
+      },
+      {
+        "code": "066",
+        "name": "Đắk Lắk"
+      },
+      {
+        "code": "067",
+        "name": "Đắk Nông"
+      },
+      {
+        "code": "068",
+        "name": "Lâm Đồng"
+      },
+      {
+        "code": "070",
+        "name": "Bình Phước"
+      },
+      {
+        "code": "072",
+        "name": "Tây Ninh"
+      },
+      {
+        "code": "074",
+        "name": "Bình Dương"
+      },
+      {
+        "code": "075",
+        "name": "Đồng Nai"
+      },
+      {
+        "code": "077",
+        "name": "Bà Rịa - Vũng Tàu"
+      },
+      {
+        "code": "079",
+        "name": "Hồ Chí Minh"
+      },
+      {
+        "code": "080",
+        "name": "Long An"
+      },
+      {
+        "code": "082",
+        "name": "Tiền Giang"
+      },
+      {
+        "code": "083",
+        "name": "Bến Tre"
+      },
+      {
+        "code": "084",
+        "name": "Trà Vinh"
+      },
+      {
+        "code": "086",
+        "name": "Vĩnh Long"
+      },
+      {
+        "code": "087",
+        "name": "Đồng Tháp"
+      },
+      {
+        "code": "089",
+        "name": "An Giang"
+      },
+      {
+        "code": "091",
+        "name": "Kiên Giang"
+      },
+      {
+        "code": "092",
+        "name": "Cần Thơ"
+      },
+      {
+        "code": "093",
+        "name": "Hậu Giang"
+      },
+      {
+        "code": "094",
+        "name": "Sóc Trăng"
+      },
+      {
+        "code": "095",
+        "name": "Bạc Liêu"
+      },
+      {
+        "code": "096",
+        "name": "Cà Mau"
+      }
+    ],
+    "provinceCodeRange": "001 to 096, with gaps that are not assignments",
+    "centuryGender": [
+      {
+        "digit": 0,
+        "century": 20,
+        "gender": "male"
+      },
+      {
+        "digit": 1,
+        "century": 20,
+        "gender": "female"
+      },
+      {
+        "digit": 2,
+        "century": 21,
+        "gender": "male"
+      },
+      {
+        "digit": 3,
+        "century": 21,
+        "gender": "female"
+      },
+      {
+        "digit": 4,
+        "century": 22,
+        "gender": "male"
+      },
+      {
+        "digit": 5,
+        "century": 22,
+        "gender": "female"
+      },
+      {
+        "digit": 6,
+        "century": 23,
+        "gender": "male"
+      },
+      {
+        "digit": 7,
+        "century": 23,
+        "gender": "female"
+      },
+      {
+        "digit": 8,
+        "century": 24,
+        "gender": "male"
+      },
+      {
+        "digit": 9,
+        "century": 24,
+        "gender": "female"
+      }
+    ],
+    "carriers": [
+      {
+        "name": "viettel",
+        "prefixes": [
+          "032",
+          "033",
+          "034",
+          "035",
+          "036",
+          "037",
+          "038",
+          "039",
+          "086",
+          "096",
+          "097",
+          "098"
+        ]
+      },
+      {
+        "name": "vinaphone",
+        "prefixes": [
+          "081",
+          "082",
+          "083",
+          "084",
+          "085",
+          "088",
+          "091",
+          "094"
+        ]
+      },
+      {
+        "name": "mobifone",
+        "prefixes": [
+          "070",
+          "076",
+          "077",
+          "078",
+          "079",
+          "089",
+          "090",
+          "093"
+        ]
+      },
+      {
+        "name": "vietnamobile",
+        "prefixes": [
+          "052",
+          "056",
+          "058",
+          "092"
+        ]
+      },
+      {
+        "name": "gmobile",
+        "prefixes": [
+          "059",
+          "099"
+        ]
+      }
+    ],
+    "carrierCount": 34,
+    "note": "thẻ Căn cước (from 2024) and thẻ CCCD gắn chip have the same 12-digit structure, and the 2025 reduction to 34 provincial units did not renumber any card. Nothing in this suite can tell the generations apart."
+  },
+  "functions": [
+    "mstCheckDigit",
+    "isValidMst",
+    "parseMst",
+    "normalizePhone",
+    "detectCarrier",
+    "isValidPhone",
+    "isValidCccd",
+    "parseCccd",
+    "isValidCmnd",
+    "classifyId"
+  ],
+  "caseCounts": {
+    "mstCheckDigit": 32,
+    "isValidMst": 33,
+    "parseMst": 4,
+    "normalizePhone": 20,
+    "detectCarrier": 48,
+    "isValidPhone": 8,
+    "isValidCccd": 72,
+    "parseCccd": 16,
+    "isValidCmnd": 6,
+    "classifyId": 19
+  },
+  "cases": [
+    {
+      "id": "mstCheckDigit-001",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "010004751"
+      },
+      "expected": 6,
+      "note": "weights 31 29 23 19 17 13 7 5 3 against the nine digits give a remainder, and 10 minus it is the check digit"
+    },
+    {
+      "id": "mstCheckDigit-002",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000001"
+      },
+      "expected": 7,
+      "note": "weights 31 29 23 19 17 13 7 5 3 against the nine digits give a remainder, and 10 minus it is the check digit"
+    },
+    {
+      "id": "mstCheckDigit-003",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "010000000"
+      },
+      "expected": 3,
+      "note": "weights 31 29 23 19 17 13 7 5 3 against the nine digits give a remainder, and 10 minus it is the check digit"
+    },
+    {
+      "id": "mstCheckDigit-004",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "030000000"
+      },
+      "expected": 0,
+      "note": "weights 31 29 23 19 17 13 7 5 3 against the nine digits give a remainder, and 10 minus it is the check digit"
+    },
+    {
+      "id": "mstCheckDigit-005",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "790000000"
+      },
+      "expected": 5,
+      "note": "weights 31 29 23 19 17 13 7 5 3 against the nine digits give a remainder, and 10 minus it is the check digit"
+    },
+    {
+      "id": "mstCheckDigit-006",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "010000001"
+      },
+      "expected": 0,
+      "note": "weights 31 29 23 19 17 13 7 5 3 against the nine digits give a remainder, and 10 minus it is the check digit"
+    },
+    {
+      "id": "mstCheckDigit-007",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "010000010"
+      },
+      "expected": 9,
+      "note": "weights 31 29 23 19 17 13 7 5 3 against the nine digits give a remainder, and 10 minus it is the check digit"
+    },
+    {
+      "id": "mstCheckDigit-008",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "010000100"
+      },
+      "expected": 7,
+      "note": "weights 31 29 23 19 17 13 7 5 3 against the nine digits give a remainder, and 10 minus it is the check digit"
+    },
+    {
+      "id": "mstCheckDigit-009",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "010001000"
+      },
+      "expected": 1,
+      "note": "weights 31 29 23 19 17 13 7 5 3 against the nine digits give a remainder, and 10 minus it is the check digit"
+    },
+    {
+      "id": "mstCheckDigit-010",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "010010000"
+      },
+      "expected": 8,
+      "note": "weights 31 29 23 19 17 13 7 5 3 against the nine digits give a remainder, and 10 minus it is the check digit"
+    },
+    {
+      "id": "mstCheckDigit-011",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "010100000"
+      },
+      "expected": 6,
+      "note": "weights 31 29 23 19 17 13 7 5 3 against the nine digits give a remainder, and 10 minus it is the check digit"
+    },
+    {
+      "id": "mstCheckDigit-012",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "011000000"
+      },
+      "expected": 2,
+      "note": "weights 31 29 23 19 17 13 7 5 3 against the nine digits give a remainder, and 10 minus it is the check digit"
+    },
+    {
+      "id": "mstCheckDigit-013",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "012345678"
+      },
+      "expected": 7,
+      "note": "weights 31 29 23 19 17 13 7 5 3 against the nine digits give a remainder, and 10 minus it is the check digit"
+    },
+    {
+      "id": "mstCheckDigit-014",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "100000000"
+      },
+      "expected": 1,
+      "note": "weights 31 29 23 19 17 13 7 5 3 against the nine digits give a remainder, and 10 minus it is the check digit"
+    },
+    {
+      "id": "mstCheckDigit-015",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000000"
+      },
+      "expected": null,
+      "note": "the weighted sum is divisible by 11, so the circular skips this sequence number rather than assigning a check digit"
+    },
+    {
+      "id": "mstCheckDigit-016",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "987654321"
+      },
+      "expected": null,
+      "note": "the weighted sum is divisible by 11, so the circular skips this sequence number rather than assigning a check digit"
+    },
+    {
+      "id": "mstCheckDigit-017",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000000"
+      },
+      "expected": null,
+      "note": "a multiple of 11 leaves no check digit, because 10 - 0 is 10; the circular skips this sequence number instead of writing a tenth digit"
+    },
+    {
+      "id": "mstCheckDigit-018",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000012"
+      },
+      "expected": null,
+      "note": "a multiple of 11 leaves no check digit, because 10 - 0 is 10; the circular skips this sequence number instead of writing a tenth digit"
+    },
+    {
+      "id": "mstCheckDigit-019",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000024"
+      },
+      "expected": null,
+      "note": "a multiple of 11 leaves no check digit, because 10 - 0 is 10; the circular skips this sequence number instead of writing a tenth digit"
+    },
+    {
+      "id": "mstCheckDigit-020",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000036"
+      },
+      "expected": null,
+      "note": "a multiple of 11 leaves no check digit, because 10 - 0 is 10; the circular skips this sequence number instead of writing a tenth digit"
+    },
+    {
+      "id": "mstCheckDigit-021",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000048"
+      },
+      "expected": null,
+      "note": "a multiple of 11 leaves no check digit, because 10 - 0 is 10; the circular skips this sequence number instead of writing a tenth digit"
+    },
+    {
+      "id": "mstCheckDigit-022",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000061"
+      },
+      "expected": null,
+      "note": "a multiple of 11 leaves no check digit, because 10 - 0 is 10; the circular skips this sequence number instead of writing a tenth digit"
+    },
+    {
+      "id": "mstCheckDigit-023",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000007"
+      },
+      "expected": 0,
+      "note": "check digit 0, one representative for each of the ten values the algorithm can produce"
+    },
+    {
+      "id": "mstCheckDigit-024",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000003"
+      },
+      "expected": 1,
+      "note": "check digit 1, one representative for each of the ten values the algorithm can produce"
+    },
+    {
+      "id": "mstCheckDigit-025",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000011"
+      },
+      "expected": 2,
+      "note": "check digit 2, one representative for each of the ten values the algorithm can produce"
+    },
+    {
+      "id": "mstCheckDigit-026",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000006"
+      },
+      "expected": 3,
+      "note": "check digit 3, one representative for each of the ten values the algorithm can produce"
+    },
+    {
+      "id": "mstCheckDigit-027",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000002"
+      },
+      "expected": 4,
+      "note": "check digit 4, one representative for each of the ten values the algorithm can produce"
+    },
+    {
+      "id": "mstCheckDigit-028",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000009"
+      },
+      "expected": 5,
+      "note": "check digit 5, one representative for each of the ten values the algorithm can produce"
+    },
+    {
+      "id": "mstCheckDigit-029",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000005"
+      },
+      "expected": 6,
+      "note": "check digit 6, one representative for each of the ten values the algorithm can produce"
+    },
+    {
+      "id": "mstCheckDigit-030",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000001"
+      },
+      "expected": 7,
+      "note": "check digit 7, one representative for each of the ten values the algorithm can produce"
+    },
+    {
+      "id": "mstCheckDigit-031",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000008"
+      },
+      "expected": 8,
+      "note": "check digit 8, one representative for each of the ten values the algorithm can produce"
+    },
+    {
+      "id": "mstCheckDigit-032",
+      "fn": "mstCheckDigit",
+      "input": {
+        "prefix": "000000004"
+      },
+      "expected": 9,
+      "note": "check digit 9, one representative for each of the ten values the algorithm can produce"
+    },
+    {
+      "id": "isValidMst-001",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047516"
+      },
+      "expected": true,
+      "note": "the tenth digit is the check digit the circular computes"
+    },
+    {
+      "id": "isValidMst-002",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0000000017"
+      },
+      "expected": true,
+      "note": "the tenth digit is the check digit the circular computes"
+    },
+    {
+      "id": "isValidMst-003",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100000003"
+      },
+      "expected": true,
+      "note": "the tenth digit is the check digit the circular computes"
+    },
+    {
+      "id": "isValidMst-004",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0304751015"
+      },
+      "expected": true,
+      "note": "the tenth digit is the check digit the circular computes"
+    },
+    {
+      "id": "isValidMst-005",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100475102"
+      },
+      "expected": true,
+      "note": "the tenth digit is the check digit the circular computes"
+    },
+    {
+      "id": "isValidMst-006",
+      "fn": "isValidMst",
+      "input": {
+        "code": "7900000005"
+      },
+      "expected": true,
+      "note": "the tenth digit is the check digit the circular computes"
+    },
+    {
+      "id": "isValidMst-007",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047516001"
+      },
+      "expected": true,
+      "note": "the tenth digit is the check digit the circular computes"
+    },
+    {
+      "id": "isValidMst-008",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047516999"
+      },
+      "expected": true,
+      "note": "the tenth digit is the check digit the circular computes"
+    },
+    {
+      "id": "isValidMst-009",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047516-001"
+      },
+      "expected": true,
+      "note": "the hyphen the circular writes between the ten digits and the branch is accepted, because it is how the code is printed"
+    },
+    {
+      "id": "isValidMst-010",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047517"
+      },
+      "expected": false,
+      "note": "the tenth digit does not match the computed check digit"
+    },
+    {
+      "id": "isValidMst-011",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047510"
+      },
+      "expected": false,
+      "note": "0 is a digit the algorithm can produce, but not this one: the check digit here is 6"
+    },
+    {
+      "id": "isValidMst-012",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0000000000"
+      },
+      "expected": false,
+      "note": "the first nine digits sum to a multiple of 11, so the circular skips this sequence number and no check digit can be assigned to it"
+    },
+    {
+      "id": "isValidMst-013",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0000000005"
+      },
+      "expected": false,
+      "note": "as above, with a digit that looks plausible"
+    },
+    {
+      "id": "isValidMst-014",
+      "fn": "isValidMst",
+      "input": {
+        "code": "010004751"
+      },
+      "expected": false,
+      "note": "nine digits is the prefix, not a tax code"
+    },
+    {
+      "id": "isValidMst-015",
+      "fn": "isValidMst",
+      "input": {
+        "code": "01000475166"
+      },
+      "expected": false,
+      "note": "eleven digits is not a form the circular defines"
+    },
+    {
+      "id": "isValidMst-016",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047516000"
+      },
+      "expected": false,
+      "note": "a 13-digit code whose branch is 000, outside the 001 to 999 range"
+    },
+    {
+      "id": "isValidMst-017",
+      "fn": "isValidMst",
+      "input": {
+        "code": "01000475161000"
+      },
+      "expected": false,
+      "note": "a branch of 1000 is out of range the other way"
+    },
+    {
+      "id": "isValidMst-018",
+      "fn": "isValidMst",
+      "input": {
+        "code": "01000475160010"
+      },
+      "expected": false,
+      "note": "a 14-digit code"
+    },
+    {
+      "id": "isValidMst-019",
+      "fn": "isValidMst",
+      "input": {
+        "code": "abc0475106"
+      },
+      "expected": false,
+      "note": "letters are not digits"
+    },
+    {
+      "id": "isValidMst-020",
+      "fn": "isValidMst",
+      "input": {
+        "code": ""
+      },
+      "expected": false,
+      "note": "an empty field is not a tax code"
+    },
+    {
+      "id": "isValidMst-021",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047516 "
+      },
+      "expected": false,
+      "note": "trailing space is refused rather than trimmed, so a paste is a visible error rather than a silent success"
+    },
+    {
+      "id": "isValidMst-022",
+      "fn": "isValidMst",
+      "input": {
+        "code": "+0100047516"
+      },
+      "expected": false,
+      "note": "a leading plus is refused"
+    },
+    {
+      "id": "isValidMst-023",
+      "fn": "isValidMst",
+      "input": {
+        "code": "01.00047516"
+      },
+      "expected": false,
+      "note": "a separator is refused: a tax code is digits, and a grouped one is a different string every time"
+    },
+    {
+      "id": "isValidMst-024",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047510"
+      },
+      "expected": false,
+      "note": "a tenth digit that is not the check digit, and the whole code is refused because of it"
+    },
+    {
+      "id": "isValidMst-025",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047511"
+      },
+      "expected": false,
+      "note": "a tenth digit that is not the check digit, and the whole code is refused because of it"
+    },
+    {
+      "id": "isValidMst-026",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047512"
+      },
+      "expected": false,
+      "note": "a tenth digit that is not the check digit, and the whole code is refused because of it"
+    },
+    {
+      "id": "isValidMst-027",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047513"
+      },
+      "expected": false,
+      "note": "a tenth digit that is not the check digit, and the whole code is refused because of it"
+    },
+    {
+      "id": "isValidMst-028",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047514"
+      },
+      "expected": false,
+      "note": "a tenth digit that is not the check digit, and the whole code is refused because of it"
+    },
+    {
+      "id": "isValidMst-029",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047515"
+      },
+      "expected": false,
+      "note": "a tenth digit that is not the check digit, and the whole code is refused because of it"
+    },
+    {
+      "id": "isValidMst-030",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047516"
+      },
+      "expected": true,
+      "note": "the one tenth digit that matches the check digit"
+    },
+    {
+      "id": "isValidMst-031",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047517"
+      },
+      "expected": false,
+      "note": "a tenth digit that is not the check digit, and the whole code is refused because of it"
+    },
+    {
+      "id": "isValidMst-032",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047518"
+      },
+      "expected": false,
+      "note": "a tenth digit that is not the check digit, and the whole code is refused because of it"
+    },
+    {
+      "id": "isValidMst-033",
+      "fn": "isValidMst",
+      "input": {
+        "code": "0100047519"
+      },
+      "expected": false,
+      "note": "a tenth digit that is not the check digit, and the whole code is refused because of it"
+    },
+    {
+      "id": "parseMst-001",
+      "fn": "parseMst",
+      "input": {
+        "code": "0100047516"
+      },
+      "expected": {
+        "regionCode": "01",
+        "serial": "0004751",
+        "checkDigit": 6,
+        "branch": null
+      },
+      "note": "the seven middle digits are the sequence number, kept as a string because the leading zeros are part of it"
+    },
+    {
+      "id": "parseMst-002",
+      "fn": "parseMst",
+      "input": {
+        "code": "0100047516001"
+      },
+      "expected": {
+        "regionCode": "01",
+        "serial": "0004751",
+        "checkDigit": 6,
+        "branch": "001"
+      },
+      "note": "a 13-digit code is the same ten digits plus a three-digit branch, so the parent parses identically"
+    },
+    {
+      "id": "parseMst-003",
+      "fn": "parseMst",
+      "input": {
+        "code": "0100047517"
+      },
+      "expected": null,
+      "note": "an invalid code parses to null rather than to a partial answer"
+    },
+    {
+      "id": "parseMst-004",
+      "fn": "parseMst",
+      "input": {
+        "code": "0100047516000"
+      },
+      "expected": null,
+      "note": "a branch of 000 is out of range, so the whole code is refused rather than the branch alone"
+    },
+    {
+      "id": "normalizePhone-001",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "0912345678"
+      },
+      "expected": "0912345678",
+      "note": "the national form, already correct"
+    },
+    {
+      "id": "normalizePhone-002",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "+84912345678"
+      },
+      "expected": "0912345678",
+      "note": "the international form loses the 84 and regains the trunk zero"
+    },
+    {
+      "id": "normalizePhone-003",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "84912345678"
+      },
+      "expected": "0912345678",
+      "note": "without the plus, 84 is still the country code here"
+    },
+    {
+      "id": "normalizePhone-004",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "840912345678"
+      },
+      "expected": "0912345678",
+      "note": "somebody wrote the 84 in front of the already-national form"
+    },
+    {
+      "id": "normalizePhone-005",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "0912 345 678"
+      },
+      "expected": "0912345678",
+      "note": "spaces are how people write a phone number down"
+    },
+    {
+      "id": "normalizePhone-006",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "0912-345-678"
+      },
+      "expected": "0912345678",
+      "note": "spaces, dashes, dots and brackets are how people write a number, not information"
+    },
+    {
+      "id": "normalizePhone-007",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "0912.345.678"
+      },
+      "expected": "0912345678",
+      "note": "spaces, dashes, dots and brackets are how people write a number, not information"
+    },
+    {
+      "id": "normalizePhone-008",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "(0912) 345678"
+      },
+      "expected": "0912345678",
+      "note": "punctuation a person typed, not a delimiter with meaning"
+    },
+    {
+      "id": "normalizePhone-009",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "  0912345678  "
+      },
+      "expected": "0912345678",
+      "note": "surrounding whitespace is trimmed"
+    },
+    {
+      "id": "normalizePhone-010",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "912345678"
+      },
+      "expected": "0912345678",
+      "note": "the one inference: a bare nine-digit national number is assumed to have lost its trunk zero"
+    },
+    {
+      "id": "normalizePhone-011",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "0987654321"
+      },
+      "expected": "0987654321",
+      "note": "spaces, dashes, dots and brackets are how people write a number, not information"
+    },
+    {
+      "id": "normalizePhone-012",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "0800123456"
+      },
+      "expected": "0800123456",
+      "note": "a landline-format number: 10 digits starting 0, valid as a number even though no mobile carrier owns it"
+    },
+    {
+      "id": "normalizePhone-013",
+      "fn": "normalizePhone",
+      "input": {
+        "input": ""
+      },
+      "expected": null,
+      "note": "an empty field is not a phone number"
+    },
+    {
+      "id": "normalizePhone-014",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "091234567"
+      },
+      "expected": null,
+      "note": "nine digits starting 0, which is not the shape of anything"
+    },
+    {
+      "id": "normalizePhone-015",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "09123456789"
+      },
+      "expected": null,
+      "note": "eleven digits with no country code"
+    },
+    {
+      "id": "normalizePhone-016",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "8491234567"
+      },
+      "expected": null,
+      "note": "the 84 form with a number that already has its zero, and one digit short"
+    },
+    {
+      "id": "normalizePhone-017",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "+1 202 555 0143"
+      },
+      "expected": null,
+      "note": "a North American number, refused rather than reshaped into something that looks Vietnamese"
+    },
+    {
+      "id": "normalizePhone-018",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "abc"
+      },
+      "expected": null,
+      "note": "letters are not digits, and stripping them leaves nothing"
+    },
+    {
+      "id": "normalizePhone-019",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "09123456789012"
+      },
+      "expected": null,
+      "note": "a number far too long to be anything but a paste accident"
+    },
+    {
+      "id": "normalizePhone-020",
+      "fn": "normalizePhone",
+      "input": {
+        "input": "912345678",
+        "options": {
+          "assumeTrunkZero": false
+        }
+      },
+      "expected": null,
+      "note": "with the inference switched off, a bare nine-digit number is refused, because a number that lost its trunk zero and a number that is simply short are indistinguishable"
+    },
+    {
+      "id": "detectCarrier-001",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0323456789"
+      },
+      "expected": "viettel",
+      "note": "032 is in viettel's published range"
+    },
+    {
+      "id": "detectCarrier-002",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0333456789"
+      },
+      "expected": "viettel",
+      "note": "033 is in viettel's published range"
+    },
+    {
+      "id": "detectCarrier-003",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0343456789"
+      },
+      "expected": "viettel",
+      "note": "034 is in viettel's published range"
+    },
+    {
+      "id": "detectCarrier-004",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0353456789"
+      },
+      "expected": "viettel",
+      "note": "035 is in viettel's published range"
+    },
+    {
+      "id": "detectCarrier-005",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0363456789"
+      },
+      "expected": "viettel",
+      "note": "036 is in viettel's published range"
+    },
+    {
+      "id": "detectCarrier-006",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0373456789"
+      },
+      "expected": "viettel",
+      "note": "037 is in viettel's published range"
+    },
+    {
+      "id": "detectCarrier-007",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0383456789"
+      },
+      "expected": "viettel",
+      "note": "038 is in viettel's published range"
+    },
+    {
+      "id": "detectCarrier-008",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0393456789"
+      },
+      "expected": "viettel",
+      "note": "039 is in viettel's published range"
+    },
+    {
+      "id": "detectCarrier-009",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0863456789"
+      },
+      "expected": "viettel",
+      "note": "086 is in viettel's published range"
+    },
+    {
+      "id": "detectCarrier-010",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0963456789"
+      },
+      "expected": "viettel",
+      "note": "096 is in viettel's published range"
+    },
+    {
+      "id": "detectCarrier-011",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0973456789"
+      },
+      "expected": "viettel",
+      "note": "097 is in viettel's published range"
+    },
+    {
+      "id": "detectCarrier-012",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0983456789"
+      },
+      "expected": "viettel",
+      "note": "098 is in viettel's published range"
+    },
+    {
+      "id": "detectCarrier-013",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0813456789"
+      },
+      "expected": "vinaphone",
+      "note": "081 is in vinaphone's published range"
+    },
+    {
+      "id": "detectCarrier-014",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0823456789"
+      },
+      "expected": "vinaphone",
+      "note": "082 is in vinaphone's published range"
+    },
+    {
+      "id": "detectCarrier-015",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0833456789"
+      },
+      "expected": "vinaphone",
+      "note": "083 is in vinaphone's published range"
+    },
+    {
+      "id": "detectCarrier-016",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0843456789"
+      },
+      "expected": "vinaphone",
+      "note": "084 is in vinaphone's published range"
+    },
+    {
+      "id": "detectCarrier-017",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0853456789"
+      },
+      "expected": "vinaphone",
+      "note": "085 is in vinaphone's published range"
+    },
+    {
+      "id": "detectCarrier-018",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0883456789"
+      },
+      "expected": "vinaphone",
+      "note": "088 is in vinaphone's published range"
+    },
+    {
+      "id": "detectCarrier-019",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0913456789"
+      },
+      "expected": "vinaphone",
+      "note": "091 is in vinaphone's published range"
+    },
+    {
+      "id": "detectCarrier-020",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0943456789"
+      },
+      "expected": "vinaphone",
+      "note": "094 is in vinaphone's published range"
+    },
+    {
+      "id": "detectCarrier-021",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0703456789"
+      },
+      "expected": "mobifone",
+      "note": "070 is in mobifone's published range"
+    },
+    {
+      "id": "detectCarrier-022",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0763456789"
+      },
+      "expected": "mobifone",
+      "note": "076 is in mobifone's published range"
+    },
+    {
+      "id": "detectCarrier-023",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0773456789"
+      },
+      "expected": "mobifone",
+      "note": "077 is in mobifone's published range"
+    },
+    {
+      "id": "detectCarrier-024",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0783456789"
+      },
+      "expected": "mobifone",
+      "note": "078 is in mobifone's published range"
+    },
+    {
+      "id": "detectCarrier-025",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0793456789"
+      },
+      "expected": "mobifone",
+      "note": "079 is in mobifone's published range"
+    },
+    {
+      "id": "detectCarrier-026",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0893456789"
+      },
+      "expected": "mobifone",
+      "note": "089 is in mobifone's published range"
+    },
+    {
+      "id": "detectCarrier-027",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0903456789"
+      },
+      "expected": "mobifone",
+      "note": "090 is in mobifone's published range"
+    },
+    {
+      "id": "detectCarrier-028",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0933456789"
+      },
+      "expected": "mobifone",
+      "note": "093 is in mobifone's published range"
+    },
+    {
+      "id": "detectCarrier-029",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0523456789"
+      },
+      "expected": "vietnamobile",
+      "note": "052 is in vietnamobile's published range"
+    },
+    {
+      "id": "detectCarrier-030",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0563456789"
+      },
+      "expected": "vietnamobile",
+      "note": "056 is in vietnamobile's published range"
+    },
+    {
+      "id": "detectCarrier-031",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0583456789"
+      },
+      "expected": "vietnamobile",
+      "note": "058 is in vietnamobile's published range"
+    },
+    {
+      "id": "detectCarrier-032",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0923456789"
+      },
+      "expected": "vietnamobile",
+      "note": "092 is in vietnamobile's published range"
+    },
+    {
+      "id": "detectCarrier-033",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0593456789"
+      },
+      "expected": "gmobile",
+      "note": "059 is in gmobile's published range"
+    },
+    {
+      "id": "detectCarrier-034",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0993456789"
+      },
+      "expected": "gmobile",
+      "note": "099 is in gmobile's published range"
+    },
+    {
+      "id": "detectCarrier-035",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0303456789"
+      },
+      "expected": null,
+      "note": "030 is not assigned to any mobile carrier: the number is well-formed and belongs to nobody"
+    },
+    {
+      "id": "detectCarrier-036",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0403456789"
+      },
+      "expected": null,
+      "note": "040 is not assigned to any mobile carrier: the number is well-formed and belongs to nobody"
+    },
+    {
+      "id": "detectCarrier-037",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0503456789"
+      },
+      "expected": null,
+      "note": "050 is not assigned to any mobile carrier: the number is well-formed and belongs to nobody"
+    },
+    {
+      "id": "detectCarrier-038",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0533456789"
+      },
+      "expected": null,
+      "note": "053 is not assigned to any mobile carrier: the number is well-formed and belongs to nobody"
+    },
+    {
+      "id": "detectCarrier-039",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0603456789"
+      },
+      "expected": null,
+      "note": "060 is not assigned to any mobile carrier: the number is well-formed and belongs to nobody"
+    },
+    {
+      "id": "detectCarrier-040",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0713456789"
+      },
+      "expected": null,
+      "note": "071 is not assigned to any mobile carrier: the number is well-formed and belongs to nobody"
+    },
+    {
+      "id": "detectCarrier-041",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0803456789"
+      },
+      "expected": null,
+      "note": "080 is not assigned to any mobile carrier: the number is well-formed and belongs to nobody"
+    },
+    {
+      "id": "detectCarrier-042",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0873456789"
+      },
+      "expected": null,
+      "note": "087 is not assigned to any mobile carrier: the number is well-formed and belongs to nobody"
+    },
+    {
+      "id": "detectCarrier-043",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0953456789"
+      },
+      "expected": null,
+      "note": "095 is not assigned to any mobile carrier: the number is well-formed and belongs to nobody"
+    },
+    {
+      "id": "detectCarrier-044",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0912345678"
+      },
+      "expected": "vinaphone",
+      "note": "the lookup runs on the normalised form"
+    },
+    {
+      "id": "detectCarrier-045",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "912345678"
+      },
+      "expected": null,
+      "note": "a nine-digit number has no carrier until the trunk zero is known, and guessing is how a phone ends up attributed to the wrong network"
+    },
+    {
+      "id": "detectCarrier-046",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "+84912345678"
+      },
+      "expected": null,
+      "note": "the lookup does not normalise for you, so a caller cannot accidentally attribute a number it has not actually checked"
+    },
+    {
+      "id": "detectCarrier-047",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": ""
+      },
+      "expected": null,
+      "note": null
+    },
+    {
+      "id": "detectCarrier-048",
+      "fn": "detectCarrier",
+      "input": {
+        "phone": "0800123456"
+      },
+      "expected": null,
+      "note": "a valid ten-digit number with no mobile prefix is still a valid number, and still belongs to no carrier"
+    },
+    {
+      "id": "isValidPhone-001",
+      "fn": "isValidPhone",
+      "input": {
+        "input": "0912345678"
+      },
+      "expected": true,
+      "note": "a number that normalises"
+    },
+    {
+      "id": "isValidPhone-002",
+      "fn": "isValidPhone",
+      "input": {
+        "input": "+84912345678"
+      },
+      "expected": true,
+      "note": "the international form is the same number"
+    },
+    {
+      "id": "isValidPhone-003",
+      "fn": "isValidPhone",
+      "input": {
+        "input": "0912 345 678"
+      },
+      "expected": true,
+      "note": "a number that normalises"
+    },
+    {
+      "id": "isValidPhone-004",
+      "fn": "isValidPhone",
+      "input": {
+        "input": "091234567"
+      },
+      "expected": false,
+      "note": "nine digits is not a phone number shape, and this is exactly where the trunk-zero inference must not fire"
+    },
+    {
+      "id": "isValidPhone-005",
+      "fn": "isValidPhone",
+      "input": {
+        "input": "912345678"
+      },
+      "expected": true,
+      "note": "a bare nine-digit number is accepted, with the assumption stated in the case note"
+    },
+    {
+      "id": "isValidPhone-006",
+      "fn": "isValidPhone",
+      "input": {
+        "input": ""
+      },
+      "expected": false,
+      "note": "a number that does not"
+    },
+    {
+      "id": "isValidPhone-007",
+      "fn": "isValidPhone",
+      "input": {
+        "input": "abc"
+      },
+      "expected": false,
+      "note": "a number that does not"
+    },
+    {
+      "id": "isValidPhone-008",
+      "fn": "isValidPhone",
+      "input": {
+        "input": "+12025550143"
+      },
+      "expected": false,
+      "note": "a number from somewhere else is not reshaped into looking Vietnamese"
+    },
+    {
+      "id": "isValidCccd-001",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "001098512345"
+      },
+      "expected": true,
+      "note": "001 is Hà Nội, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-002",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "002098512345"
+      },
+      "expected": true,
+      "note": "002 is Hà Giang, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-003",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "004098512345"
+      },
+      "expected": true,
+      "note": "004 is Cao Bằng, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-004",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "006098512345"
+      },
+      "expected": true,
+      "note": "006 is Bắc Kạn, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-005",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "008098512345"
+      },
+      "expected": true,
+      "note": "008 is Tuyên Quang, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-006",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "010098512345"
+      },
+      "expected": true,
+      "note": "010 is Lào Cai, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-007",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "011098512345"
+      },
+      "expected": true,
+      "note": "011 is Điện Biên, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-008",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "012098512345"
+      },
+      "expected": true,
+      "note": "012 is Lai Châu, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-009",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "014098512345"
+      },
+      "expected": true,
+      "note": "014 is Sơn La, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-010",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "015098512345"
+      },
+      "expected": true,
+      "note": "015 is Yên Bái, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-011",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "017098512345"
+      },
+      "expected": true,
+      "note": "017 is Hòa Bình, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-012",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "019098512345"
+      },
+      "expected": true,
+      "note": "019 is Thái Nguyên, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-013",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "020098512345"
+      },
+      "expected": true,
+      "note": "020 is Lạng Sơn, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-014",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "022098512345"
+      },
+      "expected": true,
+      "note": "022 is Quảng Ninh, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-015",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "024098512345"
+      },
+      "expected": true,
+      "note": "024 is Bắc Giang, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-016",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "025098512345"
+      },
+      "expected": true,
+      "note": "025 is Phú Thọ, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-017",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "026098512345"
+      },
+      "expected": true,
+      "note": "026 is Vĩnh Phúc, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-018",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "027098512345"
+      },
+      "expected": true,
+      "note": "027 is Bắc Ninh, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-019",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "030098512345"
+      },
+      "expected": true,
+      "note": "030 is Hải Dương, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-020",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "031098512345"
+      },
+      "expected": true,
+      "note": "031 is Hải Phòng, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-021",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "033098512345"
+      },
+      "expected": true,
+      "note": "033 is Hưng Yên, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-022",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "034098512345"
+      },
+      "expected": true,
+      "note": "034 is Thái Bình, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-023",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "035098512345"
+      },
+      "expected": true,
+      "note": "035 is Hà Nam, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-024",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "036098512345"
+      },
+      "expected": true,
+      "note": "036 is Nam Định, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-025",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "037098512345"
+      },
+      "expected": true,
+      "note": "037 is Ninh Bình, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-026",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "038098512345"
+      },
+      "expected": true,
+      "note": "038 is Thanh Hóa, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-027",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "040098512345"
+      },
+      "expected": true,
+      "note": "040 is Nghệ An, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-028",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "042098512345"
+      },
+      "expected": true,
+      "note": "042 is Hà Tĩnh, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-029",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "044098512345"
+      },
+      "expected": true,
+      "note": "044 is Quảng Bình, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-030",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "045098512345"
+      },
+      "expected": true,
+      "note": "045 is Quảng Trị, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-031",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "046098512345"
+      },
+      "expected": true,
+      "note": "046 is Thừa Thiên Huế, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-032",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "048098512345"
+      },
+      "expected": true,
+      "note": "048 is Đà Nẵng, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-033",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "049098512345"
+      },
+      "expected": true,
+      "note": "049 is Quảng Nam, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-034",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "051098512345"
+      },
+      "expected": true,
+      "note": "051 is Quảng Ngãi, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-035",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "052098512345"
+      },
+      "expected": true,
+      "note": "052 is Bình Định, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-036",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "054098512345"
+      },
+      "expected": true,
+      "note": "054 is Phú Yên, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-037",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "056098512345"
+      },
+      "expected": true,
+      "note": "056 is Khánh Hòa, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-038",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "058098512345"
+      },
+      "expected": true,
+      "note": "058 is Ninh Thuận, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-039",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "060098512345"
+      },
+      "expected": true,
+      "note": "060 is Bình Thuận, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-040",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "062098512345"
+      },
+      "expected": true,
+      "note": "062 is Kon Tum, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-041",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "064098512345"
+      },
+      "expected": true,
+      "note": "064 is Gia Lai, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-042",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "066098512345"
+      },
+      "expected": true,
+      "note": "066 is Đắk Lắk, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-043",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "067098512345"
+      },
+      "expected": true,
+      "note": "067 is Đắk Nông, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-044",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "068098512345"
+      },
+      "expected": true,
+      "note": "068 is Lâm Đồng, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-045",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "070098512345"
+      },
+      "expected": true,
+      "note": "070 is Bình Phước, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-046",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "072098512345"
+      },
+      "expected": true,
+      "note": "072 is Tây Ninh, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-047",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "074098512345"
+      },
+      "expected": true,
+      "note": "074 is Bình Dương, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-048",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "075098512345"
+      },
+      "expected": true,
+      "note": "075 is Đồng Nai, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-049",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "077098512345"
+      },
+      "expected": true,
+      "note": "077 is Bà Rịa - Vũng Tàu, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-050",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "079098512345"
+      },
+      "expected": true,
+      "note": "079 is Hồ Chí Minh, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-051",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "080098512345"
+      },
+      "expected": true,
+      "note": "080 is Long An, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-052",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "082098512345"
+      },
+      "expected": true,
+      "note": "082 is Tiền Giang, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-053",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "083098512345"
+      },
+      "expected": true,
+      "note": "083 is Bến Tre, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-054",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "084098512345"
+      },
+      "expected": true,
+      "note": "084 is Trà Vinh, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-055",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "086098512345"
+      },
+      "expected": true,
+      "note": "086 is Vĩnh Long, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-056",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "087098512345"
+      },
+      "expected": true,
+      "note": "087 is Đồng Tháp, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-057",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "089098512345"
+      },
+      "expected": true,
+      "note": "089 is An Giang, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-058",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "091098512345"
+      },
+      "expected": true,
+      "note": "091 is Kiên Giang, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-059",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "092098512345"
+      },
+      "expected": true,
+      "note": "092 is Cần Thơ, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-060",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "093098512345"
+      },
+      "expected": true,
+      "note": "093 is Hậu Giang, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-061",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "094098512345"
+      },
+      "expected": true,
+      "note": "094 is Sóc Trăng, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-062",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "095098512345"
+      },
+      "expected": true,
+      "note": "095 is Bạc Liêu, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-063",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "096098512345"
+      },
+      "expected": true,
+      "note": "096 is Cà Mau, and the century digit 0 is 20th century male, so 85 is 1985"
+    },
+    {
+      "id": "isValidCccd-064",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "00100000000"
+      },
+      "expected": false,
+      "note": "eleven digits"
+    },
+    {
+      "id": "isValidCccd-065",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "0010000000000"
+      },
+      "expected": false,
+      "note": "thirteen digits, which is a tax code shape and not a card shape"
+    },
+    {
+      "id": "isValidCccd-066",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "000098512345"
+      },
+      "expected": false,
+      "note": "000 is not a province: the codes run 001 to 096 with gaps, and a gap is not an assignment"
+    },
+    {
+      "id": "isValidCccd-067",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "097098512345"
+      },
+      "expected": false,
+      "note": "097 is above the highest assigned code"
+    },
+    {
+      "id": "isValidCccd-068",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "003098512345"
+      },
+      "expected": false,
+      "note": "003 is a gap between Hà Giang and Cao Bằng, not a province"
+    },
+    {
+      "id": "isValidCccd-069",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "00109851234a"
+      },
+      "expected": false,
+      "note": "a letter in the serial"
+    },
+    {
+      "id": "isValidCccd-070",
+      "fn": "isValidCccd",
+      "input": {
+        "code": ""
+      },
+      "expected": false,
+      "note": "an empty field"
+    },
+    {
+      "id": "isValidCccd-071",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "  001098512345"
+      },
+      "expected": false,
+      "note": "leading whitespace is refused, matching every other function here rather than trimming quietly"
+    },
+    {
+      "id": "isValidCccd-072",
+      "fn": "isValidCccd",
+      "input": {
+        "code": "+84001098512345"
+      },
+      "expected": false,
+      "note": "the country code is not part of a card number"
+    },
+    {
+      "id": "parseCccd-001",
+      "fn": "parseCccd",
+      "input": {
+        "code": "001085123456"
+      },
+      "expected": {
+        "provinceCode": "001",
+        "province": "Hà Nội",
+        "century": 20,
+        "gender": "male",
+        "birthYear": 1985,
+        "serial": "123456"
+      },
+      "note": "fourth digit 0 is the twentieth century, male, so 85 means 1985"
+    },
+    {
+      "id": "parseCccd-002",
+      "fn": "parseCccd",
+      "input": {
+        "code": "001185123456"
+      },
+      "expected": {
+        "provinceCode": "001",
+        "province": "Hà Nội",
+        "century": 20,
+        "gender": "female",
+        "birthYear": 1985,
+        "serial": "123456"
+      },
+      "note": "fourth digit 1 is the twentieth century, female, so 85 means 1985"
+    },
+    {
+      "id": "parseCccd-003",
+      "fn": "parseCccd",
+      "input": {
+        "code": "001285123456"
+      },
+      "expected": {
+        "provinceCode": "001",
+        "province": "Hà Nội",
+        "century": 21,
+        "gender": "male",
+        "birthYear": 2085,
+        "serial": "123456"
+      },
+      "note": "fourth digit 2 is the twenty-first century, male, so 85 means 2085"
+    },
+    {
+      "id": "parseCccd-004",
+      "fn": "parseCccd",
+      "input": {
+        "code": "001385123456"
+      },
+      "expected": {
+        "provinceCode": "001",
+        "province": "Hà Nội",
+        "century": 21,
+        "gender": "female",
+        "birthYear": 2085,
+        "serial": "123456"
+      },
+      "note": "fourth digit 3 is the twenty-first century, female, so 85 means 2085"
+    },
+    {
+      "id": "parseCccd-005",
+      "fn": "parseCccd",
+      "input": {
+        "code": "001485123456"
+      },
+      "expected": {
+        "provinceCode": "001",
+        "province": "Hà Nội",
+        "century": 22,
+        "gender": "male",
+        "birthYear": 2185,
+        "serial": "123456"
+      },
+      "note": "fourth digit 4 is the twenty-second century, male, so 85 means 2185"
+    },
+    {
+      "id": "parseCccd-006",
+      "fn": "parseCccd",
+      "input": {
+        "code": "001585123456"
+      },
+      "expected": {
+        "provinceCode": "001",
+        "province": "Hà Nội",
+        "century": 22,
+        "gender": "female",
+        "birthYear": 2185,
+        "serial": "123456"
+      },
+      "note": "fourth digit 5 is the twenty-second century, female, so 85 means 2185"
+    },
+    {
+      "id": "parseCccd-007",
+      "fn": "parseCccd",
+      "input": {
+        "code": "001685123456"
+      },
+      "expected": {
+        "provinceCode": "001",
+        "province": "Hà Nội",
+        "century": 23,
+        "gender": "male",
+        "birthYear": 2285,
+        "serial": "123456"
+      },
+      "note": "fourth digit 6 is the twenty-third century, male, so 85 means 2285"
+    },
+    {
+      "id": "parseCccd-008",
+      "fn": "parseCccd",
+      "input": {
+        "code": "001785123456"
+      },
+      "expected": {
+        "provinceCode": "001",
+        "province": "Hà Nội",
+        "century": 23,
+        "gender": "female",
+        "birthYear": 2285,
+        "serial": "123456"
+      },
+      "note": "fourth digit 7 is the twenty-third century, female, so 85 means 2285"
+    },
+    {
+      "id": "parseCccd-009",
+      "fn": "parseCccd",
+      "input": {
+        "code": "001885123456"
+      },
+      "expected": {
+        "provinceCode": "001",
+        "province": "Hà Nội",
+        "century": 24,
+        "gender": "male",
+        "birthYear": 2385,
+        "serial": "123456"
+      },
+      "note": "fourth digit 8 is the twenty-fourth century, male, so 85 means 2385"
+    },
+    {
+      "id": "parseCccd-010",
+      "fn": "parseCccd",
+      "input": {
+        "code": "001985123456"
+      },
+      "expected": {
+        "provinceCode": "001",
+        "province": "Hà Nội",
+        "century": 24,
+        "gender": "female",
+        "birthYear": 2385,
+        "serial": "123456"
+      },
+      "note": "fourth digit 9 is the twenty-fourth century, female, so 85 means 2385"
+    },
+    {
+      "id": "parseCccd-011",
+      "fn": "parseCccd",
+      "input": {
+        "code": "079087123456"
+      },
+      "expected": {
+        "provinceCode": "079",
+        "province": "Hồ Chí Minh",
+        "century": 20,
+        "gender": "male",
+        "birthYear": 1987,
+        "serial": "123456"
+      },
+      "note": "a whole card number: 079 is Hồ Chí Minh, the fourth digit 0 is 20th century male, and 87 under that century is 1987"
+    },
+    {
+      "id": "parseCccd-012",
+      "fn": "parseCccd",
+      "input": {
+        "code": "049205123456"
+      },
+      "expected": {
+        "provinceCode": "049",
+        "province": "Quảng Nam",
+        "century": 21,
+        "gender": "male",
+        "birthYear": 2005,
+        "serial": "123456"
+      },
+      "note": "the same two year digits under a different fourth digit would give 1905, and the fourth digit is the only thing that tells the two apart"
+    },
+    {
+      "id": "parseCccd-013",
+      "fn": "parseCccd",
+      "input": {
+        "code": "001000000000"
+      },
+      "expected": {
+        "provinceCode": "001",
+        "province": "Hà Nội",
+        "century": 20,
+        "gender": "male",
+        "birthYear": 1900,
+        "serial": "000000"
+      },
+      "note": "the year 00 in the twentieth century is 1900, which is well-formed, and it parses: whether the person is alive is not this function's question"
+    },
+    {
+      "id": "parseCccd-014",
+      "fn": "parseCccd",
+      "input": {
+        "code": "001899999999"
+      },
+      "expected": {
+        "provinceCode": "001",
+        "province": "Hà Nội",
+        "century": 24,
+        "gender": "male",
+        "birthYear": 2399,
+        "serial": "999999"
+      },
+      "note": "the fourth digit 8 is the twenty-fourth century, so year 99 here is 2399, and it parses: a card number has no check digit, so a year in the future is not detectable here"
+    },
+    {
+      "id": "parseCccd-015",
+      "fn": "parseCccd",
+      "input": {
+        "code": "097000000000"
+      },
+      "expected": null,
+      "note": "an unassigned province code parses to null"
+    },
+    {
+      "id": "parseCccd-016",
+      "fn": "parseCccd",
+      "input": {
+        "code": "00100000000"
+      },
+      "expected": null,
+      "note": "an eleven-digit number parses to null"
+    },
+    {
+      "id": "isValidCmnd-001",
+      "fn": "isValidCmnd",
+      "input": {
+        "code": "001001001"
+      },
+      "expected": true,
+      "note": "the old paper card is nine digits and has no structure to check"
+    },
+    {
+      "id": "isValidCmnd-002",
+      "fn": "isValidCmnd",
+      "input": {
+        "code": "000000000"
+      },
+      "expected": true,
+      "note": "all zeros is well-formed even though no such card was ever issued"
+    },
+    {
+      "id": "isValidCmnd-003",
+      "fn": "isValidCmnd",
+      "input": {
+        "code": "00100100"
+      },
+      "expected": false,
+      "note": "eight digits"
+    },
+    {
+      "id": "isValidCmnd-004",
+      "fn": "isValidCmnd",
+      "input": {
+        "code": "0010010011"
+      },
+      "expected": false,
+      "note": "ten digits, which is a tax code shape"
+    },
+    {
+      "id": "isValidCmnd-005",
+      "fn": "isValidCmnd",
+      "input": {
+        "code": "00100100a"
+      },
+      "expected": false,
+      "note": "letters"
+    },
+    {
+      "id": "isValidCmnd-006",
+      "fn": "isValidCmnd",
+      "input": {
+        "code": ""
+      },
+      "expected": false,
+      "note": "an empty field"
+    },
+    {
+      "id": "classifyId-001",
+      "fn": "classifyId",
+      "input": {
+        "value": "001098512345"
+      },
+      "expected": "cccd",
+      "note": "twelve digits with a known province code and a defined fourth digit"
+    },
+    {
+      "id": "classifyId-002",
+      "fn": "classifyId",
+      "input": {
+        "value": "001001001"
+      },
+      "expected": "cmnd",
+      "note": "nine digits is the old paper card, and there is nothing else nine digits could be"
+    },
+    {
+      "id": "classifyId-003",
+      "fn": "classifyId",
+      "input": {
+        "value": "0100047516"
+      },
+      "expected": "mst",
+      "note": "ten digits whose tenth is the check digit"
+    },
+    {
+      "id": "classifyId-004",
+      "fn": "classifyId",
+      "input": {
+        "value": "0100047516001"
+      },
+      "expected": "mst",
+      "note": "thirteen digits is a dependent unit of a tax code"
+    },
+    {
+      "id": "classifyId-005",
+      "fn": "classifyId",
+      "input": {
+        "value": "0912345678"
+      },
+      "expected": "phone",
+      "note": "ten digits starting 0, and not a tax code because the tenth is not its check digit"
+    },
+    {
+      "id": "classifyId-006",
+      "fn": "classifyId",
+      "input": {
+        "value": "0800123456"
+      },
+      "expected": "phone",
+      "note": "a ten-digit number starting 0, even though no carrier owns it"
+    },
+    {
+      "id": "classifyId-007",
+      "fn": "classifyId",
+      "input": {
+        "value": ""
+      },
+      "expected": "unknown",
+      "note": "an empty field is unknown, not a card"
+    },
+    {
+      "id": "classifyId-008",
+      "fn": "classifyId",
+      "input": {
+        "value": "abc"
+      },
+      "expected": "unknown",
+      "note": null
+    },
+    {
+      "id": "classifyId-009",
+      "fn": "classifyId",
+      "input": {
+        "value": "123"
+      },
+      "expected": "unknown",
+      "note": "three digits is nothing"
+    },
+    {
+      "id": "classifyId-010",
+      "fn": "classifyId",
+      "input": {
+        "value": "079000123456"
+      },
+      "expected": "cccd",
+      "note": "fourth digit 0 is a defined century and sex, so this is a card number -- of a generation this library cannot identify"
+    },
+    {
+      "id": "classifyId-011",
+      "fn": "classifyId",
+      "input": {
+        "value": "079100123456"
+      },
+      "expected": "cccd",
+      "note": "fourth digit 1 is a defined century and sex, so this is a card number -- of a generation this library cannot identify"
+    },
+    {
+      "id": "classifyId-012",
+      "fn": "classifyId",
+      "input": {
+        "value": "079200123456"
+      },
+      "expected": "cccd",
+      "note": "fourth digit 2 is a defined century and sex, so this is a card number -- of a generation this library cannot identify"
+    },
+    {
+      "id": "classifyId-013",
+      "fn": "classifyId",
+      "input": {
+        "value": "079300123456"
+      },
+      "expected": "cccd",
+      "note": "fourth digit 3 is a defined century and sex, so this is a card number -- of a generation this library cannot identify"
+    },
+    {
+      "id": "classifyId-014",
+      "fn": "classifyId",
+      "input": {
+        "value": "079400123456"
+      },
+      "expected": "cccd",
+      "note": "fourth digit 4 is a defined century and sex, so this is a card number -- of a generation this library cannot identify"
+    },
+    {
+      "id": "classifyId-015",
+      "fn": "classifyId",
+      "input": {
+        "value": "079500123456"
+      },
+      "expected": "cccd",
+      "note": "fourth digit 5 is a defined century and sex, so this is a card number -- of a generation this library cannot identify"
+    },
+    {
+      "id": "classifyId-016",
+      "fn": "classifyId",
+      "input": {
+        "value": "079600123456"
+      },
+      "expected": "cccd",
+      "note": "fourth digit 6 is a defined century and sex, so this is a card number -- of a generation this library cannot identify"
+    },
+    {
+      "id": "classifyId-017",
+      "fn": "classifyId",
+      "input": {
+        "value": "079700123456"
+      },
+      "expected": "cccd",
+      "note": "fourth digit 7 is a defined century and sex, so this is a card number -- of a generation this library cannot identify"
+    },
+    {
+      "id": "classifyId-018",
+      "fn": "classifyId",
+      "input": {
+        "value": "079800123456"
+      },
+      "expected": "cccd",
+      "note": "fourth digit 8 is a defined century and sex, so this is a card number -- of a generation this library cannot identify"
+    },
+    {
+      "id": "classifyId-019",
+      "fn": "classifyId",
+      "input": {
+        "value": "079900123456"
+      },
+      "expected": "cccd",
+      "note": "fourth digit 9 is a defined century and sex, so this is a card number -- of a generation this library cannot identify"
+    }
+  ]
+}
