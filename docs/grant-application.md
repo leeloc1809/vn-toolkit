@@ -1,4 +1,18 @@
-# Codex for Open Source — application draft
+# Codex for Open Source — application
+
+**Submitted 2026-10-04.** Rolling review, no deadline, decision by email.
+
+> **This is the first application, and it is expected to be a weak one.** The
+> repository had 0 stars, 0 downloads and 0 external contributors on the day it
+> was sent, and field 1 says so plainly rather than dressing it up. The reason
+> to send it anyway is that the fund is finite, previous recipients are
+> explicitly allowed to re-apply, and this submission is the baseline the second
+> one gets compared against.
+>
+> **The next application is the real one.** Everything below is written to be
+> rewritten from `node scripts/track-traction.mjs` once there are numbers worth
+> quoting. Do not edit the text in place — re-open this file, and write the new
+> version beside the old one so the difference is visible.
 
 Everything below is written to be pasted into the form as-is. Every free-text
 field is counted, because the form enforces a 500-character limit and a field
